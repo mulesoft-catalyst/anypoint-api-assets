@@ -1,0 +1,104 @@
+#%RAML 1.0
+title: NIS Anypoint Exchange Assets
+version: v1
+description: Manage select Anypoint Exchange assets between Anypoint Platform PCE and Anypoint Platform GovCloud iPaaS.
+
+baseUri: https://pubsec.services.mulesoft.com/anypoint/{version}
+
+protocols: [ HTTPS ]
+
+mediaType: application/json
+
+uses:
+  assetTypes: exchange_modules/<your-exchange-org-id>/nis-anypoint-exchange-assets-types/1.0.1/nis-anypoint-exchange-assets-types.raml
+
+/assets:
+  post:
+    description: Publish all relevant API assets and all its components from PCE to GovCloud iPaaS.
+    body:
+      application/json:
+        type: assetTypes.MultipleAssetRequestType
+        example: !include examples/assets-request.json
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include examples/assets-response.json
+/asset:
+  post:
+    description: Publish a specified API asset and all its components from PCE to GovCloud iPaaS.
+    body:
+      application/json:
+        type: assetTypes.SingleAssetRequestType
+        example: !include examples/asset-request.json
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include examples/asset-response.json
+/exchange:
+  /assets:
+    post:
+      description: Publish all relevant Exchange assets.
+      body:
+        application/json:
+          type: assetTypes.MultipleAssetRequestType
+          example: !include examples/exchange-assets-request.json
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include examples/exchange-assets-response.json
+  /asset:
+    post:
+      description: Publish specified Exchange asset.
+      body:
+        application/json:
+          type: assetTypes.SingleAssetRequestType
+          example: !include examples/exchange-asset-request.json
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include examples/exchange-asset-response.json
+/api-manager:
+  /instances:
+    post:
+      description: Publish all relevant api instances from one or all environments.
+      body:
+        application/json:
+          type: assetTypes.SingleAssetRequestType
+          examples:
+            ex1: !include examples/api-instances-asset-request.json
+            ex2: !include examples/api-instances-envs-asset-request.json
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include examples/api-instances-response.json
+    /{instanceLabel}:
+      post:
+        description: |
+          Publish specified api instance from one or more environments.
+          If an environment list is not provided, than all environments are processed for this instance label.
+        body:
+          application/json:
+            type: assetTypes.SingleAssetRequestType
+            example: !include examples/api-instances-envs-asset-request.json
+        responses:
+          200:
+            body:
+              application/json:
+                example: !include examples/api-instance-label-response.json
+      /sla-tiers:
+        post:
+          description: Publish only SLA tiers for a given api instance from one or more environments.
+          body:
+            application/json:
+              type: assetTypes.SingleAssetRequestType
+              example: !include examples/api-instances-envs-asset-request.json
+          responses:
+            200:
+              body:
+                application/json:
+                  example: !include examples/sla-tiers-response.json

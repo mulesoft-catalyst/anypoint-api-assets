@@ -1,0 +1,1622 @@
+[
+    {
+        "groupId": "074345f4-651b-4b90-9a5f-083303be816b",
+        "assetId": "hello-jb",
+        "version": "1.0.0",
+        "versionGroup": "1.0",
+        "productAPIVersion": "1.0",
+        "isPublic": false,
+        "name": "Hello-JB",
+        "type": "rest-api",
+        "status": "published",
+        "assetLink": "",
+        "createdAt": "2020-09-18T16:09:03.908Z",
+        "runtimeVersion": "",
+        "attributes": [
+            {
+                "value": "raml",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "rest",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "api",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "1.0",
+                "tagType": "attribute",
+                "key": "product-api-version"
+            },
+            {
+                "value": "1eaba0fd-4865-4b61-8f50-301eece0c3f0",
+                "tagType": "attribute",
+                "key": "project-id"
+            },
+            {
+                "value": "master",
+                "tagType": "attribute",
+                "key": "branch-id"
+            },
+            {
+                "value": "1f59ab28a7cd64ee7ffd651f76d50c6070d36327",
+                "tagType": "attribute",
+                "key": "commit-id"
+            },
+            {
+                "value": "has-mule4-connector",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "has-mule3-connector",
+                "tagType": "attribute",
+                "key": null
+            }
+        ],
+        "labels": [],
+        "categories": [],
+        "customFields": [],
+        "tags": [
+            {
+                "value": "raml",
+                "key": null
+            },
+            {
+                "value": "rest",
+                "key": null
+            },
+            {
+                "value": "api",
+                "key": null
+            },
+            {
+                "value": "1.0",
+                "key": "product-api-version"
+            },
+            {
+                "value": "1eaba0fd-4865-4b61-8f50-301eece0c3f0",
+                "key": "project-id"
+            },
+            {
+                "value": "master",
+                "key": "branch-id"
+            },
+            {
+                "value": "1f59ab28a7cd64ee7ffd651f76d50c6070d36327",
+                "key": "commit-id"
+            },
+            {
+                "value": "has-mule4-connector",
+                "key": null
+            },
+            {
+                "value": "has-mule3-connector",
+                "key": null
+            }
+        ],
+        "files": [
+            {
+                "classifier": null,
+                "packaging": "pom",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/0c411021-838f-48d0-8e33-3411dfd91dad/hello-jb-1.0.0.pom",
+                "md5": "8432be2a77cf4937493626cedf967c4d",
+                "createdDate": "2020-09-18T16:09:29.722Z"
+            },
+            {
+                "classifier": "mule-plugin",
+                "packaging": "jar",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/5e26893f-12ac-4f66-b71b-02ddf4fb5ceb/hello-jb-1.0.0-mule-plugin.jar",
+                "md5": "83673bfda5706d5ede7f0fa71fa8e9c3",
+                "createdDate": "2020-09-18T16:09:29.552Z"
+            },
+            {
+                "classifier": "fat-raml",
+                "packaging": "zip",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/f3748d36-b627-4693-b49d-7c6b450689e0/hello-jb-1.0.0-fat-raml.zip",
+                "md5": "9041064ae4fe7f95b5bb20611e26a7e6",
+                "createdDate": "2020-09-18T16:09:03.7Z"
+            },
+            {
+                "classifier": "raml",
+                "packaging": "zip",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/104ba5b0-f709-4076-9d25-1aab1c65829d/hello-jb-1.0.0-raml.zip",
+                "md5": "df502ae42a1f1f1f7342e9186479ea01",
+                "createdDate": "2020-09-18T16:09:03.162Z"
+            }
+        ],
+        "rating": 0,
+        "numberOfRates": 0,
+        "createdBy": {
+            "id": "c6e61d07-84eb-40cd-9a4c-ad8c475b0f0d",
+            "userName": "L1JTB01",
+            "firstName": "Jeffrey",
+            "lastName": "Bowman"
+        },
+        "organization": {
+            "name": "NIS",
+            "id": "074345f4-651b-4b90-9a5f-083303be816b",
+            "createdAt": "2017-08-03T16:39:49.393Z",
+            "updatedAt": "2020-07-10T16:16:03.335Z",
+            "ownerId": "1a381d2a-7b7a-4c01-a563-f26fabb78b99",
+            "clientId": "8923f10211454d0b8a0bb5fc2355d30b",
+            "domain": "frs",
+            "idprovider_id": "mulesoft",
+            "isFederated": true,
+            "parentOrganizationIds": [
+                "6760ce10-4ceb-4fad-9fc3-000d57fb3ded"
+            ],
+            "subOrganizationIds": [
+                "85323283-cf87-4d18-a536-624fb01b7459"
+            ],
+            "tenantOrganizationIds": [],
+            "isMaster": false
+        },
+        "id": "074345f4-651b-4b90-9a5f-083303be816b/hello-jb/1.0.0",
+        "icon": null,
+        "modifiedAt": "2020-09-18T16:09:03.908Z"
+    },
+    {
+        "groupId": "074345f4-651b-4b90-9a5f-083303be816b",
+        "assetId": "m3-api-template",
+        "version": "1.0.0",
+        "versionGroup": "v1",
+        "productAPIVersion": "v1",
+        "isPublic": false,
+        "name": "M3 API Template",
+        "type": "rest-api",
+        "status": "published",
+        "assetLink": "",
+        "createdAt": "2020-08-26T20:04:28.074Z",
+        "runtimeVersion": "",
+        "attributes": [
+            {
+                "value": "raml",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "rest",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "api",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "v1",
+                "tagType": "attribute",
+                "key": "product-api-version"
+            },
+            {
+                "value": "de6e4e46-2993-4e45-8b0a-dcdb0cdf091e",
+                "tagType": "attribute",
+                "key": "project-id"
+            },
+            {
+                "value": "master",
+                "tagType": "attribute",
+                "key": "branch-id"
+            },
+            {
+                "value": "85853f8a613a577d92826abe9f5789427ee8ff10",
+                "tagType": "attribute",
+                "key": "commit-id"
+            },
+            {
+                "value": "has-mule4-connector",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "has-mule3-connector",
+                "tagType": "attribute",
+                "key": null
+            }
+        ],
+        "labels": [],
+        "categories": [],
+        "customFields": [],
+        "tags": [
+            {
+                "value": "raml",
+                "key": null
+            },
+            {
+                "value": "rest",
+                "key": null
+            },
+            {
+                "value": "api",
+                "key": null
+            },
+            {
+                "value": "v1",
+                "key": "product-api-version"
+            },
+            {
+                "value": "de6e4e46-2993-4e45-8b0a-dcdb0cdf091e",
+                "key": "project-id"
+            },
+            {
+                "value": "master",
+                "key": "branch-id"
+            },
+            {
+                "value": "85853f8a613a577d92826abe9f5789427ee8ff10",
+                "key": "commit-id"
+            },
+            {
+                "value": "has-mule4-connector",
+                "key": null
+            },
+            {
+                "value": "has-mule3-connector",
+                "key": null
+            }
+        ],
+        "files": [
+            {
+                "classifier": null,
+                "packaging": "pom",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/9a6df13b-e73f-4030-afb5-24d97d88bb15/m3-api-template-1.0.0.pom",
+                "md5": "e1c412c98c7394bb46d1a0be3598059a",
+                "createdDate": "2020-08-26T20:04:52.47Z"
+            },
+            {
+                "classifier": "mule-plugin",
+                "packaging": "jar",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/29579fa0-be32-4472-902e-62e5134594e2/m3-api-template-1.0.0-mule-plugin.jar",
+                "md5": "5f2c92574454082658d0f1f67f527545",
+                "createdDate": "2020-08-26T20:04:52.323Z"
+            },
+            {
+                "classifier": "fat-raml",
+                "packaging": "zip",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/664ff316-d004-4d1d-b520-bb915fd69c08/m3-api-template-1.0.0-fat-raml.zip",
+                "md5": "a682c491ab2304d95563373b4d575000",
+                "createdDate": "2020-08-26T20:04:27.913Z"
+            },
+            {
+                "classifier": "raml",
+                "packaging": "zip",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/86dd690c-4b22-4343-84ca-3bc8ede59202/m3-api-template-1.0.0-raml.zip",
+                "md5": "9f9620fb5ee48c89ec920a8456591419",
+                "createdDate": "2020-08-26T20:04:27.227Z"
+            }
+        ],
+        "rating": 0,
+        "numberOfRates": 0,
+        "createdBy": {
+            "id": "99a11c22-b536-463f-9b3d-b3983a503af0",
+            "userName": "L1JHS01",
+            "firstName": "Jin",
+            "lastName": "Shin"
+        },
+        "organization": {
+            "name": "NIS",
+            "id": "074345f4-651b-4b90-9a5f-083303be816b",
+            "createdAt": "2017-08-03T16:39:49.393Z",
+            "updatedAt": "2020-07-10T16:16:03.335Z",
+            "ownerId": "1a381d2a-7b7a-4c01-a563-f26fabb78b99",
+            "clientId": "8923f10211454d0b8a0bb5fc2355d30b",
+            "domain": "frs",
+            "idprovider_id": "mulesoft",
+            "isFederated": true,
+            "parentOrganizationIds": [
+                "6760ce10-4ceb-4fad-9fc3-000d57fb3ded"
+            ],
+            "subOrganizationIds": [
+                "85323283-cf87-4d18-a536-624fb01b7459"
+            ],
+            "tenantOrganizationIds": [],
+            "isMaster": false
+        },
+        "id": "074345f4-651b-4b90-9a5f-083303be816b/m3-api-template/1.0.0",
+        "icon": null,
+        "modifiedAt": "2020-08-26T20:04:28.074Z"
+    },
+    {
+        "groupId": "074345f4-651b-4b90-9a5f-083303be816b",
+        "assetId": "api-promotion-model-poc",
+        "version": "1.0.0",
+        "versionGroup": "v1",
+        "productAPIVersion": "v1",
+        "isPublic": false,
+        "name": "API Promotion Model PoC",
+        "type": "rest-api",
+        "status": "published",
+        "assetLink": "",
+        "createdAt": "2020-06-29T19:21:30.173Z",
+        "runtimeVersion": "",
+        "attributes": [
+            {
+                "value": "raml",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "rest",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "api",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "v1",
+                "tagType": "attribute",
+                "key": "product-api-version"
+            },
+            {
+                "value": "c011b970-ad8d-4d1a-8a6f-2d6678871c82",
+                "tagType": "attribute",
+                "key": "project-id"
+            },
+            {
+                "value": "master",
+                "tagType": "attribute",
+                "key": "branch-id"
+            },
+            {
+                "value": "89a4e4038cf3f0e52008525d78a3008f73fb65f2",
+                "tagType": "attribute",
+                "key": "commit-id"
+            },
+            {
+                "value": "has-mule4-connector",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "has-mule3-connector",
+                "tagType": "attribute",
+                "key": null
+            }
+        ],
+        "labels": [],
+        "categories": [],
+        "customFields": [],
+        "tags": [
+            {
+                "value": "raml",
+                "key": null
+            },
+            {
+                "value": "rest",
+                "key": null
+            },
+            {
+                "value": "api",
+                "key": null
+            },
+            {
+                "value": "v1",
+                "key": "product-api-version"
+            },
+            {
+                "value": "c011b970-ad8d-4d1a-8a6f-2d6678871c82",
+                "key": "project-id"
+            },
+            {
+                "value": "master",
+                "key": "branch-id"
+            },
+            {
+                "value": "89a4e4038cf3f0e52008525d78a3008f73fb65f2",
+                "key": "commit-id"
+            },
+            {
+                "value": "has-mule4-connector",
+                "key": null
+            },
+            {
+                "value": "has-mule3-connector",
+                "key": null
+            }
+        ],
+        "files": [
+            {
+                "classifier": null,
+                "packaging": "pom",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/c52cdfd9-cb39-4a73-a0e0-cfc1f8ef1807/api-promotion-model-poc-1.0.0.pom",
+                "md5": "e9e80272390346c787bb0dbc1a392a8a",
+                "createdDate": "2020-06-29T19:21:54.956Z"
+            },
+            {
+                "classifier": "mule-plugin",
+                "packaging": "jar",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/3715f685-8baa-43c4-9cad-eeac5e186d64/api-promotion-model-poc-1.0.0-mule-plugin.jar",
+                "md5": "87839c6325abdf13dac62c3c68d93142",
+                "createdDate": "2020-06-29T19:21:54.856Z"
+            },
+            {
+                "classifier": "fat-raml",
+                "packaging": "zip",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/9d03e354-2bcd-41c0-8203-21f73d65d759/api-promotion-model-poc-1.0.0-fat-raml.zip",
+                "md5": "8fd6eb24095c77f59c5d07944cab2f71",
+                "createdDate": "2020-06-29T19:21:29.933Z"
+            },
+            {
+                "classifier": "raml",
+                "packaging": "zip",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/2ec9ff4e-0c35-425c-8765-16bcdf4dfd7c/api-promotion-model-poc-1.0.0-raml.zip",
+                "md5": "debe896dfa9ab282941d7e1263688d3f",
+                "createdDate": "2020-06-29T19:21:28.009Z"
+            }
+        ],
+        "rating": 0,
+        "numberOfRates": 0,
+        "createdBy": {
+            "id": "54aa34a7-56e7-464a-9253-0941fe53f267",
+            "userName": "L1LMZ01",
+            "firstName": "Linabel",
+            "lastName": "Zhao"
+        },
+        "organization": {
+            "name": "NIS",
+            "id": "074345f4-651b-4b90-9a5f-083303be816b",
+            "createdAt": "2017-08-03T16:39:49.393Z",
+            "updatedAt": "2020-07-10T16:16:03.335Z",
+            "ownerId": "1a381d2a-7b7a-4c01-a563-f26fabb78b99",
+            "clientId": "8923f10211454d0b8a0bb5fc2355d30b",
+            "domain": "frs",
+            "idprovider_id": "mulesoft",
+            "isFederated": true,
+            "parentOrganizationIds": [
+                "6760ce10-4ceb-4fad-9fc3-000d57fb3ded"
+            ],
+            "subOrganizationIds": [
+                "85323283-cf87-4d18-a536-624fb01b7459"
+            ],
+            "tenantOrganizationIds": [],
+            "isMaster": false
+        },
+        "id": "074345f4-651b-4b90-9a5f-083303be816b/api-promotion-model-poc/1.0.0",
+        "icon": null,
+        "modifiedAt": "2020-06-29T19:21:30.173Z"
+    },
+    {
+        "groupId": "074345f4-651b-4b90-9a5f-083303be816b",
+        "assetId": "hello-api",
+        "version": "1.0.0",
+        "versionGroup": "v1",
+        "productAPIVersion": "v1",
+        "isPublic": false,
+        "name": "Hello API",
+        "type": "rest-api",
+        "status": "published",
+        "assetLink": "",
+        "createdAt": "2020-06-17T22:17:11.555Z",
+        "runtimeVersion": "",
+        "attributes": [
+            {
+                "value": "raml",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "rest",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "api",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "v1",
+                "tagType": "attribute",
+                "key": "product-api-version"
+            },
+            {
+                "value": "bf60f65a-21fd-4831-8569-d33b21dc9ade",
+                "tagType": "attribute",
+                "key": "project-id"
+            },
+            {
+                "value": "master",
+                "tagType": "attribute",
+                "key": "branch-id"
+            },
+            {
+                "value": "5b26148d8ab653615c21fd8c32251970271d904b",
+                "tagType": "attribute",
+                "key": "commit-id"
+            },
+            {
+                "value": "has-mule4-connector",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "has-mule3-connector",
+                "tagType": "attribute",
+                "key": null
+            }
+        ],
+        "labels": [],
+        "categories": [],
+        "customFields": [],
+        "tags": [
+            {
+                "value": "raml",
+                "key": null
+            },
+            {
+                "value": "rest",
+                "key": null
+            },
+            {
+                "value": "api",
+                "key": null
+            },
+            {
+                "value": "v1",
+                "key": "product-api-version"
+            },
+            {
+                "value": "bf60f65a-21fd-4831-8569-d33b21dc9ade",
+                "key": "project-id"
+            },
+            {
+                "value": "master",
+                "key": "branch-id"
+            },
+            {
+                "value": "5b26148d8ab653615c21fd8c32251970271d904b",
+                "key": "commit-id"
+            },
+            {
+                "value": "has-mule4-connector",
+                "key": null
+            },
+            {
+                "value": "has-mule3-connector",
+                "key": null
+            }
+        ],
+        "files": [
+            {
+                "classifier": null,
+                "packaging": "pom",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/031bf35f-4533-4937-9008-07b8df7c864b/hello-api-1.0.0.pom",
+                "md5": "f1775a2ff73fc24c47569c678d913b68",
+                "createdDate": "2020-06-17T22:17:37.28Z"
+            },
+            {
+                "classifier": "mule-plugin",
+                "packaging": "jar",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/716c8425-6fe1-4ae6-b84b-e767c91aa28b/hello-api-1.0.0-mule-plugin.jar",
+                "md5": "540d03ca81bee60693bcb45758987c65",
+                "createdDate": "2020-06-17T22:17:37.128Z"
+            },
+            {
+                "classifier": "fat-raml",
+                "packaging": "zip",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/6df0758e-0235-4082-84dc-86f6d6e73ce8/hello-api-1.0.0-fat-raml.zip",
+                "md5": "339c7722ab9b2e5b4333b6a03a07ec9b",
+                "createdDate": "2020-06-17T22:17:11.422Z"
+            },
+            {
+                "classifier": "raml",
+                "packaging": "zip",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/e3eb7fc5-8454-4a44-a602-c533fd15e853/hello-api-1.0.0-raml.zip",
+                "md5": "eb147b208dfbd8aab95b25578c0cee7e",
+                "createdDate": "2020-06-17T22:17:10.979Z"
+            }
+        ],
+        "rating": 0,
+        "numberOfRates": 0,
+        "createdBy": {
+            "id": "ed9e1c67-8e47-41bd-a4de-d3cfad1a8595",
+            "userName": "L1JXK11",
+            "firstName": "Jaya",
+            "lastName": "Kandadai"
+        },
+        "organization": {
+            "name": "NIS",
+            "id": "074345f4-651b-4b90-9a5f-083303be816b",
+            "createdAt": "2017-08-03T16:39:49.393Z",
+            "updatedAt": "2020-07-10T16:16:03.335Z",
+            "ownerId": "1a381d2a-7b7a-4c01-a563-f26fabb78b99",
+            "clientId": "8923f10211454d0b8a0bb5fc2355d30b",
+            "domain": "frs",
+            "idprovider_id": "mulesoft",
+            "isFederated": true,
+            "parentOrganizationIds": [
+                "6760ce10-4ceb-4fad-9fc3-000d57fb3ded"
+            ],
+            "subOrganizationIds": [
+                "85323283-cf87-4d18-a536-624fb01b7459"
+            ],
+            "tenantOrganizationIds": [],
+            "isMaster": false
+        },
+        "id": "074345f4-651b-4b90-9a5f-083303be816b/hello-api/1.0.0",
+        "icon": null,
+        "modifiedAt": "2020-06-17T22:17:11.555Z"
+    },
+    {
+        "groupId": "074345f4-651b-4b90-9a5f-083303be816b",
+        "assetId": "apisg-promotion-model-poc",
+        "version": "1.0.0",
+        "versionGroup": "v1",
+        "productAPIVersion": "v1",
+        "isPublic": false,
+        "name": "APISG Promotion Model PoC",
+        "type": "rest-api",
+        "status": "published",
+        "assetLink": "",
+        "createdAt": "2020-06-16T21:43:58.504Z",
+        "runtimeVersion": "",
+        "attributes": [
+            {
+                "value": "raml",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "rest",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "api",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "v1",
+                "tagType": "attribute",
+                "key": "product-api-version"
+            },
+            {
+                "value": "89d2085d-c0f0-4be2-8db8-de26ff3c8ce9",
+                "tagType": "attribute",
+                "key": "project-id"
+            },
+            {
+                "value": "master",
+                "tagType": "attribute",
+                "key": "branch-id"
+            },
+            {
+                "value": "08f6a3887fe508f3e65da402f82eab744f4ee88b",
+                "tagType": "attribute",
+                "key": "commit-id"
+            },
+            {
+                "value": "has-mule4-connector",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "has-mule3-connector",
+                "tagType": "attribute",
+                "key": null
+            }
+        ],
+        "labels": [],
+        "categories": [],
+        "customFields": [],
+        "tags": [
+            {
+                "value": "raml",
+                "key": null
+            },
+            {
+                "value": "rest",
+                "key": null
+            },
+            {
+                "value": "api",
+                "key": null
+            },
+            {
+                "value": "v1",
+                "key": "product-api-version"
+            },
+            {
+                "value": "89d2085d-c0f0-4be2-8db8-de26ff3c8ce9",
+                "key": "project-id"
+            },
+            {
+                "value": "master",
+                "key": "branch-id"
+            },
+            {
+                "value": "08f6a3887fe508f3e65da402f82eab744f4ee88b",
+                "key": "commit-id"
+            },
+            {
+                "value": "has-mule4-connector",
+                "key": null
+            },
+            {
+                "value": "has-mule3-connector",
+                "key": null
+            }
+        ],
+        "files": [
+            {
+                "classifier": null,
+                "packaging": "pom",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/25b1c91b-a590-4294-8fc3-abb86458c2b8/apisg-promotion-model-poc-1.0.0.pom",
+                "md5": "9eb267e570b9cb575d8874ff7ebfc089",
+                "createdDate": "2020-06-16T21:44:24.841Z"
+            },
+            {
+                "classifier": "mule-plugin",
+                "packaging": "jar",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/3a2537ea-bf44-4006-805d-820478b60485/apisg-promotion-model-poc-1.0.0-mule-plugin.jar",
+                "md5": "d946c261824e98e4db3c0dae80c9b41e",
+                "createdDate": "2020-06-16T21:44:24.695Z"
+            },
+            {
+                "classifier": "fat-raml",
+                "packaging": "zip",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/7a267af6-4e43-4a33-91a6-342c31ed7dee/apisg-promotion-model-poc-1.0.0-fat-raml.zip",
+                "md5": "373247b1ece9d0a0af30aa8629f4f363",
+                "createdDate": "2020-06-16T21:43:58.358Z"
+            },
+            {
+                "classifier": "raml",
+                "packaging": "zip",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/c9a70f64-c797-4f85-bf03-96e0afa095f5/apisg-promotion-model-poc-1.0.0-raml.zip",
+                "md5": "294a1a6b4fd7decfe1fd7d34b073394c",
+                "createdDate": "2020-06-16T21:43:57.951Z"
+            }
+        ],
+        "rating": 0,
+        "numberOfRates": 0,
+        "createdBy": {
+            "id": "54aa34a7-56e7-464a-9253-0941fe53f267",
+            "userName": "L1LMZ01",
+            "firstName": "Linabel",
+            "lastName": "Zhao"
+        },
+        "organization": {
+            "name": "NIS",
+            "id": "074345f4-651b-4b90-9a5f-083303be816b",
+            "createdAt": "2017-08-03T16:39:49.393Z",
+            "updatedAt": "2020-07-10T16:16:03.335Z",
+            "ownerId": "1a381d2a-7b7a-4c01-a563-f26fabb78b99",
+            "clientId": "8923f10211454d0b8a0bb5fc2355d30b",
+            "domain": "frs",
+            "idprovider_id": "mulesoft",
+            "isFederated": true,
+            "parentOrganizationIds": [
+                "6760ce10-4ceb-4fad-9fc3-000d57fb3ded"
+            ],
+            "subOrganizationIds": [
+                "85323283-cf87-4d18-a536-624fb01b7459"
+            ],
+            "tenantOrganizationIds": [],
+            "isMaster": false
+        },
+        "id": "074345f4-651b-4b90-9a5f-083303be816b/apisg-promotion-model-poc/1.0.0",
+        "icon": null,
+        "modifiedAt": "2020-06-16T21:43:58.504Z"
+    },
+    {
+        "groupId": "074345f4-651b-4b90-9a5f-083303be816b",
+        "assetId": "rob",
+        "version": "2.0.0",
+        "versionGroup": "v2",
+        "productAPIVersion": "v2",
+        "isPublic": false,
+        "name": "Rob",
+        "type": "rest-api",
+        "status": "published",
+        "assetLink": "",
+        "createdAt": "2020-06-15T20:50:20.329Z",
+        "runtimeVersion": "",
+        "attributes": [
+            {
+                "value": "raml",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "rest",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "api",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "v2",
+                "tagType": "attribute",
+                "key": "product-api-version"
+            },
+            {
+                "value": "2cf057d8-e6d3-4dd6-9a40-0aef3f125a7e",
+                "tagType": "attribute",
+                "key": "project-id"
+            },
+            {
+                "value": "v1",
+                "tagType": "attribute",
+                "key": "branch-id"
+            },
+            {
+                "value": "5c061a584fc85c3f7836de27e43cc588a00e49c2",
+                "tagType": "attribute",
+                "key": "commit-id"
+            },
+            {
+                "value": "has-mule4-connector",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "has-mule3-connector",
+                "tagType": "attribute",
+                "key": null
+            }
+        ],
+        "labels": [],
+        "categories": [],
+        "customFields": [],
+        "tags": [
+            {
+                "value": "raml",
+                "key": null
+            },
+            {
+                "value": "rest",
+                "key": null
+            },
+            {
+                "value": "api",
+                "key": null
+            },
+            {
+                "value": "v2",
+                "key": "product-api-version"
+            },
+            {
+                "value": "2cf057d8-e6d3-4dd6-9a40-0aef3f125a7e",
+                "key": "project-id"
+            },
+            {
+                "value": "v1",
+                "key": "branch-id"
+            },
+            {
+                "value": "5c061a584fc85c3f7836de27e43cc588a00e49c2",
+                "key": "commit-id"
+            },
+            {
+                "value": "has-mule4-connector",
+                "key": null
+            },
+            {
+                "value": "has-mule3-connector",
+                "key": null
+            }
+        ],
+        "files": [
+            {
+                "classifier": null,
+                "packaging": "pom",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/f9143e53-996f-4c5e-a489-5e0b64a1bfea/rob-2.0.0.pom",
+                "md5": "412d2c575834029a867db8e7004892fc",
+                "createdDate": "2020-06-15T20:50:43.875Z"
+            },
+            {
+                "classifier": "mule-plugin",
+                "packaging": "jar",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/e4a49831-5fa2-45fd-bdb5-e77f0118b989/rob-2.0.0-mule-plugin.jar",
+                "md5": "9859004f88963c6a45d1977de356fcc2",
+                "createdDate": "2020-06-15T20:50:43.758Z"
+            },
+            {
+                "classifier": "fat-raml",
+                "packaging": "zip",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/e50b4875-d1e2-4e30-89bf-fe94b4c46beb/rob-2.0.0-fat-raml.zip",
+                "md5": "84851ceae00a568869c03a3d7396d4e0",
+                "createdDate": "2020-06-15T20:50:20.201Z"
+            },
+            {
+                "classifier": "raml",
+                "packaging": "zip",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/3b7c5fa4-45fa-4602-a25c-7cd92b4ceb49/rob-2.0.0-raml.zip",
+                "md5": "a362fe28e765e8fd53a1cf327c102f43",
+                "createdDate": "2020-06-15T20:50:19.726Z"
+            }
+        ],
+        "rating": 0,
+        "numberOfRates": 0,
+        "createdBy": {
+            "id": "7208b502-5a75-45df-9f4a-99c467ca6a46",
+            "userName": "B1RXA07",
+            "firstName": "Robert",
+            "lastName": "Ameen"
+        },
+        "organization": {
+            "name": "NIS",
+            "id": "074345f4-651b-4b90-9a5f-083303be816b",
+            "createdAt": "2017-08-03T16:39:49.393Z",
+            "updatedAt": "2020-07-10T16:16:03.335Z",
+            "ownerId": "1a381d2a-7b7a-4c01-a563-f26fabb78b99",
+            "clientId": "8923f10211454d0b8a0bb5fc2355d30b",
+            "domain": "frs",
+            "idprovider_id": "mulesoft",
+            "isFederated": true,
+            "parentOrganizationIds": [
+                "6760ce10-4ceb-4fad-9fc3-000d57fb3ded"
+            ],
+            "subOrganizationIds": [
+                "85323283-cf87-4d18-a536-624fb01b7459"
+            ],
+            "tenantOrganizationIds": [],
+            "isMaster": false
+        },
+        "id": "074345f4-651b-4b90-9a5f-083303be816b/rob/2.0.0",
+        "icon": null,
+        "modifiedAt": "2020-06-15T20:50:20.329Z"
+    },
+    {
+        "groupId": "074345f4-651b-4b90-9a5f-083303be816b",
+        "assetId": "american-flights-api-bp",
+        "version": "2.0.0",
+        "versionGroup": "v2",
+        "productAPIVersion": "v2",
+        "isPublic": false,
+        "name": "American Flights API - BP",
+        "type": "rest-api",
+        "status": "published",
+        "assetLink": "",
+        "createdAt": "2020-06-15T20:13:29.349Z",
+        "runtimeVersion": "",
+        "attributes": [
+            {
+                "value": "raml",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "rest",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "api",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "v2",
+                "tagType": "attribute",
+                "key": "product-api-version"
+            },
+            {
+                "value": "28e480a8-3148-4753-bfa6-0e58fd6a4380",
+                "tagType": "attribute",
+                "key": "project-id"
+            },
+            {
+                "value": "master",
+                "tagType": "attribute",
+                "key": "branch-id"
+            },
+            {
+                "value": "fafb607fc53316c872bf024f359fefde5bdab87b",
+                "tagType": "attribute",
+                "key": "commit-id"
+            },
+            {
+                "value": "has-mule4-connector",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "has-mule3-connector",
+                "tagType": "attribute",
+                "key": null
+            }
+        ],
+        "labels": [],
+        "categories": [],
+        "customFields": [],
+        "tags": [
+            {
+                "value": "raml",
+                "key": null
+            },
+            {
+                "value": "rest",
+                "key": null
+            },
+            {
+                "value": "api",
+                "key": null
+            },
+            {
+                "value": "v2",
+                "key": "product-api-version"
+            },
+            {
+                "value": "28e480a8-3148-4753-bfa6-0e58fd6a4380",
+                "key": "project-id"
+            },
+            {
+                "value": "master",
+                "key": "branch-id"
+            },
+            {
+                "value": "fafb607fc53316c872bf024f359fefde5bdab87b",
+                "key": "commit-id"
+            },
+            {
+                "value": "has-mule4-connector",
+                "key": null
+            },
+            {
+                "value": "has-mule3-connector",
+                "key": null
+            }
+        ],
+        "files": [
+            {
+                "classifier": null,
+                "packaging": "pom",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/54b0ede4-5b88-4202-bfda-be6b1e7627a6/american-flights-api-bp-2.0.0.pom",
+                "md5": "e6fad40038ab49c5e89648a0b966c3bb",
+                "createdDate": "2020-06-15T20:13:52.782Z"
+            },
+            {
+                "classifier": "mule-plugin",
+                "packaging": "jar",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/51002a9e-3e0b-436b-9b68-49aa05bf0d65/american-flights-api-bp-2.0.0-mule-plugin.jar",
+                "md5": "23b69cfdaf80e327318646b25571b905",
+                "createdDate": "2020-06-15T20:13:52.667Z"
+            },
+            {
+                "classifier": "fat-raml",
+                "packaging": "zip",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/77a556f8-db51-4994-9142-cb0fb6a14ea8/american-flights-api-bp-2.0.0-fat-raml.zip",
+                "md5": "cfa79fb5a83b0d62d24cfba121c6ccec",
+                "createdDate": "2020-06-15T20:13:29.176Z"
+            },
+            {
+                "classifier": "raml",
+                "packaging": "zip",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/0efa75ca-8054-446b-b18f-1048249f5a5a/american-flights-api-bp-2.0.0-raml.zip",
+                "md5": "8217f617217202878d587bae1b4179e7",
+                "createdDate": "2020-06-15T20:13:28.614Z"
+            }
+        ],
+        "rating": 0,
+        "numberOfRates": 0,
+        "createdBy": {
+            "id": "10e1e389-a58d-49c3-aadb-f67282bf55f2",
+            "userName": "B1BXP08",
+            "firstName": "Biren",
+            "lastName": "Patel"
+        },
+        "organization": {
+            "name": "NIS",
+            "id": "074345f4-651b-4b90-9a5f-083303be816b",
+            "createdAt": "2017-08-03T16:39:49.393Z",
+            "updatedAt": "2020-07-10T16:16:03.335Z",
+            "ownerId": "1a381d2a-7b7a-4c01-a563-f26fabb78b99",
+            "clientId": "8923f10211454d0b8a0bb5fc2355d30b",
+            "domain": "frs",
+            "idprovider_id": "mulesoft",
+            "isFederated": true,
+            "parentOrganizationIds": [
+                "6760ce10-4ceb-4fad-9fc3-000d57fb3ded"
+            ],
+            "subOrganizationIds": [
+                "85323283-cf87-4d18-a536-624fb01b7459"
+            ],
+            "tenantOrganizationIds": [],
+            "isMaster": false
+        },
+        "id": "074345f4-651b-4b90-9a5f-083303be816b/american-flights-api-bp/2.0.0",
+        "icon": null,
+        "modifiedAt": "2020-06-15T20:13:29.349Z"
+    },
+    {
+        "groupId": "074345f4-651b-4b90-9a5f-083303be816b",
+        "assetId": "american-flight-api-srini-d",
+        "version": "2.0.0",
+        "versionGroup": "v2",
+        "productAPIVersion": "v2",
+        "isPublic": false,
+        "name": "American Flight API - Srini D",
+        "type": "rest-api",
+        "status": "published",
+        "assetLink": "",
+        "createdAt": "2020-06-15T20:11:56.299Z",
+        "runtimeVersion": "",
+        "attributes": [
+            {
+                "value": "raml",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "rest",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "api",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "v2",
+                "tagType": "attribute",
+                "key": "product-api-version"
+            },
+            {
+                "value": "d53f59d5-adcf-43da-9eda-85431cea3644",
+                "tagType": "attribute",
+                "key": "project-id"
+            },
+            {
+                "value": "v1",
+                "tagType": "attribute",
+                "key": "branch-id"
+            },
+            {
+                "value": "59e87e3ba17d4f2a45c0eb80746ff52a29cffcdb",
+                "tagType": "attribute",
+                "key": "commit-id"
+            },
+            {
+                "value": "has-mule4-connector",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "has-mule3-connector",
+                "tagType": "attribute",
+                "key": null
+            }
+        ],
+        "labels": [],
+        "categories": [],
+        "customFields": [],
+        "tags": [
+            {
+                "value": "raml",
+                "key": null
+            },
+            {
+                "value": "rest",
+                "key": null
+            },
+            {
+                "value": "api",
+                "key": null
+            },
+            {
+                "value": "v2",
+                "key": "product-api-version"
+            },
+            {
+                "value": "d53f59d5-adcf-43da-9eda-85431cea3644",
+                "key": "project-id"
+            },
+            {
+                "value": "v1",
+                "key": "branch-id"
+            },
+            {
+                "value": "59e87e3ba17d4f2a45c0eb80746ff52a29cffcdb",
+                "key": "commit-id"
+            },
+            {
+                "value": "has-mule4-connector",
+                "key": null
+            },
+            {
+                "value": "has-mule3-connector",
+                "key": null
+            }
+        ],
+        "files": [
+            {
+                "classifier": null,
+                "packaging": "pom",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/b4ccee42-eb76-4c04-95c7-947ff3b40be4/american-flight-api-srini-d-2.0.0.pom",
+                "md5": "46d0fb33cfa19980a0707fb3f185315c",
+                "createdDate": "2020-06-15T20:12:47.775Z"
+            },
+            {
+                "classifier": "mule-plugin",
+                "packaging": "jar",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/75dc4522-09cd-492b-a037-e0b41bf65810/american-flight-api-srini-d-2.0.0-mule-plugin.jar",
+                "md5": "921504cff0189a5ba8c3ecce834a6ee5",
+                "createdDate": "2020-06-15T20:12:47.668Z"
+            },
+            {
+                "classifier": "fat-raml",
+                "packaging": "zip",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/b057eade-5668-4b8d-b39e-0a467f244ac3/american-flight-api-srini-d-2.0.0-fat-raml.zip",
+                "md5": "350401b2f442fbea72cdc10f66ed3da8",
+                "createdDate": "2020-06-15T20:11:56.055Z"
+            },
+            {
+                "classifier": "raml",
+                "packaging": "zip",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/18fa153a-09d4-494e-91af-e7accf012f84/american-flight-api-srini-d-2.0.0-raml.zip",
+                "md5": "8bf50f944d5eef366fb84081063014ee",
+                "createdDate": "2020-06-15T20:11:55.612Z"
+            }
+        ],
+        "rating": 0,
+        "numberOfRates": 0,
+        "createdBy": {
+            "id": "3f80b417-b078-4c87-a0cf-d6103686f043",
+            "userName": "B1SXD28",
+            "firstName": "Srinivasa",
+            "lastName": "Damera"
+        },
+        "organization": {
+            "name": "NIS",
+            "id": "074345f4-651b-4b90-9a5f-083303be816b",
+            "createdAt": "2017-08-03T16:39:49.393Z",
+            "updatedAt": "2020-07-10T16:16:03.335Z",
+            "ownerId": "1a381d2a-7b7a-4c01-a563-f26fabb78b99",
+            "clientId": "8923f10211454d0b8a0bb5fc2355d30b",
+            "domain": "frs",
+            "idprovider_id": "mulesoft",
+            "isFederated": true,
+            "parentOrganizationIds": [
+                "6760ce10-4ceb-4fad-9fc3-000d57fb3ded"
+            ],
+            "subOrganizationIds": [
+                "85323283-cf87-4d18-a536-624fb01b7459"
+            ],
+            "tenantOrganizationIds": [],
+            "isMaster": false
+        },
+        "id": "074345f4-651b-4b90-9a5f-083303be816b/american-flight-api-srini-d/2.0.0",
+        "icon": null,
+        "modifiedAt": "2020-06-15T20:11:56.299Z"
+    },
+    {
+        "groupId": "074345f4-651b-4b90-9a5f-083303be816b",
+        "assetId": "american-flights-api-luis-henriquez",
+        "version": "2.0.0",
+        "versionGroup": "v2",
+        "productAPIVersion": "v2",
+        "isPublic": false,
+        "name": "American Flights API - Luis Henriquez",
+        "type": "rest-api",
+        "status": "published",
+        "assetLink": "",
+        "createdAt": "2020-06-15T20:11:52.119Z",
+        "runtimeVersion": "",
+        "attributes": [
+            {
+                "value": "raml",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "rest",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "api",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "v2",
+                "tagType": "attribute",
+                "key": "product-api-version"
+            },
+            {
+                "value": "16cf0936-82a7-45fd-becc-c28c2c39b3f7",
+                "tagType": "attribute",
+                "key": "project-id"
+            },
+            {
+                "value": "v1",
+                "tagType": "attribute",
+                "key": "branch-id"
+            },
+            {
+                "value": "cf54a0f32177e6f9a8d613651f19c06582e847a8",
+                "tagType": "attribute",
+                "key": "commit-id"
+            },
+            {
+                "value": "has-mule4-connector",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "has-mule3-connector",
+                "tagType": "attribute",
+                "key": null
+            }
+        ],
+        "labels": [],
+        "categories": [],
+        "customFields": [],
+        "tags": [
+            {
+                "value": "raml",
+                "key": null
+            },
+            {
+                "value": "rest",
+                "key": null
+            },
+            {
+                "value": "api",
+                "key": null
+            },
+            {
+                "value": "v2",
+                "key": "product-api-version"
+            },
+            {
+                "value": "16cf0936-82a7-45fd-becc-c28c2c39b3f7",
+                "key": "project-id"
+            },
+            {
+                "value": "v1",
+                "key": "branch-id"
+            },
+            {
+                "value": "cf54a0f32177e6f9a8d613651f19c06582e847a8",
+                "key": "commit-id"
+            },
+            {
+                "value": "has-mule4-connector",
+                "key": null
+            },
+            {
+                "value": "has-mule3-connector",
+                "key": null
+            }
+        ],
+        "files": [
+            {
+                "classifier": null,
+                "packaging": "pom",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/fb971bb5-1445-41f0-be85-0fe4d566f6b8/american-flights-api-luis-henriquez-2.0.0.pom",
+                "md5": "f580ff94c38f3f490655eb6ed1974d02",
+                "createdDate": "2020-06-15T20:12:17.631Z"
+            },
+            {
+                "classifier": "mule-plugin",
+                "packaging": "jar",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/b3e62503-12da-4507-b1b3-50c8f80aa6d4/american-flights-api-luis-henriquez-2.0.0-mule-plugin.jar",
+                "md5": "b6d4bafbb30c46c685c90ecc149b9c63",
+                "createdDate": "2020-06-15T20:12:17.513Z"
+            },
+            {
+                "classifier": "fat-raml",
+                "packaging": "zip",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/676ca966-19dc-431c-9d28-555514a41d46/american-flights-api-luis-henriquez-2.0.0-fat-raml.zip",
+                "md5": "92c1835ab3c3145d6312efeacfff4a24",
+                "createdDate": "2020-06-15T20:11:51.974Z"
+            },
+            {
+                "classifier": "raml",
+                "packaging": "zip",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/09f4544a-d901-4362-a89e-e7f5c58ebd04/american-flights-api-luis-henriquez-2.0.0-raml.zip",
+                "md5": "111fc5813e443cf7693085b2be764021",
+                "createdDate": "2020-06-15T20:11:51.478Z"
+            }
+        ],
+        "rating": 0,
+        "numberOfRates": 0,
+        "createdBy": {
+            "id": "5144095b-587f-481a-85b8-9ae280f671f6",
+            "userName": "B1LZHSC",
+            "firstName": "Luis",
+            "lastName": "Henriquez"
+        },
+        "organization": {
+            "name": "NIS",
+            "id": "074345f4-651b-4b90-9a5f-083303be816b",
+            "createdAt": "2017-08-03T16:39:49.393Z",
+            "updatedAt": "2020-07-10T16:16:03.335Z",
+            "ownerId": "1a381d2a-7b7a-4c01-a563-f26fabb78b99",
+            "clientId": "8923f10211454d0b8a0bb5fc2355d30b",
+            "domain": "frs",
+            "idprovider_id": "mulesoft",
+            "isFederated": true,
+            "parentOrganizationIds": [
+                "6760ce10-4ceb-4fad-9fc3-000d57fb3ded"
+            ],
+            "subOrganizationIds": [
+                "85323283-cf87-4d18-a536-624fb01b7459"
+            ],
+            "tenantOrganizationIds": [],
+            "isMaster": false
+        },
+        "id": "074345f4-651b-4b90-9a5f-083303be816b/american-flights-api-luis-henriquez/2.0.0",
+        "icon": null,
+        "modifiedAt": "2020-06-15T20:11:52.119Z"
+    },
+    {
+        "groupId": "074345f4-651b-4b90-9a5f-083303be816b",
+        "assetId": "american-flights-api-ramya-veerubh",
+        "version": "2.0.0",
+        "versionGroup": "v2",
+        "productAPIVersion": "v2",
+        "isPublic": false,
+        "name": "American Flights API - Ramya Veerubh",
+        "type": "rest-api",
+        "status": "published",
+        "assetLink": "",
+        "createdAt": "2020-06-15T20:11:49.184Z",
+        "runtimeVersion": "",
+        "attributes": [
+            {
+                "value": "raml",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "rest",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "api",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "v2",
+                "tagType": "attribute",
+                "key": "product-api-version"
+            },
+            {
+                "value": "231af762-1e37-434f-98fc-f68ddb02e6d5",
+                "tagType": "attribute",
+                "key": "project-id"
+            },
+            {
+                "value": "v1",
+                "tagType": "attribute",
+                "key": "branch-id"
+            },
+            {
+                "value": "f69f7970a36d6f923c5b3ea7fbf22e2fd2c95fec",
+                "tagType": "attribute",
+                "key": "commit-id"
+            },
+            {
+                "value": "has-mule4-connector",
+                "tagType": "attribute",
+                "key": null
+            },
+            {
+                "value": "has-mule3-connector",
+                "tagType": "attribute",
+                "key": null
+            }
+        ],
+        "labels": [],
+        "categories": [],
+        "customFields": [],
+        "tags": [
+            {
+                "value": "raml",
+                "key": null
+            },
+            {
+                "value": "rest",
+                "key": null
+            },
+            {
+                "value": "api",
+                "key": null
+            },
+            {
+                "value": "v2",
+                "key": "product-api-version"
+            },
+            {
+                "value": "231af762-1e37-434f-98fc-f68ddb02e6d5",
+                "key": "project-id"
+            },
+            {
+                "value": "v1",
+                "key": "branch-id"
+            },
+            {
+                "value": "f69f7970a36d6f923c5b3ea7fbf22e2fd2c95fec",
+                "key": "commit-id"
+            },
+            {
+                "value": "has-mule4-connector",
+                "key": null
+            },
+            {
+                "value": "has-mule3-connector",
+                "key": null
+            }
+        ],
+        "files": [
+            {
+                "classifier": null,
+                "packaging": "pom",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/f134a8e7-6c5f-4714-8a9e-114b9bd68c6f/american-flights-api-ramya-veerubh-2.0.0.pom",
+                "md5": "f371dc0564aab5fce981cb5e9de7c16d",
+                "createdDate": "2020-06-15T20:12:37.63Z"
+            },
+            {
+                "classifier": "mule-plugin",
+                "packaging": "jar",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/def6ac12-8d06-4271-ae3e-c5845a9efc1c/american-flights-api-ramya-veerubh-2.0.0-mule-plugin.jar",
+                "md5": "bf275642a1e226ee13280bb47dd67ba8",
+                "createdDate": "2020-06-15T20:12:37.515Z"
+            },
+            {
+                "classifier": "fat-raml",
+                "packaging": "zip",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/f68786c0-cc88-429c-8635-27087d7cadaf/american-flights-api-ramya-veerubh-2.0.0-fat-raml.zip",
+                "md5": "0dd4e4f6053540ff497b163a00408379",
+                "createdDate": "2020-06-15T20:11:49.046Z"
+            },
+            {
+                "classifier": "raml",
+                "packaging": "zip",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/79f5c3ff-6271-446d-825f-6a409d4e6152/american-flights-api-ramya-veerubh-2.0.0-raml.zip",
+                "md5": "09dc5c37be5e90044212de8fa749cceb",
+                "createdDate": "2020-06-15T20:11:48.548Z"
+            }
+        ],
+        "rating": 0,
+        "numberOfRates": 0,
+        "createdBy": {
+            "id": "3b0f4afa-9a70-43bb-b3bb-60f32141968b",
+            "userName": "L4RXV01",
+            "firstName": "Ramya",
+            "lastName": "Veerubhottla"
+        },
+        "organization": {
+            "name": "NIS",
+            "id": "074345f4-651b-4b90-9a5f-083303be816b",
+            "createdAt": "2017-08-03T16:39:49.393Z",
+            "updatedAt": "2020-07-10T16:16:03.335Z",
+            "ownerId": "1a381d2a-7b7a-4c01-a563-f26fabb78b99",
+            "clientId": "8923f10211454d0b8a0bb5fc2355d30b",
+            "domain": "frs",
+            "idprovider_id": "mulesoft",
+            "isFederated": true,
+            "parentOrganizationIds": [
+                "6760ce10-4ceb-4fad-9fc3-000d57fb3ded"
+            ],
+            "subOrganizationIds": [
+                "85323283-cf87-4d18-a536-624fb01b7459"
+            ],
+            "tenantOrganizationIds": [],
+            "isMaster": false
+        },
+        "id": "074345f4-651b-4b90-9a5f-083303be816b/american-flights-api-ramya-veerubh/2.0.0",
+        "icon": null,
+        "modifiedAt": "2020-06-15T20:11:49.184Z"
+    }
+]

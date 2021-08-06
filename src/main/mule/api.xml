@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+
+	<flow name="api-main">
+        <http:listener config-ref="HTTP_Listener_config" path="${secure::api.base.uri}">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[payload]]]></http:body>
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+            </http:error-response>
+        </http:listener>
+        <set-variable value="#[payload]" doc:name="originalPayload" doc:id="6085b6b9-199d-4fb8-86fe-7e6dae45aa43" variableName="originalPayload"/>
+		<logger level="INFO" doc:name="Log request payload" doc:id="cf9138ae-7e57-48c6-9281-5f333b47b501" message="#[vars.originalPayload]"/>
+		<apikit:router config-ref="api-config" />
+		<error-handler>
+            <on-error-propagate type="APIKIT:BAD_REQUEST">
+                <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Bad request"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">400</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+            <on-error-propagate type="APIKIT:NOT_FOUND">
+                <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Resource not found"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">404</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+            <on-error-propagate type="APIKIT:METHOD_NOT_ALLOWED">
+                <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Method not allowed"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">405</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+            <on-error-propagate type="APIKIT:NOT_ACCEPTABLE">
+                <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Not acceptable"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">406</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+            <on-error-propagate type="APIKIT:UNSUPPORTED_MEDIA_TYPE">
+                <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Unsupported media type"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">415</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+            <on-error-propagate type="APIKIT:NOT_IMPLEMENTED">
+                <ee:transform xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd 
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Not Implemented"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">501</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+        </error-handler>
+    </flow>
+
+    <flow name="post:\asset:api-config">
+    	<logger level="INFO" doc:name="Log APIkit resource" doc:id="d0ce4eb6-e8c5-4c62-9526-27a418d4bbf6" message='#["Routing to APIkit resource: " ++ flow.name]'/>
+		<set-variable value='#[vars.originalPayload.skipExchangeAssets]' doc:name="skipExchangeAssets" doc:id="7070f8fc-405e-45fd-9110-06f6fd163def" variableName="skipExchangeAssets"/>
+		<set-variable value='#[vars.originalPayload.skipAPIInstances]' doc:name="skipAPIInstances" doc:id="f71fc4c5-b08b-4142-9d5b-8267626fff31" variableName="skipAPIInstances"/>
+		<flow-ref doc:name="single-asset" doc:id="048cd01e-24e1-4d9a-8b32-0f425f2556a9" name="single-asset" />
+	</flow>
+	<flow name="post:\assets:api-config">
+    	<logger level="INFO" doc:name="Log APIkit resource" doc:id="d097fce0-c49a-4af7-8d6c-a893a47c26a7" message='#["Routing to APIkit resource: " ++ flow.name]'/>	
+		<set-variable value="#[vars.originalPayload.skipExchangeAssets]" doc:name="skipExchangeAssets" doc:id="a50fbfe9-9ca4-4905-9a97-facbc8a83820" variableName="skipExchangeAssets"/>
+		<set-variable value="#[vars.originalPayload.skipAPIInstances]" doc:name="skipAPIInstances" doc:id="b709892c-e53c-483f-b146-dee3205579be" variableName="skipAPIInstances"/>
+		<flow-ref doc:name="multiple-assets" doc:id="d50f3d0a-0261-4635-8bc4-2837c6e202da" name="multiple-assets"/>
+	</flow>
+    <flow name="post:\exchange\asset:api-config">
+    	<logger level="INFO" doc:name="Log APIkit resource" doc:id="1181c575-1efb-473f-b1cc-2831dab12c5d" message='#["Routing to APIkit resource: " ++ flow.name]'/>	
+    	<set-variable value='#["false" as Boolean]' doc:name="skipExchangeAssets" doc:id="89e1b6cc-ac53-43d1-8d2a-5e8fb9dce996" variableName="skipExchangeAssets"/>
+		<set-variable value='#["true" as Boolean]' doc:name="skipAPIInstances" doc:id="6785d7b0-7ac5-4274-9350-e736221e7ba3" variableName="skipAPIInstances"/>    
+		<flow-ref doc:name="single-asset" doc:id="baf278ec-64b3-4448-bdaa-4675d884001a" name="single-asset" />
+	</flow>
+	<flow name="post:\exchange\assets:api-config">
+    	<logger level="INFO" doc:name="Log APIkit resource" doc:id="c8f8e606-ba37-4b57-8feb-417e49c15bd4" message='#["Routing to APIkit resource: " ++ flow.name]'/>	
+    	<set-variable value='#["false" as Boolean]' doc:name="skipExchangeAssets" doc:id="03363331-2bac-4aa8-b81f-cf85abb4f86b" variableName="skipExchangeAssets"/>
+		<set-variable value='#["true" as Boolean]' doc:name="skipAPIInstances" doc:id="8bffc8a0-0041-4d2f-bf16-cdb7d6cc049f" variableName="skipAPIInstances"/>	
+		<flow-ref doc:name="multiple-assets" doc:id="1af7641c-a542-4914-8970-d02afb4989e4" name="multiple-assets"/>
+	</flow>
+	<flow name="post:\api-manager\instances:api-config">
+    	<logger level="INFO" doc:name="Log APIkit resource" doc:id="b929a5c2-b5e8-41e6-b828-14200bb2c22e" message='#["Routing to APIkit resource: " ++ flow.name]'/>	
+    	<set-variable value='#["true" as Boolean]' doc:name="skipExchangeAssets" doc:id="19c7b22c-7c2a-4614-a9aa-99c3eed39870" variableName="skipExchangeAssets"/>
+		<set-variable value='#["false" as Boolean]' doc:name="skipAPIInstances" doc:id="6b631417-da90-4d26-9ced-ba77c34e4f7b" variableName="skipAPIInstances"/>	
+		<set-variable value="#[vars.originalPayload.asset.apiInstances.environments]" doc:name="apiInstanceEnvs" doc:id="ca407813-9dcf-44c3-9648-6204486392f2" variableName="apiInstanceEnvs"/>
+		<flow-ref doc:name="single-asset" doc:id="c70fd4cf-4e93-47d0-98b5-5c77b52e6c8a" name="single-asset"/>
+	</flow>
+	<flow name="post:\api-manager\instances\(instanceLabel):api-config">
+    	<logger level="INFO" doc:name="Log APIkit resource" doc:id="41a7b0dd-23cb-45cd-b9d5-27affe02ccfc" message='#["Routing to APIkit resource: " ++ flow.name]'/>	
+    	<set-variable value='#["true" as Boolean]' doc:name="skipExchangeAssets" doc:id="57c4c018-8c7f-43f3-83b9-849a29238068" variableName="skipExchangeAssets"/>
+		<set-variable value='#["false" as Boolean]' doc:name="skipAPIInstances" doc:id="2b792b85-43c5-4656-ad0a-5ec090516cf9" variableName="skipAPIInstances"/>	
+		<set-variable value="#[vars.originalPayload.asset.apiInstances.environments]" doc:name="apiInstanceEnvs" doc:id="44e0010d-5937-4047-82b4-e13e655f5c72" variableName="apiInstanceEnvs"/>
+		<set-variable value="#[attributes.uriParams.instanceLabel]" doc:name="instanceLabel" doc:id="5f3091ed-c69f-452d-8092-ad8e67dcc912" variableName="instanceLabel"/>
+		<flow-ref doc:name="single-asset" doc:id="5ca65a9e-c291-4a53-abc5-dde0cd972d99" name="single-asset"/>
+	</flow>	
+	<flow name="post:\api-manager\instances\(instanceLabel)\sla-tiers:api-config">
+    	<logger level="INFO" doc:name="Log APIkit resource" doc:id="1ec4f463-be4c-496c-a22c-577e0d16084d" message='#["Routing to APIkit resource: " ++ flow.name]'/>	
+    	<set-variable value='#["true" as Boolean]' doc:name="skipExchangeAssets" doc:id="4c2018ec-7a66-4146-826f-5acd51a87f47" variableName="skipExchangeAssets"/>
+		<set-variable value='#["false" as Boolean]' doc:name="skipAPIInstances" doc:id="20c2aedc-427d-4674-92c4-8427b44271e2" variableName="skipAPIInstances"/>	
+		<set-variable value="#[vars.originalPayload.asset.apiInstances.environments]" doc:name="apiInstanceEnvs" doc:id="70487e3f-b4bd-4e48-872d-31ab62b80f99" variableName="apiInstanceEnvs"/>
+		<set-variable value="#[attributes.uriParams.instanceLabel]" doc:name="instanceLabel" doc:id="d5b63ec9-c02c-4e55-a825-1884939062b7" variableName="instanceLabel"/>
+		<set-variable value='#["true" as Boolean]' doc:name="onlySLATiers" doc:id="5950c29f-01a9-44ff-9782-f3e2535c3fbe" variableName="onlySLATiers"/>
+		<flow-ref doc:name="single-asset" doc:id="abf874f2-9870-4c9d-9786-6d2b5e742ef1" name="single-asset"/>
+	</flow>		
+
+</mule>

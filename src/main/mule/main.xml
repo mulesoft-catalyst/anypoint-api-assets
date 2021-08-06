@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:min-log="http://www.mulesoft.org/schema/mule/min-log"
+	xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit"
+	xmlns:file="http://www.mulesoft.org/schema/mule/file"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd 
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd 
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd">
+    
+	<sub-flow name="doExchange" doc:id="3182f353-94c1-4f75-afd4-b55fa895c564" >
+		<flow-ref doc:name="setup-vars" doc:id="3365eab8-6907-443e-9681-9b51240cf2dc" name="setup-vars" />
+		<choice doc:name="Skip exchange assets?" doc:id="86bccb66-d71b-4854-8e9a-7242f02537a9">
+				<when expression="#[vars.skipExchangeAssets == null or !vars.skipExchangeAssets]">
+					<flow-ref doc:name="exchange-assets" doc:id="ba9e8811-d9ab-4572-9270-a81f8482a4be" name="exchange-assets" />
+				</when>
+				<otherwise>
+					<logger level="INFO" doc:name="Skipping exchange assets" doc:id="5701e5e7-95f2-47ea-87de-432d86282a79" message='#["Skipping exchange assets in " ++ flow.name]' />
+				</otherwise>
+			</choice>
+		<choice doc:name="Skip API instances?" doc:id="8de30968-97a1-4004-ba8c-eebbbed5265f">
+				<when expression="#[vars.skipAPIInstances == null or !vars.skipAPIInstances]">
+					<flow-ref doc:name="api-instances" doc:id="7982f833-618e-4dd8-9084-afb68a0dd5b6" name="api-instances" />
+				</when>
+				<otherwise>
+					<logger level="INFO" doc:name="Skipping API Instances" doc:id="20944696-d8db-4aa3-ab81-d965f2585b9c" message='#["Skipping API Instances in " ++ flow.name]' />
+				</otherwise>
+			</choice>
+	</sub-flow>
+	<flow name="single-asset" doc:id="0209da4c-954c-4263-8307-700ceedee312">
+		<logger level="INFO" doc:name="Log start of single asset processing" doc:id="17277fb7-7996-4978-adb3-abd4bbf2549c" message='#["Begin single asset processing in " ++ flow.name]'/>
+		<flow-ref doc:name="get-tokens" doc:id="222a3af9-35cc-4a84-a8b5-0e09646b2371" name="get-tokens" />
+		<http:request method="GET" doc:name="Get target orgs" doc:id="69b79c0d-3617-4016-8bf3-f4645e2a8972" config-ref="HTTP_Request_Anypoint_Target" path="${secure::anypoint.target.profile.path}" target="targetOrgs" targetValue="#[if (payload.memberOfOrganizations?) payload.memberOfOrganizations else null]">
+			<http:headers><![CDATA[#[output application/java
+---
+{
+	"Authorization":"bearer " ++ vars.targetAuthToken
+}]]]></http:headers>
+		</http:request>
+		<http:request method="GET" doc:name="Get source orgs" doc:id="3da83521-1f71-491a-828c-f83f2d33bc04" config-ref="HTTP_Request_Anypoint_Source" path="${secure::anypoint.source.profile.path}" target="sourceOrgs" targetValue="#[if (payload.memberOfOrganizations?) payload.memberOfOrganizations else null]">
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"Authorization":"bearer " ++ vars.sourceAuthToken
+}]]]></http:headers>
+		</http:request>
+		<set-variable value="#[%dw 2.0
+output application/json
+---
+(vars.sourceOrgs map (
+    $ mapObject (v,k) -&gt; if((v) == payload.asset.organizationName) {id:$.id} else {}
+) reduce ($$++$)).id]" doc:name="organizationID" doc:id="71e42b74-cf2d-4d8e-9909-edb2e5368e28" variableName="organizationID"/>
+		<http:request method="GET" doc:name="Get source exchange asset" doc:id="3889c951-77ba-4b83-9005-edeff225363a" config-ref="HTTP_Request_Anypoint_Source" path='#["/exchange/api/v1/assets/" ++ vars.organizationID ++ "/" ++ payload.asset.assetId ++ "/productAPIVersion/" ++ payload.asset.apiVersion]'>
+			<http:headers><![CDATA[#[output application/java
+---
+{
+	"Authorization":"bearer " ++ vars.sourceAuthToken
+}]]]></http:headers>
+		</http:request>
+		<set-variable value='#[%dw 2.0
+output application/json
+---
+{
+	"exchangeAssets": [],
+	"apiInstances": [],
+	"slaTiers": [],
+	"errors": []
+}]' doc:name="responseMessage" doc:id="41122901-44c0-4b67-9e3a-c0043338e232" variableName="responseMessage" />
+	
+		<flow-ref doc:name="doExchange" doc:id="1e537516-8f3d-468f-977b-8b2c975bf1b4" name="doExchange"/>
+		<set-payload value="#[vars.responseMessage]" doc:name="Set response payload" doc:id="321fa402-2a36-450f-b954-07cd86ef9af6" />
+		<logger level="DEBUG" doc:name="Log response payload" doc:id="3a79fd76-8d88-412f-8b69-0312f0a4a951" message="#[payload]" />	
+		<error-handler ref="generalErrorHandler"/>	
+	</flow>
+	<flow name="multiple-assets" doc:id="84d056e5-7b76-4d89-9ca4-20de25f1f414">
+		<logger level="INFO" doc:name="Log start of multiple asset processing" doc:id="f9281038-f4ac-4d7e-9cd9-7c062fe1d51b" message='#["Begin multiple asset processing in " ++ flow.name]'/>
+		<flow-ref doc:name="get-tokens" doc:id="96bbfb98-cf37-4351-b963-210e5cb0519c" name="get-tokens"/>
+		<http:request method="GET" doc:name="Get target orgs" doc:id="f9ec82fe-3a8c-4399-a172-fcfc1daa54d7" config-ref="HTTP_Request_Anypoint_Target" path="${secure::anypoint.target.profile.path}" target="targetOrgs" targetValue="#[if (payload.memberOfOrganizations?) payload.memberOfOrganizations else null]">
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"Authorization":"bearer " ++ vars.targetAuthToken
+}]]]></http:headers>
+		</http:request>				
+		<http:request method="GET" doc:name="Get source exchange assets" doc:id="bb94705e-1a7d-4bdd-a1c3-3f0d41960c89" config-ref="HTTP_Request_Anypoint_Source" path="${secure::anypoint.source.assets.base.path}" target="sourceExchangeAssets">
+			<http:headers><![CDATA[#[output application/java
+---
+{
+	"Authorization":"bearer " ++ vars.sourceAuthToken
+}]]]></http:headers>
+			<http:query-params><![CDATA[#[output application/java
+---
+{
+	"search" : Mule::p('secure::exchange.search.category'),
+	"type" : "rest-api"
+}]]]></http:query-params>
+		</http:request>
+		<set-variable value='#[%dw 2.0
+output application/json
+---
+{
+	"exchangeAssets": [],
+	"apiInstances": [],
+	"slaTiers": [],
+	"errors": []
+}]' doc:name="responseMessage" doc:id="64fa7aed-6d84-48e3-9e2a-3ca82963d0c3" variableName="responseMessage"/>
+	
+		<foreach doc:name="For each filtered asset" doc:id="0d455bf0-97b6-4bf0-8d6f-8c0850eb0eac" collection="#[vars.sourceExchangeAssets]">
+			<flow-ref doc:name="doExchange" doc:id="45c96e50-13bd-4e6a-9812-34e94304a8a1" name="doExchange" />
+
+		</foreach>
+		<set-payload value="#[vars.responseMessage]" doc:name="Set response payload" doc:id="4a038396-8171-46e5-bd2f-e1c1dc72dc44"/>
+		<logger level="DEBUG" doc:name="Log response payload" doc:id="333fc83a-f0a6-4e88-bdb1-24c1b440adc3" message="#[payload]"/>
+		<error-handler ref="generalErrorHandler"/>		
+	</flow>
+	<sub-flow name="setup-vars" doc:id="c2800b6e-484e-40b7-a3e3-356fecee3649" >
+		<set-variable value='#["false" as Boolean]' doc:name="updatePagesOnly" doc:id="11ddae01-af23-44e1-98bb-43955eb0ec80" variableName="updatePagesOnly" />
+		<set-variable value='#["true" as Boolean]' doc:name="errorsDoNotExist" doc:id="c83e65f7-0afa-4514-a255-7d8315fc68ad" variableName="errorsDoNotExist" />
+		<set-variable value='#[%dw 2.0
+output application/java
+---
+(payload.files filter($.classifier == "fat-raml"))[0].externalLink]' doc:name="fileURL" doc:id="735fd23a-78c2-4401-9dfc-982263ebb3c4" variableName="fileURL" />
+		<set-variable value="#[payload.groupId]" doc:name="groupId" doc:id="0c637e54-311b-44c8-9e16-65801ba3df7b" variableName="groupId" />
+		<set-variable value="#[payload.organization.name]" doc:name="orgName" doc:id="a998c8fd-52b0-4fc0-818b-98451c2fee56" variableName="orgName" />
+		<set-variable value="#[payload.productAPIVersion]" doc:name="apiVersion" doc:id="2ddde45f-6eb4-4ad0-9404-c6a6930f55ec" variableName="apiVersion" />
+		<set-variable value="#[payload.name]" doc:name="name" doc:id="215a063e-28f4-460b-96e3-6d5a46bac81d" variableName="name" />
+		<set-variable value="#[payload.assetId]" doc:name="assetId" doc:id="2a97fc1c-bcc5-4ae5-b393-4f8db91ee65e" variableName="assetId" />
+		<set-variable value="#[payload.version]" doc:name="assetVersion" doc:id="e40a2067-8173-435d-9d4c-77eda6aff215" variableName="assetVersion" />
+		<set-variable value='#[%dw 2.0
+output application/java
+---
+(payload.files filter($.classifier == "fat-raml"))[0].mainFile default (payload.assetId ++ ".raml")]' doc:name="ramlFileName" doc:id="fe917a78-b1ef-4605-8671-4bf9f9b05e4d" variableName="ramlFileName" />
+		<set-variable value="#[%dw 2.0
+output application/json
+---
+(vars.targetOrgs map (
+    $ mapObject (v,k) -&gt; if((v) == vars.orgName) {id:$.id} else {}
+) reduce ($$++$)).id]" doc:name="targetOrgId" doc:id="004787f7-2318-4001-8fa2-c123c3d6ed03" variableName="targetOrgId" />
+		<logger level="INFO" doc:name="Log initial vars completed" doc:id="610c357e-b6c1-466f-bfe7-ae5cbd5af9df" message='#["Initialized variables successfully in: " ++ flow.name]'/>
+	
+</sub-flow>
+	<sub-flow name="get-tokens" doc:id="a9edc26e-1898-4d53-8685-3e99f6e57b01" >
+		<choice doc:name="What's the source authentication type?" doc:id="f3181e93-d519-4335-92e5-ac5f556bc667" >
+			<when expression="#[payload.source.authenticationType == Mule::p('secure::authentication.type.connected.app')]">
+				<http:request method="POST" doc:name="Get source access token - connected app" doc:id="6c6efa76-9bc0-4995-b460-420d966445a2" config-ref="HTTP_Request_Anypoint_Source" path="${secure::anypoint.token.path.token}" target="sourceAuthToken" targetValue="#[payload.access_token]">
+					<http:body ><![CDATA[#[%dw 2.0
+output application/java
+---
+write({
+"grant_type": "password",
+"scope": "full",
+"client_id": Mule::p('secure::anypoint.source.oauth.client.id'),
+"client_secret": Mule::p('secure::anypoint.source.oauth.client.secret'),
+"username": Mule::p('secure::anypoint.source.username'),
+"password": Mule::p('secure::anypoint.source.password')
+}, 'application/x-www-form-urlencoded')]]]></http:body>
+					<http:headers ><![CDATA[#[output application/java
+---
+{
+	"Content-Type" : "application/x-www-form-urlencoded"
+}]]]></http:headers>
+				</http:request>
+			</when>
+			<otherwise >
+				<http:request method="POST" doc:name="Get source access token - user credentials" doc:id="d09b192f-114b-4a1e-b699-27e97064f55a" config-ref="HTTP_Request_Anypoint_Source" path="${secure::anypoint.token.path.user}" target="sourceAuthToken" targetValue="#[payload.access_token]">
+			<http:body><![CDATA[#[%dw 2.0
+output application/json
+---
+{
+  username: Mule::p('secure::anypoint.source.username'),
+  password: Mule::p('secure::anypoint.source.password')
+}]]]></http:body>
+			<http:headers><![CDATA[#[output application/java
+---
+{
+	"Content-Type" : "application/json"
+}]]]></http:headers>
+		</http:request>
+			</otherwise>
+		</choice>
+		<http:request method="POST" doc:name="Get target access token - connected app" doc:id="366e8cf7-b70c-40ec-92f0-e1a97d95c7e5" config-ref="HTTP_Request_Anypoint_Target" path="${secure::anypoint.token.path.token}" target="targetAuthToken" targetValue="#[payload.access_token]">
+			<http:body ><![CDATA[#[%dw 2.0
+output application/java
+---
+write({
+"grant_type": "client_credentials",
+"client_id": Mule::p('secure::anypoint.target.oauth.client.id'),
+"client_secret": Mule::p('secure::anypoint.target.oauth.client.secret')
+}, 'application/x-www-form-urlencoded')]]]></http:body>
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"Content-Type" : "application/x-www-form-urlencoded"
+}]]]></http:headers>
+			</http:request>
+	</sub-flow>
+
+</mule>

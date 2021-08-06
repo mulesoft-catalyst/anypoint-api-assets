@@ -1,0 +1,75 @@
+{
+    "exchangeAssets": [
+        {
+            "groupId": "074345f4-651b-4b90-9a5f-083303be816b",
+            "orgName": "NIS",
+            "assetId": "pea-demo-1",
+            "version": "1.0.1",
+            "status": "No asset updates"
+        }
+    ],
+    "apiInstances": [
+        {
+            "groupId": "074345f4-651b-4b90-9a5f-083303be816b",
+            "orgName": "NIS",
+            "assetId": "pea-demo-1",
+            "assetVersion": "1.0.1",
+            "apiVersion": "v1",
+            "instanceLabel": "on-prem",
+            "environment": "Sandbox",
+            "status": "Success"
+        },
+        {
+            "groupId": "074345f4-651b-4b90-9a5f-083303be816b",
+            "orgName": "NIS",
+            "assetId": "pea-demo-1",
+            "assetVersion": "1.0.1",
+            "apiVersion": "v1",
+            "instanceLabel": "cloud",
+            "environment": "Sandbox",
+            "status": "Success"
+        }
+    ],
+    "slaTiers": [
+        {
+            "groupId": "074345f4-651b-4b90-9a5f-083303be816b",
+            "orgName": "NIS",
+            "assetId": "pea-demo-1",
+            "assetVersion": "1.0.1",
+            "apiVersion": "v1",
+            "apiInstanceId": 1379,
+            "instanceLabel": "on-prem",
+            "slaTierId": 625,
+            "slaTierName": "Trial",
+            "environment": "Sandbox",
+            "status": "Success"
+        },
+        {
+            "groupId": "074345f4-651b-4b90-9a5f-083303be816b",
+            "orgName": "NIS",
+            "assetId": "pea-demo-1",
+            "assetVersion": "1.0.1",
+            "apiVersion": "v1",
+            "apiInstanceId": 1379,
+            "instanceLabel": "on-prem",
+            "slaTierId": 628,
+            "slaTierName": "Enterprise",
+            "environment": "Sandbox",
+            "status": "Success"
+        },
+        {
+            "groupId": "074345f4-651b-4b90-9a5f-083303be816b",
+            "orgName": "NIS",
+            "assetId": "pea-demo-1",
+            "assetVersion": "1.0.1",
+            "apiVersion": "v1",
+            "apiInstanceId": 1380,
+            "instanceLabel": "cloud",
+            "slaTierId": 579,
+            "slaTierName": "Trial",
+            "environment": "Sandbox",
+            "status": "Success"
+        }
+    ],
+    "errors": []
+}

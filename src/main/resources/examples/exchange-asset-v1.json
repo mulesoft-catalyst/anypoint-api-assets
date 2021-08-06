@@ -1,0 +1,186 @@
+{
+  "groupId": "074345f4-651b-4b90-9a5f-083303be816b",
+  "assetId": "m3-api-template",
+  "version": "1.0.2",
+  "versionGroup": "v1",
+  "productAPIVersion": "v1",
+  "isPublic": false,
+  "name": "M3 API Template",
+  "type": "rest-api",
+  "status": "published",
+  "assetLink": "",
+  "createdAt": "2020-10-14T04:18:12.479Z",
+  "runtimeVersion": "",
+  "attributes": [
+    {
+      "value": "raml",
+      "tagType": "attribute",
+      "key": null
+    },
+    {
+      "value": "rest",
+      "tagType": "attribute",
+      "key": null
+    },
+    {
+      "value": "api",
+      "tagType": "attribute",
+      "key": null
+    },
+    {
+      "value": "v1",
+      "tagType": "attribute",
+      "key": "product-api-version"
+    },
+    {
+      "value": "de6e4e46-2993-4e45-8b0a-dcdb0cdf091e",
+      "tagType": "attribute",
+      "key": "project-id"
+    },
+    {
+      "value": "master",
+      "tagType": "attribute",
+      "key": "branch-id"
+    },
+    {
+      "value": "d00355d500b69d10abac38c351eb91194bbd25a9",
+      "tagType": "attribute",
+      "key": "commit-id"
+    },
+    {
+      "value": "has-mule4-connector",
+      "tagType": "attribute",
+      "key": null
+    },
+    {
+      "value": "has-mule3-connector",
+      "tagType": "attribute",
+      "key": null
+    }
+  ],
+  "labels": [
+    {
+      "value": "last-sync-date:2020-10-14 00:42:24.654-0400",
+      "tagType": "label",
+      "key": null
+    }
+  ],
+  "categories": [
+    {
+      "value": [
+        "MyCategory"
+      ],
+      "displayName": "project",
+      "tagType": "category",
+      "dataType": "enum",
+      "key": "Project"
+    }
+  ],
+  "customFields": [
+    
+  ],
+  "tags": [
+    {
+      "value": "last-sync-date:2020-10-14 00:42:24.654-0400",
+      "key": null
+    },
+    {
+      "value": "raml",
+      "key": null
+    },
+    {
+      "value": "rest",
+      "key": null
+    },
+    {
+      "value": "api",
+      "key": null
+    },
+    {
+      "value": "v1",
+      "key": "product-api-version"
+    },
+    {
+      "value": "de6e4e46-2993-4e45-8b0a-dcdb0cdf091e",
+      "key": "project-id"
+    },
+    {
+      "value": "master",
+      "key": "branch-id"
+    },
+    {
+      "value": "d00355d500b69d10abac38c351eb91194bbd25a9",
+      "key": "commit-id"
+    },
+    {
+      "value": "has-mule4-connector",
+      "key": null
+    },
+    {
+      "value": "has-mule3-connector",
+      "key": null
+    }
+  ],
+  "files": [
+    {
+      "classifier": null,
+      "packaging": "pom",
+      "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/ae9a4d60-5857-44de-b0fa-2e08182eb26a/m3-api-template-1.0.2.pom",
+      "md5": "e5a8ceb4405e5c634c45a672c27e5805",
+      "createdDate": "2020-10-14T04:18:34.766Z"
+    },
+    {
+      "classifier": "mule-plugin",
+      "packaging": "jar",
+      "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/161252b1-7f57-43a8-83e9-3de871161346/m3-api-template-1.0.2-mule-plugin.jar",
+      "md5": "27807f5b32a1c53e4ecf2921381abc8a",
+      "createdDate": "2020-10-14T04:18:34.639Z"
+    },
+    {
+      "classifier": "fat-raml",
+      "packaging": "zip",
+      "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/7756d65c-a919-4852-adbd-f983f026f6e6/m3-api-template-1.0.2-fat-raml.zip",
+      "md5": "c50316945cc31863fdbcf6b14bdd2573",
+      "createdDate": "2020-10-14T04:18:12.329Z"
+    },
+    {
+      "classifier": "raml",
+      "packaging": "zip",
+      "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/074345f4-651b-4b90-9a5f-083303be816b/98d17b25-fb6f-4150-8457-e43b68843679/m3-api-template-1.0.2-raml.zip",
+      "md5": "e42e62e2ac5aeaee4a8cb51993f469d6",
+      "createdDate": "2020-10-14T04:18:11.807Z"
+    }
+  ],
+  "rating": 0,
+  "numberOfRates": 0,
+  "createdBy": {
+    "id": "99a11c22-b536-463f-9b3d-b3983a503af0",
+    "userName": "L1JHS01",
+    "firstName": "Jin",
+    "lastName": "Shin"
+  },
+  "organization": {
+    "name": "NIS",
+    "id": "074345f4-651b-4b90-9a5f-083303be816b",
+    "createdAt": "2017-08-03T16:39:49.393Z",
+    "updatedAt": "2020-07-10T16:16:03.335Z",
+    "ownerId": "1a381d2a-7b7a-4c01-a563-f26fabb78b99",
+    "clientId": "8923f10211454d0b8a0bb5fc2355d30b",
+    "domain": "frs",
+    "idprovider_id": "mulesoft",
+    "isFederated": true,
+    "parentOrganizationIds": [
+      "6760ce10-4ceb-4fad-9fc3-000d57fb3ded"
+    ],
+    "subOrganizationIds": [
+      "85323283-cf87-4d18-a536-624fb01b7459"
+    ],
+    "tenantOrganizationIds": [
+      
+    ],
+    "isMaster": false
+  },
+  "id": "074345f4-651b-4b90-9a5f-083303be816b/m3-api-template/1.0.2",
+  "icon": null,
+  "modifiedAt": "2020-10-14T04:18:12.479Z"
+}

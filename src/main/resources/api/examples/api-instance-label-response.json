@@ -1,0 +1,44 @@
+{
+    "exchangeAssets": [],
+    "apiInstances": [
+        {
+            "groupId": "64675daa-bcba-4962-a29c-5ebd4c97b5be",
+            "orgName": "ADC",
+            "assetId": "pea-demo-adc",
+            "assetVersion": "1.0.0",
+            "apiVersion": "v1",
+            "instanceLabel": "on-prem",
+            "environment": "Sandbox",
+            "status": "Success"
+        }
+    ],
+    "slaTiers": [
+        {
+            "groupId": "64675daa-bcba-4962-a29c-5ebd4c97b5be",
+            "orgName": "ADC",
+            "assetId": "pea-demo-adc",
+            "assetVersion": "1.0.0",
+            "apiVersion": "v1",
+            "apiInstanceId": 1381,
+            "instanceLabel": "on-prem",
+            "slaTierId": 635,
+            "slaTierName": "Trial",
+            "environment": "Sandbox",
+            "status": "Success"
+        },
+        {
+            "groupId": "64675daa-bcba-4962-a29c-5ebd4c97b5be",
+            "orgName": "ADC",
+            "assetId": "pea-demo-adc",
+            "assetVersion": "1.0.0",
+            "apiVersion": "v1",
+            "apiInstanceId": 1381,
+            "instanceLabel": "on-prem",
+            "slaTierId": 636,
+            "slaTierName": "Enterprise",
+            "environment": "Sandbox",
+            "status": "Success"
+        }
+    ],
+    "errors": []
+}

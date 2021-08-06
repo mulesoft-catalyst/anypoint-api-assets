@@ -1,0 +1,12 @@
+{
+    "asset": {
+        "organizationName": "BG1",
+        "assetId": "demo-api",
+        "apiVersion": "v1"
+    },
+    "useProperties": true,
+    "source": {
+         "authenticationType": "platformUser"
+    },
+    "target": {}
+}

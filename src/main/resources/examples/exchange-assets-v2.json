@@ -1,0 +1,227 @@
+[
+    {
+        "groupId": "5d056f50-5948-45a6-a0a3-02f89f11c286",
+        "assetId": "petstoretest",
+        "version": "1.0.0",
+        "minorVersion": "1.0",
+        "versionGroup": "1.0.0",
+        "description": "",
+        "isPublic": false,
+        "name": "petStoreTest",
+        "type": "rest-api",
+        "isSnapshot": false,
+        "status": "published",
+        "externalFile": {
+            "url": null
+        },
+        "createdDate": "2020-05-21T16:39:38.133Z",
+        "updatedDate": "2020-05-21T16:39:38.099Z",
+        "minMuleVersion": null,
+        "labels": [],
+        "categories": [],
+        "files": [
+            {
+                "classifier": "raml",
+                "packaging": "zip",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/5d056f50-5948-45a6-a0a3-02f89f11c286/eeb95d2be3f2d11f1d574d3a6118783a9f068d39065f7e86aae62c2f05fb8978.zip",
+                "createdDate": "2020-05-21T16:39:36.399Z",
+                "md5": "c4ce4fba913a30b4c15401bfceba6d6d",
+                "sha1": "962965b08bee776ef04b4eedbc920cba19a93ed4",
+                "mainFile": "petstoretest.raml",
+                "isGenerated": false
+            },
+            {
+                "classifier": "fat-raml",
+                "packaging": "zip",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/5d056f50-5948-45a6-a0a3-02f89f11c286/8697cb2eba8a16bad17d702fa85fb44acacc663ec0757a3623d29a69d832c577.zip",
+                "createdDate": "2020-05-21T16:39:36.836Z",
+                "md5": "099d4e03d752895e2291d0247a261a04",
+                "sha1": "e5c0f2d5ed6f85e93d4d91314f3a3882d662baa2",
+                "mainFile": "petstoretest.raml",
+                "isGenerated": false
+            },
+            {
+                "classifier": "oas",
+                "packaging": "zip",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/5d056f50-5948-45a6-a0a3-02f89f11c286/f1b537abb1648521359547ad29aaddc3e2a25a4895c1d711143a7e77263c8594.zip",
+                "createdDate": "2020-05-21T16:39:38.034Z",
+                "md5": "9f58aece2bd8ef1bf2aad82aa0540311",
+                "sha1": "9b34d8ea96c62964d0fa2cfa9aab6a0833e72c86",
+                "mainFile": "api.json",
+                "isGenerated": true
+            }
+        ],
+        "customFields": [],
+        "rating": 0,
+        "numberOfRates": 0,
+        "createdBy": {
+            "id": "7ddc8eed-9ab9-4df3-aad3-cde5d5865d8a",
+            "userName": "PCEadmin",
+            "firstName": "System",
+            "lastName": "Admin"
+        },
+        "organization": {
+            "id": "5d056f50-5948-45a6-a0a3-02f89f11c286",
+            "name": "ABC.APIGW",
+            "parentOrganizationIds": [],
+            "subOrganizationIds": [],
+            "tenantOrganizationIds": [],
+            "isMaster": true,
+            "domain": "abcapigw"
+        },
+        "id": "5d056f50-5948-45a6-a0a3-02f89f11c286/petstoretest/1.0.0",
+        "icon": null,
+        "createdAt": "2020-05-21T16:39:38.133Z",
+        "modifiedAt": "2020-05-21T16:39:38.099Z"
+    },
+    {
+        "groupId": "5d056f50-5948-45a6-a0a3-02f89f11c286",
+        "assetId": "auditlogapi",
+        "version": "1.0.0",
+        "minorVersion": "1.0",
+        "versionGroup": "v1",
+        "description": "",
+        "isPublic": false,
+        "name": "auditLogAPI",
+        "type": "rest-api",
+        "isSnapshot": false,
+        "status": "published",
+        "externalFile": {
+            "url": null
+        },
+        "createdDate": "2020-05-21T16:27:02.377Z",
+        "updatedDate": "2020-05-21T16:27:02.352Z",
+        "minMuleVersion": null,
+        "labels": [],
+        "categories": [],
+        "files": [
+            {
+                "classifier": "raml",
+                "packaging": "zip",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/5d056f50-5948-45a6-a0a3-02f89f11c286/138b439a6ffbdd1892cbbd039e4eeca488c3107d855f16d57ee133d0ed828be8.zip",
+                "createdDate": "2020-05-21T16:27:01.099Z",
+                "md5": "5d88b2b085c1773946e59c6e4d372d0a",
+                "sha1": "b1f38253d54d32c3ba5671b9c26e48662a57b40f",
+                "mainFile": "auditlogapi.raml",
+                "isGenerated": false
+            },
+            {
+                "classifier": "fat-raml",
+                "packaging": "zip",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/5d056f50-5948-45a6-a0a3-02f89f11c286/ded4dbe6d624edb71128941492cb69aef596a55beb10e676c17b6cd72efd7723.zip",
+                "createdDate": "2020-05-21T16:27:01.515Z",
+                "md5": "f701dee43d99e27e15e8f77426256976",
+                "sha1": "03bad0fe1625b4e70945210363dae534e5fd8242",
+                "mainFile": "auditlogapi.raml",
+                "isGenerated": false
+            },
+            {
+                "classifier": "oas",
+                "packaging": "zip",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/5d056f50-5948-45a6-a0a3-02f89f11c286/3ca24deb408e4f96a8fdcae63589c765b65d3145133458d11b251864a054650f.zip",
+                "createdDate": "2020-05-21T16:27:02.291Z",
+                "md5": "cb1d3f9df2939ab1d2899e68eddf6298",
+                "sha1": "4402dc78472678607302f0425383f1566b1208c0",
+                "mainFile": "api.json",
+                "isGenerated": true
+            }
+        ],
+        "customFields": [],
+        "rating": 0,
+        "numberOfRates": 0,
+        "createdBy": {
+            "id": "7ddc8eed-9ab9-4df3-aad3-cde5d5865d8a",
+            "userName": "PCEadmin",
+            "firstName": "System",
+            "lastName": "Admin"
+        },
+        "organization": {
+            "id": "5d056f50-5948-45a6-a0a3-02f89f11c286",
+            "name": "ABC.APIGW",
+            "parentOrganizationIds": [],
+            "subOrganizationIds": [],
+            "tenantOrganizationIds": [],
+            "isMaster": true,
+            "domain": "abcapigw"
+        },
+        "id": "5d056f50-5948-45a6-a0a3-02f89f11c286/auditlogapi/1.0.0",
+        "icon": null,
+        "createdAt": "2020-05-21T16:27:02.377Z",
+        "modifiedAt": "2020-05-21T16:27:02.352Z"
+    },
+    {
+        "groupId": "5d056f50-5948-45a6-a0a3-02f89f11c286",
+        "assetId": "helloworld",
+        "version": "1.0.0",
+        "minorVersion": "1.0",
+        "versionGroup": "1.0",
+        "description": "",
+        "isPublic": false,
+        "name": "helloworld",
+        "type": "rest-api",
+        "isSnapshot": false,
+        "status": "published",
+        "externalFile": {
+            "url": null
+        },
+        "createdDate": "2020-05-20T17:53:09.796Z",
+        "updatedDate": "2020-05-20T17:53:09.763Z",
+        "minMuleVersion": null,
+        "labels": [],
+        "categories": [],
+        "files": [
+            {
+                "classifier": "raml",
+                "packaging": "zip",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/5d056f50-5948-45a6-a0a3-02f89f11c286/d61f6c95308dd010bc628fd318b3a5ee7d5706dc4d781a9c55208acff2fce806.zip",
+                "createdDate": "2020-05-20T17:53:07.636Z",
+                "md5": "4db0c074abe2a701e9b8c531d45abc41",
+                "sha1": "683c24d8a0d251fb83239e3d3d6be2e9ed09d5d3",
+                "mainFile": "helloworld.raml",
+                "isGenerated": false
+            },
+            {
+                "classifier": "fat-raml",
+                "packaging": "zip",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/5d056f50-5948-45a6-a0a3-02f89f11c286/486e3ca05524dac10dc4a327b196a88acf40bb515b230980b46f396c7baca497.zip",
+                "createdDate": "2020-05-20T17:53:08.141Z",
+                "md5": "4b300a03370e5edc72b42379503934a5",
+                "sha1": "c6542257a033f65cd3254c1566448ca8f7aa2709",
+                "mainFile": "helloworld.raml",
+                "isGenerated": false
+            },
+            {
+                "classifier": "oas",
+                "packaging": "zip",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/5d056f50-5948-45a6-a0a3-02f89f11c286/3c94fc521a247177559427db4b7ad32cdf5cd802822953b8ef81fd2324ca76ab.zip",
+                "createdDate": "2020-05-20T17:53:09.663Z",
+                "md5": "05178bd1c256f20a6e564f9dcdf38927",
+                "sha1": "29e4748d91d19e761e9dfbb6d6e9deced3f13bca",
+                "mainFile": "api.json",
+                "isGenerated": true
+            }
+        ],
+        "customFields": [],
+        "rating": 5,
+        "numberOfRates": 1,
+        "createdBy": {
+            "id": "7ddc8eed-9ab9-4df3-aad3-cde5d5865d8a",
+            "userName": "PCEadmin",
+            "firstName": "System",
+            "lastName": "Admin"
+        },
+        "organization": {
+            "id": "5d056f50-5948-45a6-a0a3-02f89f11c286",
+            "name": "ABC.APIGW",
+            "parentOrganizationIds": [],
+            "subOrganizationIds": [],
+            "tenantOrganizationIds": [],
+            "isMaster": true,
+            "domain": "abcapigw"
+        },
+        "id": "5d056f50-5948-45a6-a0a3-02f89f11c286/helloworld/1.0.0",
+        "icon": null,
+        "createdAt": "2020-05-20T17:53:09.796Z",
+        "modifiedAt": "2020-05-20T17:53:09.763Z"
+    }
+]

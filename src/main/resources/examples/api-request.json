@@ -1,0 +1,23 @@
+{
+    "endpoint": {
+        "deploymentType": "HY",
+        "isCloudHub": false,
+        "muleVersion4OrAbove": true,
+        "proxyUri": "https://0.0.0.0/app/demo",
+        "proxyTemplate": {
+            "assetVersion": "2.1.0"
+        },
+        "referencesUserDomain": true,
+        "responseTimeout": null,
+        "type": "rest",
+        "uri": "https://pubsec.services.mulesoft.com/my-service",
+        "validation": "DISABLED"
+    },
+    "providerId": null,
+    "instanceLabel": "my-api-instance",
+    "spec": {
+        "assetId": "exchange-demo-asset",
+        "groupId": "814941cd-878d-487c-80ad-50c0fa24b115",
+        "version": "1.0.0"
+    }
+}
