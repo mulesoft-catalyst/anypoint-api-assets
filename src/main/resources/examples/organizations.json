@@ -1,0 +1,27 @@
+[
+  {
+    "name": "ABC Inc.",
+    "id": "9bb66774-7ad0-492c-91ba-dc320dfa7041",
+    "location": "DC"
+  },
+  {
+    "name": "Enterprise",
+    "id": "9cd8cff9-6db7-49a3-98be-dd85097e91e1",
+    "location": "CA"
+  },
+  {
+    "name": "Finance",
+    "id": "c079870a-aa47-401d-893e-814a80a02760",
+    "location": "NY"
+  },
+  {
+    "name": "LoB 1",
+    "id": "15bd45cd-8919-4bc5-8648-891ec030186c",
+    "location": "AK"
+  },
+  {
+    "name": "LoB 2",
+    "id": "686e5c58-de8d-4a40-ba39-47c0100fe1b8",
+    "location": "AZ"
+  }
+]

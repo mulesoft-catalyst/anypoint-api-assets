@@ -1,0 +1,19 @@
+{
+    "asset": {
+        "organizationName": "BG1",
+        "assetId": "demo-api",
+        "apiVersion": "v1",
+        "apiInstances": {
+            "environments": [
+                "DEV",
+                "QA",
+                "PROD"
+            ]
+        }
+    },
+    "useProperties": true,
+    "source": {
+        "authenticationType": "connectedApp"
+    },
+    "target": {}
+}

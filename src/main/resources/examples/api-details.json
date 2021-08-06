@@ -1,0 +1,47 @@
+{
+    "audit": {
+        "created": {
+            "date": "2020-12-14T18:50:26.466Z"
+        },
+        "updated": {
+            "date": "2020-12-15T18:06:06.938Z"
+        }
+    },
+    "masterOrganizationId": "6760ce10-4ceb-4fad-9fc3-000d57fb3ded",
+    "organizationId": "64675daa-bcba-4962-a29c-5ebd4c97b5be",
+    "id": 1223,
+    "instanceLabel": "cloud-sandbox",
+    "groupId": "64675daa-bcba-4962-a29c-5ebd4c97b5be",
+    "assetId": "fl-demo-1",
+    "assetVersion": "1.0.0",
+    "productVersion": "v1",
+    "description": null,
+    "tags": [],
+    "order": 1,
+    "deprecated": false,
+    "lastActiveDate": null,
+    "endpointUri": null,
+    "environmentId": "24c8b29b-1ce2-4d37-a507-0767c35f60d1",
+    "isPublic": false,
+    "endpoint": {
+        "audit": {
+            "created": {},
+            "updated": {}
+        },
+        "id": 1123,
+        "type": "raml",
+        "uri": "https://pubsec.services.mulesoft.com/my-service",
+        "proxyUri": "https://0.0.0.0:8082/fl/demo",
+        "proxyRegistrationUri": null,
+        "lastActiveDate": null,
+        "isCloudHub": false,
+        "deploymentType": "HY",
+        "policiesVersion": null,
+        "referencesUserDomain": false,
+        "muleVersion4OrAbove": true,
+        "responseTimeout": null,
+        "wsdlConfig": null
+    },
+    "deployment": null,
+    "autodiscoveryInstanceName": "v1:1223"
+}

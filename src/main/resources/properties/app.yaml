@@ -1,0 +1,31 @@
+########################################################
+# Common App Properties
+########################################################
+api:
+  base:
+    version: "v1"
+    uri: "/anypoint/${secure::api.base.version}/*"
+  manager:
+    proxy:
+      version: "2.1.0"    
+  
+message:
+  asset:
+    status:
+      updates:
+        none: "No asset updates."
+exchange:
+  search:
+    category: "category:project=MyCategory"
+tag:
+  last:
+    sync:
+      date: "last-sync-date"
+  force:
+    sync: "force-sync"
+authentication:
+  type:
+    connected:
+      app: "connectedApp"
+    user: "platformUser"
+    

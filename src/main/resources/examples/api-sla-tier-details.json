@@ -1,0 +1,26 @@
+{
+    "audit": {
+        "created": {
+            "date": "2021-06-14T14:50:36.420Z"
+        },
+        "updated": {
+            "date": "2021-06-14T18:17:55.179Z"
+        }
+    },
+    "masterOrganizationId": "6760ce10-4ceb-4fad-9fc3-000d57fb3ded",
+    "organizationId": "074345f4-651b-4b90-9a5f-083303be816b",
+    "id": 625,
+    "name": "Trial",
+    "description": "Trial tier",
+    "limits": [
+        {
+            "visible": true,
+            "timePeriodInMilliseconds": 60000,
+            "maximumRequests": 3
+        }
+    ],
+    "status": "ACTIVE",
+    "autoApprove": false,
+    "applicationCount": 0,
+    "apiId": 1379
+}

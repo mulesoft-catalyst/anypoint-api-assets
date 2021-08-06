@@ -1,0 +1,7 @@
+{
+    "useProperties": true,
+    "source": {
+        "authenticationType": "platformUser"
+    },
+    "target": {}
+}

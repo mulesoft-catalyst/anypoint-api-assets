@@ -1,0 +1,78 @@
+#%RAML 1.0 Library
+
+types:
+  MultipleAssetRequestType:
+    type: object
+    properties:
+      useProperties:
+        type: boolean
+        required: false
+      source:
+        type: object
+        required: true
+        properties: 
+          authenticationType:
+            type: string
+            enum: [ connectedApp, platformUser ]
+            required: true
+      target:
+        type: object
+        required: false
+      skipExchangeAssets:
+        type: boolean
+        required: false
+      skipAPIInstances:
+        type: boolean
+        required: false
+  SingleAssetRequestType:
+    type: object
+    properties:
+      asset:
+        type: AssetType
+        required: true
+      useProperties:
+        type: boolean
+        required: false
+      source:
+        type: object
+        required: true
+        properties: 
+          authenticationType:
+            type: string
+            enum: [ connectedApp, platformUser ]
+            required: true
+      target:
+        type: object
+        required: false
+      skipExchangeAssets:
+        type: boolean
+        required: false
+      skipAPIInstances:
+        type: boolean
+        required: false
+  AssetType:
+    type: object
+    properties:
+      organizationName:
+        type: string
+        required: true
+        # List of expected business groups
+        enum: [ Enterprise, BG1, BG2, BG3 ]
+      assetId:
+        type: string
+        required: true
+      apiVersion:
+        type: string
+        required: true
+      apiInstances:
+        type: object
+        required: false
+        properties:
+          environments:
+            type: array
+            required: true
+            items:
+              type: string
+              # List of expected environments
+              enum: [ DEV, QA, PROD ]
+

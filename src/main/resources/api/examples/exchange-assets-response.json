@@ -1,0 +1,28 @@
+{
+    "exchangeAssets": [
+        {
+            "groupId": "074345f4-651b-4b90-9a5f-083303be816b",
+            "orgName": "NIS",
+            "assetId": "pea-demo-1",
+            "version": "1.0.1",
+            "status": "Success"
+        },
+        {
+            "groupId": "64675daa-bcba-4962-a29c-5ebd4c97b5be",
+            "orgName": "ADC",
+            "assetId": "pea-demo-adc",
+            "version": "1.0.0",
+            "status": "Success"
+        },
+        {
+            "groupId": "074345f4-651b-4b90-9a5f-083303be816b",
+            "orgName": "NIS",
+            "assetId": "exchange-asset-demo",
+            "version": "1.0.0",
+            "status": "No asset updates"
+        }
+    ],
+    "apiInstances": [],
+    "slaTiers": [],
+    "errors": []
+}

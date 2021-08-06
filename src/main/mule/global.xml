@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit"
+	xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway"
+	xmlns:tls="http://www.mulesoft.org/schema/mule/tls"
+	xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:file="http://www.mulesoft.org/schema/mule/file"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd 
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd 
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd
+http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd">
+
+	<secure-properties:config 
+		name="Secure_Properties_Config_External" 
+		doc:name="Secure Properties Config" 
+		doc:id="316ead3f-93c0-4e97-b81f-b9659c60a1ac" 
+		file="${env.properties.location}/${env}.properties" key="${vault.key}" />	
+	<secure-properties:config 
+		name="Secure_Properties_Config_API" 
+		doc:name="Secure Properties Config" 
+		doc:id="6ab6c231-fe0f-439a-a68d-5b1d44b42a5d" 
+		file="properties/${env}.yaml" key="${vault.key}" />
+	<secure-properties:config 
+		name="Secure_Properties_Config_Common" 
+		doc:name="Secure Properties Config" 
+		doc:id="7675d4f3-073a-4f6e-bab9-9dcf72500bc4" 
+		file="properties/app.yaml" key="${vault.key}" />		
+
+    <apikit:config name="api-config" api="nis-anypoint-exchange-assets.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="d5bc971a-ba61-416a-a68a-7381a18e9a0f" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>	   	
+	<http:request-config name="HTTP_Request_Anypoint_Source" doc:name="HTTP Request configuration" doc:id="ea5b442b-713a-49fc-beda-c44df2693c4c" responseTimeout="${secure::http.response.timeout}" enableCookies="false">
+		<http:request-connection protocol="HTTPS" host="${secure::anypoint.source.host}" >
+
+		</http:request-connection>
+	</http:request-config>
+	<http:request-config name="HTTP_Request_Anypoint_Source_Insecure" doc:name="HTTP Request configuration" doc:id="900d9708-2973-4684-99ad-62cc283cfc99" responseTimeout="${secure::http.response.timeout}" enableCookies="false">
+		<http:request-connection protocol="HTTPS" host="${secure::anypoint.source.host}" >
+			<tls:context >
+				<tls:trust-store insecure="true"/>
+			</tls:context>
+<!--		If proxy is needed	
+			<http:proxy-config >
+				<http:proxy host="${secure::proxy.host}" port="${secure::proxy.port}" />
+			</http:proxy-config>
+-->		
+	</http:request-connection>
+	</http:request-config>	
+	<http:request-config name="HTTP_Request_Anypoint_Target" doc:name="HTTP Request configuration" doc:id="7cf46c46-22ac-460a-97a7-58c449ec82e3" responseTimeout="${secure::http.response.timeout}">
+		<http:request-connection protocol="HTTPS" host="${secure::anypoint.target.host}">
+<!--		If proxy is needed			
+			<http:proxy-config >
+				<http:proxy host="${secure::proxy.host}" port="${secure::proxy.port}" />
+			</http:proxy-config>
+-->			
+		</http:request-connection>
+	</http:request-config>
+
+	<api-gateway:autodiscovery apiId="${api.id}" doc:name="API Autodiscovery" doc:id="f59305c3-57f9-4942-b2d0-b087dac52482" flowRef="api-main" />
+	<error-handler name="generalErrorHandler">
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="7f803dfb-ae81-4fc9-95f9-45610993c4d5" >
+			<set-payload value='#[%dw 2.0
+output application/json skipNullOn="everywhere"
+---
+{
+	errors: [
+	   {
+	      "error": error.description,
+	      "errorStatusCode": if (error.errorMessage.attributes.statusCode?) error.errorMessage.attributes.statusCode else null
+	   }
+	]
+}]' doc:name="Set Error Payload" doc:id="00d93c7a-fa76-40b8-974f-507a8b5e4161" />
+			<logger level="INFO" doc:name="Logger" doc:id="c398982e-d7a6-4410-84a6-7c8af8a2f2d8" message="#[payload]"/>
+		</on-error-propagate>
+	</error-handler>
+</mule>

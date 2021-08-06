@@ -1,0 +1,47 @@
+########################################################
+# Anypoint Properties
+########################################################
+anypoint:
+  token:
+    path:
+      user: "/accounts/login"
+      token: "/accounts/api/v2/oauth2/token"
+  source:
+    host: "anypoint.mulesoft.com"
+    port: "443"
+    profile:
+      path: "accounts/api/profile"    
+    oauth:
+      client:
+        # Connected app credentials to access source Anypoint Platform
+        id: "<client-id>"
+        secret: "<client-secret>"   
+    assets:
+      base:
+        path: "/exchange/api/v1/assets"
+    # Anypoint user credentials (if using Password grant or older platform like PCE 2.x)
+    username: "<username>"
+    password: "<password>"
+  target:
+    host: "gov.anypoint.mulesoft.com"
+    port: "443"
+    profile:
+      path: "accounts/api/profile"
+    oauth:
+      # Connected app credentials to access target Anypoint Platform
+      client:
+        # Anypoint
+        id: "<client-id>"
+        secret: "<client-secret>"
+    assets:
+      base:
+        path: "/exchange/api/v1/assets"
+
+# If a proxy is needed (if so must configure on HTTP requester for target)
+#proxy:
+#  host: ""
+#  port: ""
+  
+http:
+  response:
+    timeout: "30000"

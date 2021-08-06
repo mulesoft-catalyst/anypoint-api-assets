@@ -1,0 +1,271 @@
+{
+	"info": {
+		"_postman_id": "23165b3a-0d2d-4c5c-b901-07cf12beb384",
+		"name": "Anypoint API Assets",
+		"description": "API calls to sync Anypoint API assets from one Anypoint org to another.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/assets",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"useProperties\": true,\r\n    \"source\": {\r\n        \"authenticationType\": \"connectedApp\"\r\n    },\r\n    \"target\": {},\r\n    \"skipExchangeAssets\": false,\r\n    \"skipAPIInstances\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{mule.host}}/anypoint/v1/assets",
+					"protocol": "http",
+					"host": [
+						"{{mule.host}}"
+					],
+					"path": [
+						"anypoint",
+						"v1",
+						"assets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/asset",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"asset\": {\r\n       \"organizationName\": \"ABC\",\r\n       \"assetId\": \"pea-demo-1\",\r\n       \"apiVersion\": \"v1\"\r\n    },\r\n    \"useProperties\": true,\r\n    \"source\": {\r\n        \"authenticationType\": \"connectedApp\"\r\n    },\r\n    \"target\": {},\r\n    \"skipExchangeAssets\": false,\r\n    \"skipAPIInstances\": false    \r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{mule.host}}/anypoint/v1/asset",
+					"protocol": "http",
+					"host": [
+						"{{mule.host}}"
+					],
+					"path": [
+						"anypoint",
+						"v1",
+						"asset"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/exchange/assets",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"useProperties\": true,\r\n    \"source\": {\r\n        \"authenticationType\": \"connectedApp\"\r\n    },\r\n    \"target\": {}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{mule.host}}/anypoint/v1/exchange/assets",
+					"protocol": "http",
+					"host": [
+						"{{mule.host}}"
+					],
+					"path": [
+						"anypoint",
+						"v1",
+						"exchange",
+						"assets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/exchange/asset",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"asset\": {\r\n       \"organizationName\": \"ABC\",\r\n       \"assetId\": \"pea-demo-1\",\r\n       \"apiVersion\": \"v1\"\r\n    },\r\n    \"useProperties\": true,\r\n    \"source\": {\r\n        \"authenticationType\": \"connectedApp\"\r\n    },\r\n    \"target\": {}\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{mule.host}}/anypoint/v1/exchange/asset",
+					"protocol": "http",
+					"host": [
+						"{{mule.host}}"
+					],
+					"path": [
+						"anypoint",
+						"v1",
+						"exchange",
+						"asset"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api-manager/instances (all)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"asset\": {\r\n        \"organizationName\": \"ABC\",\r\n        \"assetId\": \"pea-demo-1\",\r\n        \"apiVersion\": \"v1\"\r\n    },\r\n    \"useProperties\": true,\r\n    \"source\": {\r\n         \"authenticationType\": \"connectedApp\"\r\n    },\r\n    \"target\": {}\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{mule.host}}/anypoint/v1/api-manager/instances",
+					"protocol": "http",
+					"host": [
+						"{{mule.host}}"
+					],
+					"path": [
+						"anypoint",
+						"v1",
+						"api-manager",
+						"instances"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api-manager/instances (specific envs)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"asset\": {\r\n        \"organizationName\": \"ABC\",\r\n        \"assetId\": \"pea-demo-1\",\r\n        \"apiVersion\": \"v1\",\r\n        \"apiInstances\": {\r\n            \"environments\": [\r\n               \"DEV\", \r\n               \"QA\"\r\n            ]\r\n        }\r\n    },\r\n    \"useProperties\": true,\r\n    \"source\": {\r\n        \"authenticationType\": \"connectedApp\"\r\n    },\r\n    \"target\": {}\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{mule.host}}/anypoint/v1/api-manager/instances",
+					"protocol": "http",
+					"host": [
+						"{{mule.host}}"
+					],
+					"path": [
+						"anypoint",
+						"v1",
+						"api-manager",
+						"instances"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api-manager/instances/{instanceLabel}",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"asset\": {\r\n        \"organizationName\": \"ABC\",\r\n        \"assetId\": \"pea-demo-ABC\",\r\n        \"apiVersion\": \"v1\",\r\n        \"apiInstances\": {\r\n            \"environments\": [\r\n                \"DEV\"\r\n            ]\r\n        }\r\n    },\r\n    \"useProperties\": true,\r\n    \"source\": {\r\n        \"authenticationType\": \"connectedApp\"\r\n    },\r\n    \"target\": {}\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{mule.host}}/anypoint/v1/api-manager/instances/{{instanceLabel}}",
+					"protocol": "http",
+					"host": [
+						"{{mule.host}}"
+					],
+					"path": [
+						"anypoint",
+						"v1",
+						"api-manager",
+						"instances",
+						"{{instanceLabel}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api-manager/instances/{instanceLabel}/sla-tiers",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"asset\": {\r\n        \"organizationName\": \"ABC\",\r\n        \"assetId\": \"pea-demo-ABC\",\r\n        \"apiVersion\": \"v1\",\r\n        \"apiInstances\": {\r\n            \"environments\": [\r\n                \"DEV\"\r\n            ]\r\n        }\r\n    },\r\n    \"useProperties\": true,\r\n    \"source\": {\r\n        \"authenticationType\": \"connectedApp\"\r\n    },\r\n    \"target\": {}\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{mule.host}}/anypoint/v1/api-manager/instances/{{instanceLabel}}/sla-tiers",
+					"protocol": "http",
+					"host": [
+						"{{mule.host}}"
+					],
+					"path": [
+						"anypoint",
+						"v1",
+						"api-manager",
+						"instances",
+						"{{instanceLabel}}",
+						"sla-tiers"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

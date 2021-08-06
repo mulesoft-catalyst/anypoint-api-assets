@@ -1,0 +1,75 @@
+{
+        "groupId": "5d056f50-5948-45a6-a0a3-02f89f11c286",
+        "assetId": "petstoretest",
+        "version": "1.0.1",
+        "minorVersion": "1.0",
+        "versionGroup": "1.0.0",
+        "description": "",
+        "isPublic": false,
+        "name": "petStoreTest",
+        "type": "rest-api",
+        "isSnapshot": false,
+        "status": "published",
+        "externalFile": {
+            "url": null
+        },
+        "createdDate": "2020-06-09T19:10:48.523Z",
+        "updatedDate": "2020-06-09T19:10:48.471Z",
+        "minMuleVersion": null,
+        "labels": [],
+        "categories": [],
+        "files": [
+            {
+                "classifier": "raml",
+                "packaging": "zip",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/5d056f50-5948-45a6-a0a3-02f89f11c286/a9cd78a9ade2f8ac984adbd880a00b1facafd96aceef350ba427c0ef33d4fd14.zip",
+                "createdDate": "2020-06-09T19:10:45.539Z",
+                "md5": "ba2ba083d3b0b3107dbde305fe2acaa2",
+                "sha1": "dc66177a1c0d875c444bc7b5b2dfb3730d9aec84",
+                "mainFile": "petstoretest.raml",
+                "isGenerated": false
+            },
+            {
+                "classifier": "fat-raml",
+                "packaging": "zip",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/5d056f50-5948-45a6-a0a3-02f89f11c286/c671bca7ec536a40fe51f2cb263db022386577d501bcca502575a7b52038184d.zip",
+                "createdDate": "2020-06-09T19:10:46.281Z",
+                "md5": "bde9631cd82aeb85c30e0a1c5cf4d0e8",
+                "sha1": "023fb2671bd5de796e9e466ffa6f5855dcea735b",
+                "mainFile": "petstoretest.raml",
+                "isGenerated": false
+            },
+            {
+                "classifier": "oas",
+                "packaging": "zip",
+                "externalLink": "https://anypoint.mulesoft.com:443/object-store/repository-service-storage/5d056f50-5948-45a6-a0a3-02f89f11c286/4518630d08c81e18be29ce4bda3c73a0cee4b4021ae0ad89d778a9bafa5a99f3.zip",
+                "createdDate": "2020-06-09T19:10:48.378Z",
+                "md5": "09e28038b95fb7916c4af0c8e0e3dd3a",
+                "sha1": "04ed495e5c4d8117747d4d77e1e2ac934f722758",
+                "mainFile": "api.json",
+                "isGenerated": true
+            }
+        ],
+        "customFields": [],
+        "rating": 0,
+        "numberOfRates": 0,
+        "createdBy": {
+            "id": "7ddc8eed-9ab9-4df3-aad3-cde5d5865d8a",
+            "userName": "PCEadmin",
+            "firstName": "System",
+            "lastName": "Admin"
+        },
+        "organization": {
+            "id": "5d056f50-5948-45a6-a0a3-02f89f11c286",
+            "name": "ABC.APIGW",
+            "parentOrganizationIds": [],
+            "subOrganizationIds": [],
+            "tenantOrganizationIds": [],
+            "isMaster": true,
+            "domain": "abcapigw"
+        },
+        "id": "5d056f50-5948-45a6-a0a3-02f89f11c286/petstoretest/1.0.1",
+        "icon": null,
+        "createdAt": "2020-06-09T19:10:48.523Z",
+        "modifiedAt": "2020-06-09T19:10:48.471Z"
+    }

@@ -1,0 +1,220 @@
+{
+    "exchangeAssets": [
+        {
+            "groupId": "074345f4-651b-4b90-9a5f-083303be816b",
+            "orgName": "NIS",
+            "assetId": "pea-demo-1",
+            "version": "1.0.1",
+            "status": "Success"
+        },
+        {
+            "groupId": "64675daa-bcba-4962-a29c-5ebd4c97b5be",
+            "orgName": "ADC",
+            "assetId": "pea-demo-adc",
+            "version": "1.0.0",
+            "status": "Success"
+        },
+        {
+            "groupId": "074345f4-651b-4b90-9a5f-083303be816b",
+            "orgName": "NIS",
+            "assetId": "exchange-asset-demo",
+            "version": "1.0.0",
+            "status": "No asset updates"
+        }
+    ],
+    "apiInstances": [
+        {
+            "groupId": "074345f4-651b-4b90-9a5f-083303be816b",
+            "orgName": "NIS",
+            "assetId": "pea-demo-1",
+            "assetVersion": "1.0.1",
+            "apiVersion": "v1",
+            "instanceLabel": "cloud",
+            "environment": "Sandbox",
+            "status": "Success"
+        },
+        {
+            "groupId": "074345f4-651b-4b90-9a5f-083303be816b",
+            "orgName": "NIS",
+            "assetId": "pea-demo-1",
+            "assetVersion": "1.0.1",
+            "apiVersion": "v1",
+            "instanceLabel": "on-prem",
+            "environment": "Sandbox",
+            "status": "Success"
+        },
+        {
+            "groupId": "64675daa-bcba-4962-a29c-5ebd4c97b5be",
+            "orgName": "ADC",
+            "assetId": "pea-demo-adc",
+            "assetVersion": "1.0.0",
+            "apiVersion": "v1",
+            "instanceLabel": "on-prem",
+            "environment": "Production",
+            "status": "Success"
+        },
+        {
+            "groupId": "64675daa-bcba-4962-a29c-5ebd4c97b5be",
+            "orgName": "ADC",
+            "assetId": "pea-demo-adc",
+            "assetVersion": "1.0.0",
+            "apiVersion": "v1",
+            "instanceLabel": "cloud",
+            "environment": "Sandbox",
+            "status": "Success"
+        },
+        {
+            "groupId": "64675daa-bcba-4962-a29c-5ebd4c97b5be",
+            "orgName": "ADC",
+            "assetId": "pea-demo-adc",
+            "assetVersion": "1.0.0",
+            "apiVersion": "v1",
+            "instanceLabel": "on-prem",
+            "environment": "Sandbox",
+            "status": "Success"
+        },
+        {
+            "groupId": "074345f4-651b-4b90-9a5f-083303be816b",
+            "orgName": "NIS",
+            "assetId": "exchange-asset-demo",
+            "assetVersion": "1.0.0",
+            "apiVersion": "v1",
+            "instanceLabel": "acm-demo",
+            "environment": "Sandbox",
+            "status": "No api instance updates"
+        }
+    ],
+    "slaTiers": [
+        {
+            "groupId": "074345f4-651b-4b90-9a5f-083303be816b",
+            "orgName": "NIS",
+            "assetId": "pea-demo-1",
+            "assetVersion": "1.0.1",
+            "apiVersion": "v1",
+            "apiInstanceId": 1380,
+            "instanceLabel": "cloud",
+            "slaTierId": 579,
+            "slaTierName": "Trial",
+            "environment": "Sandbox",
+            "status": "Success"
+        },
+        {
+            "groupId": "074345f4-651b-4b90-9a5f-083303be816b",
+            "orgName": "NIS",
+            "assetId": "pea-demo-1",
+            "assetVersion": "1.0.1",
+            "apiVersion": "v1",
+            "apiInstanceId": 1379,
+            "instanceLabel": "on-prem",
+            "slaTierId": 625,
+            "slaTierName": "Trial",
+            "environment": "Sandbox",
+            "status": "Success"
+        },
+        {
+            "groupId": "074345f4-651b-4b90-9a5f-083303be816b",
+            "orgName": "NIS",
+            "assetId": "pea-demo-1",
+            "assetVersion": "1.0.1",
+            "apiVersion": "v1",
+            "apiInstanceId": 1379,
+            "instanceLabel": "on-prem",
+            "slaTierId": 628,
+            "slaTierName": "Enterprise",
+            "environment": "Sandbox",
+            "status": "Success"
+        },
+        {
+            "groupId": "64675daa-bcba-4962-a29c-5ebd4c97b5be",
+            "orgName": "ADC",
+            "assetId": "pea-demo-adc",
+            "assetVersion": "1.0.0",
+            "apiVersion": "v1",
+            "apiInstanceId": 1384,
+            "instanceLabel": "on-prem",
+            "slaTierId": 637,
+            "slaTierName": "Trial",
+            "environment": "Production",
+            "status": "Success"
+        },
+        {
+            "groupId": "64675daa-bcba-4962-a29c-5ebd4c97b5be",
+            "orgName": "ADC",
+            "assetId": "pea-demo-adc",
+            "assetVersion": "1.0.0",
+            "apiVersion": "v1",
+            "apiInstanceId": 1384,
+            "instanceLabel": "on-prem",
+            "slaTierId": 638,
+            "slaTierName": "Enterprise",
+            "environment": "Production",
+            "status": "Success"
+        },
+        {
+            "groupId": "64675daa-bcba-4962-a29c-5ebd4c97b5be",
+            "orgName": "ADC",
+            "assetId": "pea-demo-adc",
+            "assetVersion": "1.0.0",
+            "apiVersion": "v1",
+            "apiInstanceId": 1382,
+            "instanceLabel": "cloud",
+            "slaTierId": 639,
+            "slaTierName": "Private",
+            "environment": "Sandbox",
+            "status": "Success"
+        },
+        {
+            "groupId": "64675daa-bcba-4962-a29c-5ebd4c97b5be",
+            "orgName": "ADC",
+            "assetId": "pea-demo-adc",
+            "assetVersion": "1.0.0",
+            "apiVersion": "v1",
+            "apiInstanceId": 1382,
+            "instanceLabel": "cloud",
+            "slaTierId": 640,
+            "slaTierName": "Public",
+            "environment": "Sandbox",
+            "status": "Success"
+        },
+        {
+            "groupId": "64675daa-bcba-4962-a29c-5ebd4c97b5be",
+            "orgName": "ADC",
+            "assetId": "pea-demo-adc",
+            "assetVersion": "1.0.0",
+            "apiVersion": "v1",
+            "apiInstanceId": 1381,
+            "instanceLabel": "on-prem",
+            "slaTierId": 635,
+            "slaTierName": "Trial",
+            "environment": "Sandbox",
+            "status": "Success"
+        },
+        {
+            "groupId": "64675daa-bcba-4962-a29c-5ebd4c97b5be",
+            "orgName": "ADC",
+            "assetId": "pea-demo-adc",
+            "assetVersion": "1.0.0",
+            "apiVersion": "v1",
+            "apiInstanceId": 1381,
+            "instanceLabel": "on-prem",
+            "slaTierId": 636,
+            "slaTierName": "Enterprise",
+            "environment": "Sandbox",
+            "status": "Success"
+        },
+        {
+            "groupId": "074345f4-651b-4b90-9a5f-083303be816b",
+            "orgName": "NIS",
+            "assetId": "exchange-asset-demo",
+            "assetVersion": "1.0.0",
+            "apiVersion": "v1",
+            "apiInstanceId": 1307,
+            "instanceLabel": "acm-demo",
+            "slaTierId": 556,
+            "slaTierName": "Trial",
+            "environment": "Sandbox",
+            "status": "No SLA tier updates"
+        }
+    ],
+    "errors": []
+}

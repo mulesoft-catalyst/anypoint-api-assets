@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:min-log="http://www.mulesoft.org/schema/mule/min-log"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:file="http://www.mulesoft.org/schema/mule/file"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd 
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/min-log http://www.mulesoft.org/schema/mule/min-log/current/mule-min-log.xsd">
+	<flow name="exchange-assets" doc:id="4e7f6252-8dd1-4934-9a35-a797b28688e3" >
+			<ee:transform doc:name="assetUpdatesExist" doc:id="68e01323-33ba-4e57-b490-4a22ee918f0b" >
+				<ee:message >
+				</ee:message>
+				<ee:variables >
+					<ee:set-variable variableName="assetUpdatesExist" ><![CDATA[%dw 2.0
+import * from dw::core::Strings
+output application/json
+// DW function 'substringAfter' has an issue (fixed in 4.3 runtime) 
+//   where only the first character is evaluated in the find string).
+//   Ideally the find string should be "last-sync-date:", but using ":"
+//   for now due to the issue.
+var lastSyncDate = substringAfter(payload.labels.*value[?( $ contains Mule::p('secure::tag.last.sync.date') )][0], ":")
+var forceSync = payload.labels.*value[?( $ contains Mule::p('secure::tag.force.sync') )][0]
+fun normalize(date) = date replace " " with "T"
+---
+// Check if the asset was published after the last sync date OR
+//   if the force sync option is present.
+if ((not isEmpty(lastSyncDate)) and (payload.modifiedAt as DateTime > normalize(lastSyncDate) as DateTime {format: "yyyy-MM-dd'T'HH:mm:ss.SSSZ"}) or ((not isEmpty(forceSync))))
+    true
+// Case where asset has never been synced.
+else if (isEmpty(lastSyncDate))
+    true
+else
+    false]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+
+			<choice doc:name="Choice based on whether asset updates exist" doc:id="67eeb172-7a9d-4a72-9f5f-339f8b7f6d1a" >
+				<when expression="#[vars.assetUpdatesExist]">
+					<flow-ref doc:name="post-exchange-asset" doc:id="11b9eb4a-c700-457b-9f77-341f56995258" name="post-exchange-asset"/>
+					<choice doc:name="No errors?" doc:id="f90826d5-7db4-4759-a15e-e36f68d87e32">
+						<when expression="#[vars.errorsDoNotExist]">
+							<flow-ref doc:name="post-asset-portal-pages" doc:id="1fb4f64e-97cf-4d4c-a02a-fc302e2e7aa4" name="post-asset-portal-pages" />
+						</when>
+					</choice>
+					<choice doc:name="No errors?" doc:id="cf57e036-0bf7-4a0c-8b32-9729abfe8efc">
+						<when expression="#[vars.errorsDoNotExist]">
+							<flow-ref doc:name="tag-asset-with-sync-date" doc:id="33922528-f98c-4c60-a052-3aeee23b2360" name="tag-asset-with-sync-date" />
+						</when>
+					</choice>
+					<choice doc:name="No errors?" doc:id="2b03d58c-8717-467c-a77c-86bd3e80de14">
+						<when expression="#[vars.errorsDoNotExist]">
+							<set-variable value='#[%dw 2.0
+output application/json
+---
+{
+	"groupId": vars.groupId,
+	"orgName": vars.orgName,
+	"assetId": vars.assetId,
+	"version": vars.assetVersion,
+    ("status": "Success: Pages only") if (vars.updatePagesOnly),
+	("status": "Success") if (not vars.updatePagesOnly)
+    
+}]' doc:name="currentAssetStatus" doc:id="7443cafa-c7be-4024-93f6-00ffa0edab9c" variableName="currentAssetStatus" />
+							<ee:transform doc:name="Append status to response message" doc:id="45020b53-04cc-41ec-940a-5eb94472a28e">
+						<ee:message />
+						<ee:variables>
+							<ee:set-variable variableName="responseMessage"><![CDATA[%dw 2.0
+output application/json
+---
+vars.responseMessage mapObject ((value, key, index) -> do {
+	if ((key) ~= "exchangeAssets")
+	    (key): value << vars.currentAssetStatus
+	else
+	    (key): value
+})]]></ee:set-variable>
+						</ee:variables>
+					</ee:transform>
+							<logger level="INFO" doc:name="Log asset updates" doc:id="a80cfcdc-97c4-4162-95ac-4ab80dfd15f1" message="#[vars.currentAssetStatus]" />
+						</when>
+					</choice>
+				
+</when>
+				<otherwise>
+					<set-variable value='#[%dw 2.0
+output application/json
+---
+{
+	"groupId": vars.groupId,
+	"orgName": vars.orgName,
+	"assetId": vars.assetId,
+	"version": vars.assetVersion,
+	"status": "No asset updates"
+}]' doc:name="currentAssetStatus" doc:id="13469f09-3e58-4a7b-9bf1-9ea8808e9948" variableName="currentAssetStatus" />
+					<ee:transform doc:name="Append status to response message" doc:id="0c5857a4-ca4a-4d9e-9885-66563c68a7c9">
+						<ee:message>
+						</ee:message>
+						<ee:variables >
+							<ee:set-variable variableName="responseMessage" ><![CDATA[%dw 2.0
+output application/json
+---
+vars.responseMessage mapObject ((value, key, index) -> do {
+	if ((key) ~= "exchangeAssets")
+	    (key): value << vars.currentAssetStatus
+	else
+	    (key): value
+})]]></ee:set-variable>
+						</ee:variables>
+					</ee:transform>
+					<logger level="INFO" doc:name="Logger - no asset updates" doc:id="a6af74d1-8bf7-4d24-83ca-42847613bb03" message='#[vars.currentAssetStatus]'/>
+				</otherwise>
+			</choice>		
+
+		<error-handler >
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="4c74ae4f-563d-49aa-9b57-126d3835212f" >
+				<set-variable value='#[%dw 2.0
+output application/json
+---
+{
+	"groupId": vars.groupId,
+	"orgName": vars.orgName,
+	"assetId": vars.assetId,
+	"version": vars.assetVersion,
+	"statusCode": error.errorMessage.attributes.statusCode,
+	"errorLocation": "exchange-assets",
+	"errorMessage": error.description
+}]' doc:name="currentAssetStatus" doc:id="15bef6c7-727d-4854-92ac-2e26dc5f9bfb" variableName="currentAssetStatus" />
+				<ee:transform doc:name="Append status to response message" doc:id="cf4747f5-690b-48e3-9bf9-a97233a4ca24" >
+					<ee:message >
+					</ee:message>
+					<ee:variables >
+						<ee:set-variable variableName="responseMessage" ><![CDATA[%dw 2.0
+output application/json
+---
+vars.responseMessage mapObject ((value, key, index) -> do {
+	if ((key) ~= "errors")
+	    (key): value << vars.currentAssetStatus
+	else
+	    (key): value
+})]]></ee:set-variable>
+					</ee:variables>
+				</ee:transform>
+				<logger level="INFO" doc:name="Logger" doc:id="125141d3-7206-46e5-ac07-4c3e3a402cb2" message="#[vars.currentAssetStatus]" />
+			</on-error-continue>
+		</error-handler>			
+		
+	</flow>
+	<flow name="post-exchange-asset" doc:id="99d8a96f-4e72-46ce-b5ea-1bf4eb97c76c" >
+		<http:request method="GET" doc:name="Get RAML file" doc:id="39fa1e34-7257-4aef-900e-0248790ab0d0" config-ref="HTTP_Request_Anypoint_Source" url="#[vars.fileURL]" target="ramlFile"/>
+<!-- 		
+		<file:write doc:name="Write" doc:id="6f134e3d-49a8-455f-83b8-01eca0778111" config-ref="File_Config" path="C:/Dev/files/exchange.zip" >
+			<file:content ><![CDATA[#[vars.ramlFile]]]></file:content>
+		</file:write>
+ -->		
+		<http:request method="POST" doc:name="Post RAML to target" doc:id="538c65f8-9af0-4d84-84d9-7cd3969d373c" config-ref="HTTP_Request_Anypoint_Target" path="${secure::anypoint.target.assets.base.path}" target="postRamlResponse">
+				<http:body><![CDATA[#[%dw 2.0
+
+import dw::module::Multipart
+
+input payload application/xml
+output multipart/form-data boundary="------------------------target"
+---
+{
+	parts : {
+		part0: Multipart::field("organizationId" , vars.targetOrgId),
+		part1: Multipart::field("groupId" , vars.targetOrgId),
+		part2: Multipart::field("assetId" , vars.assetId),
+		part3: Multipart::field("version" , vars.assetVersion),
+		part4: Multipart::field("name" , vars.name),
+		part5: Multipart::field("classifier" , "raml"),
+		part6: Multipart::field("apiVersion" , vars.apiVersion),
+		part7: Multipart::field("main" , vars.ramlFileName),
+		part8: Multipart::field({name: "asset", value : vars.ramlFile, mime:"application/octet-stream", fileName: "exchange.zip"}),
+	}
+}]]]></http:body>
+				<http:headers><![CDATA[#[output application/java
+---
+{
+	"Authorization":"bearer " ++ vars.targetAuthToken,
+	"Accept":"application/json"
+}]]]></http:headers>
+			</http:request>
+		<logger level="INFO" doc:name="Log RAML posted" doc:id="05912366-4f27-408f-9b77-7cc44a214d8d" message='#[%dw 2.0
+output application/java
+---
+"RAML posted to target successfully for asset: " ++ vars.assetId ++ " | " ++ vars.assetVersion ++ " | " ++ vars.apiVersion ++ " in " ++ flow.name]'/>
+		<error-handler >
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="37ebbec9-00a6-416b-a719-84beac0faca8" >
+				<choice doc:name="Choice - Error status code is an asset conflict?" doc:id="5d563526-15d0-4c17-abca-cc0159d328fa" doc:description="Treat 409 (Conflict) response as soft error to allow for portal asset page updates if they exist.">
+					<when expression='#[error.errorMessage.attributes.statusCode == 409]'>
+						<set-variable value='#["true" as Boolean]' doc:name="errorsDoNotExist" doc:id="48829c6d-7ca1-4ade-8129-465146e86969" variableName="errorsDoNotExist"/>
+						<set-variable value='#["true" as Boolean]' doc:name="updatePagesOnly" doc:id="27231528-c967-46d3-a4e4-01143316d503" variableName="updatePagesOnly"/>
+					</when>
+					<otherwise>
+						<set-variable value='#["false" as Boolean]' doc:name="errorsDoNotExist" doc:id="6da6618a-f1d0-4af6-9657-786dad97c5e8" variableName="errorsDoNotExist"/>
+					</otherwise>
+				</choice>
+				<set-variable value='#[%dw 2.0
+output application/json
+---
+{
+	"groupId": vars.groupId,
+	"orgName": vars.orgName,
+	"assetId": vars.assetId,
+	"version": vars.assetVersion,
+	"statusCode": error.errorMessage.attributes.statusCode,
+	"errorLocation": "post-api-asset",
+	"errorMessage": error.description
+}]' doc:name="currentAssetStatus" doc:id="999e10fd-5004-424f-8728-3ebd8b66b7f3" variableName="currentAssetStatus" />
+				<ee:transform doc:name="Append status to response message" doc:id="e3dc5709-a329-4b5d-853a-f579f4767e75" >
+					<ee:message >
+					</ee:message>
+					<ee:variables >
+						<ee:set-variable variableName="responseMessage" ><![CDATA[%dw 2.0
+output application/json
+---
+vars.responseMessage mapObject ((value, key, index) -> do {
+	if ((key) ~= "errors")
+	    (key): value << vars.currentAssetStatus
+	else
+	    (key): value
+})]]></ee:set-variable>
+					</ee:variables>
+				</ee:transform>
+				<logger level="INFO" doc:name="Logger" doc:id="75825d3d-2ec5-4dfb-bb3d-8843dff363e8" message="#[vars.currentAssetStatus]" />
+			</on-error-continue>
+		</error-handler>
+	</flow>
+	<flow name="post-asset-portal-pages" doc:id="00949165-bec0-4831-ab67-f5da4bfcb013" >
+		<http:request method="GET" doc:name="Get asset pages" doc:id="1bf12beb-16ad-494a-8216-0bfdf8b5ef64" config-ref="HTTP_Request_Anypoint_Source" path='#["/exchange/api/v1/organizations/" ++ vars.groupId ++ "/assets/" ++ vars.groupId ++ "/" ++ vars.assetId ++ "/" ++ vars.assetVersion ++ "/portal/pages"]' target="pages">
+			<http:headers ><![CDATA[#[%dw 2.0
+output application/java
+---
+{
+	"Authorization":"bearer " ++ vars.sourceAuthToken
+}]]]></http:headers>
+		</http:request>
+		<foreach doc:name="For each asset page" doc:id="0f0efe67-d367-4f27-b104-d586c49ca76c" collection="#[vars.pages]">
+			<flow-ref doc:name="get-page-content--publish-to-target" doc:id="2f98cc8b-0440-4b99-bcbc-270c35256962" name="get-page-content--publish-to-target"/>
+		</foreach>
+		<logger level="DEBUG" doc:name="Log completion of posting asset portal pages" doc:id="340bcc9e-26c3-48c6-bf07-5966f3df3a40" message='#[%dw 2.0
+output application/java
+---
+"Finished posting asset pages for asset: " ++ vars.assetId ++ " | " ++ vars.assetVersion ++ " in " ++ flow.name]'/>
+		<error-handler >
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="bda7972b-ce93-4ceb-8870-0aa2acd9c242" >
+				<set-variable value='#["false" as Boolean]' doc:name="errorsDoNotExist" doc:id="85ba717b-984d-4d5b-ad7c-a572bf16b297" variableName="errorsDoNotExist" />
+				<set-variable value='#[%dw 2.0
+output application/json
+---
+{
+	"groupId": vars.groupId,
+	"orgName": vars.orgName,
+	"assetId": vars.assetId,
+	"version": vars.assetVersion,
+	"statusCode": error.errorMessage.attributes.statusCode,
+	"errorLocation": "post-asset-asset-portal-pages",
+	"errorMessage": error.description
+}]' doc:name="currentAssetStatus" doc:id="b4eea839-c591-456d-8e32-06d0e4e4d935" variableName="currentAssetStatus" />
+				<ee:transform doc:name="Append status to response message" doc:id="169db88d-fd87-4398-a320-c4ceef250885" >
+					<ee:message >
+					</ee:message>
+					<ee:variables >
+						<ee:set-variable variableName="responseMessage" ><![CDATA[%dw 2.0
+output application/json
+---
+vars.responseMessage mapObject ((value, key, index) -> do {
+	if ((key) ~= "errors")
+	    (key): value << vars.currentAssetStatus
+	else
+	    (key): value
+})]]></ee:set-variable>
+					</ee:variables>
+				</ee:transform>
+				<logger level="INFO" doc:name="Logger" doc:id="8f04634f-93ac-4165-9b8f-c6cd697ea8e6" message="#[vars.currentAssetStatus]" />
+			</on-error-continue>
+		</error-handler>
+	</flow>
+	<flow name="get-page-content--publish-to-target" doc:id="2226be66-3233-4cf7-8f52-c7b937b0fd1e" >
+		<http:request method="GET" doc:name="Get page content" doc:id="5c55c6be-b849-4081-9aba-ad1b633bfa8a" config-ref="HTTP_Request_Anypoint_Source" path='#["/exchange/api/v1/organizations/" ++ vars.groupId ++ "/assets/" ++ vars.groupId ++ "/" ++ vars.assetId ++ "/" ++ vars.assetVersion ++ "/portal/pages/" ++ payload.path]' target="pageContent">
+			<http:headers ><![CDATA[#[%dw 2.0
+output application/java
+---
+{
+	"Authorization":"bearer " ++ vars.sourceAuthToken,
+	"Accept": "text/markdown"
+}]]]></http:headers>
+		</http:request>	
+		
+		<http:request method="PUT" doc:name="Post page draft" doc:id="32b30528-e3c0-4dd9-8870-1b661dfe2276" config-ref="HTTP_Request_Anypoint_Target" path='#["/exchange/api/v1/organizations/" ++ vars.targetOrgId ++ "/assets/" ++ vars.targetOrgId ++ "/" ++ vars.assetId ++ "/" ++ vars.assetVersion ++ "/draft/pages/" ++ payload.name]'>
+			<http:body ><![CDATA[#[vars.pageContent]]]></http:body>
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"Authorization":"bearer " ++ vars.targetAuthToken
+}]]]></http:headers>
+		</http:request>
+		<http:request method="PATCH" doc:name="Publish page" doc:id="0e04a1df-9310-451a-a00b-24f44553b52e" config-ref="HTTP_Request_Anypoint_Target" path='#["/exchange/api/v1/assets/" ++ vars.targetOrgId ++ "/" ++ vars.assetId ++ "/" ++ vars.assetVersion]'>
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"Authorization":"bearer " ++ vars.targetAuthToken
+}]]]></http:headers>
+		</http:request>
+
+		
+		<logger level="DEBUG" doc:name="Logger" doc:id="7c35dbbf-df01-4535-bdb4-8d4b808485de" message="#[payload]"/>
+		<error-handler >
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="9bddb043-1213-4775-9b52-5c422ebb4fb2" >
+				<set-variable value='#["false" as Boolean]' doc:name="errorsDoNotExist" doc:id="d7546f9d-c615-4176-be2d-4e976478b553" variableName="errorsDoNotExist" />
+				<set-variable value='#[%dw 2.0
+output application/json
+---
+{
+	"groupId": vars.groupId,
+	"orgName": vars.orgName,
+	"assetId": vars.assetId,
+	"version": vars.assetVersion,
+	"statusCode": error.errorMessage.attributes.statusCode,
+	"errorLocation": "get-page-content--publish-to-target",
+	"errorMessage": error.description
+}]' doc:name="currentAssetStatus" doc:id="83521ee3-e2ff-4f1c-80c6-799503817753" variableName="currentAssetStatus" />
+				<ee:transform doc:name="Append status to response message" doc:id="93130e27-296e-4141-baa6-a741122b58e4" >
+					<ee:message >
+					</ee:message>
+					<ee:variables >
+						<ee:set-variable variableName="responseMessage" ><![CDATA[%dw 2.0
+output application/json
+---
+vars.responseMessage mapObject ((value, key, index) -> do {
+	if ((key) ~= "errors")
+	    (key): value << vars.currentAssetStatus
+	else
+	    (key): value
+})]]></ee:set-variable>
+					</ee:variables>
+				</ee:transform>
+				<logger level="INFO" doc:name="Logger" doc:id="08a9b2b4-3a30-4ab4-95d5-8dd52b020530" message="#[vars.currentAssetStatus]" />
+			
+</on-error-continue>
+		</error-handler>		
+	</flow>
+	<flow name="tag-asset-with-sync-date" doc:id="9f1e8982-1b9e-439e-97ec-cbc01025045e" >
+		<http:request method="PUT" doc:name="Tag asset with sync date" doc:id="31df3b24-259b-4c01-b79f-2ad312643cbb" config-ref="HTTP_Request_Anypoint_Source" path='#["exchange/api/v1/assets/" ++ vars.groupId ++ "/" ++ vars.assetId ++ "/" ++ vars.assetVersion ++ "/tags"]'>
+			<http:body ><![CDATA[#[%dw 2.0
+output application/json
+---
+[
+	{
+		value: "last-sync-date:" ++ now() as String {format: "yyyy-MM-dd' 'HH:mm:ss.SSSZ"}
+	}
+]]]]></http:body>
+			<http:headers ><![CDATA[#[%dw 2.0
+output application/java
+---
+{
+	"Authorization":"bearer " ++ vars.sourceAuthToken
+}]]]></http:headers>
+		</http:request>
+		<logger level="INFO" doc:name="Log tagged exchange asset" doc:id="389285de-e218-4bb5-a2bc-768c0bd674ea" message='#[%dw 2.0
+output application/java
+---
+"Successfully tagged exchange asset: " ++ vars.assetId ++ " | " ++ vars.assetVersion ++ " in " ++ flow.name]'/>
+		<error-handler >
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="b6328094-ee2c-425c-890a-74c50785d57e" >
+				<set-variable value='#["false" as Boolean]' doc:name="errorsDoNotExist" doc:id="6448e969-a988-4fc5-8a22-602b5900824d" variableName="errorsDoNotExist" />
+				<set-variable value='#[%dw 2.0
+output application/json
+---
+{
+	"groupId": vars.groupId,
+	"orgName": vars.orgName,
+	"assetId": vars.assetId,
+	"version": vars.assetVersion,
+	"statusCode": error.errorMessage.attributes.statusCode,
+	"errorLocation": "tag-asset-with-sync-date",
+	"errorMessage": error.description
+}]' doc:name="currentAssetStatus" doc:id="919abe81-8b94-434a-ae19-3cad84799237" variableName="currentAssetStatus" />
+				<ee:transform doc:name="Append status to response message" doc:id="82d0a57a-706e-47a4-a5e1-e12aab9b8ebe" >
+					<ee:message >
+					</ee:message>
+					<ee:variables >
+						<ee:set-variable variableName="responseMessage" ><![CDATA[%dw 2.0
+output application/json
+---
+vars.responseMessage mapObject ((value, key, index) -> do {
+	if ((key) ~= "errors")
+	    (key): value << vars.currentAssetStatus
+	else
+	    (key): value
+})]]></ee:set-variable>
+					</ee:variables>
+				</ee:transform>
+				<logger level="INFO" doc:name="Logger" doc:id="83fb2eee-677d-4e54-9c21-3f4ace9103d9" message="#[vars.currentAssetStatus]" />
+			</on-error-continue>
+		</error-handler>			
+	</flow>	
+	
+
+</mule>

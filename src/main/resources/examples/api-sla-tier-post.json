@@ -1,0 +1,14 @@
+{
+    "apiVersionId": 1379,
+    "status": "ACTIVE",
+    "autoApprove": false,
+    "limits": [
+        {
+            "visible": true,
+            "timePeriodInMilliseconds": 60000,
+            "maximumRequests": 20
+        }
+    ],
+    "name": "Enterprise",
+    "description": "Enterprise tier"
+}

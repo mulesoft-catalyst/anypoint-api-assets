@@ -1,0 +1,227 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="exchange-asset-v1" format="json">
+      <types:shape format="weave" example="examples/exchange-asset-v1.json"><![CDATA[%dw 2.0
+
+type exchange_asset_v1 = {|
+  groupId: String, 
+  assetId: String, 
+  version: String, 
+  versionGroup: String, 
+  productAPIVersion: String, 
+  isPublic: Boolean, 
+  name: String, 
+  "type": String, 
+  status: String, 
+  assetLink: String, 
+  createdAt: String, 
+  runtimeVersion: String, 
+  attributes: Array<{|    value: String,     tagType: String,     key: Null  |}>, 
+  labels: Array<{|    value: String,     tagType: String,     key: Null  |}>, 
+  categories: Array<{|    value: Array<String>, 
+    displayName: String, 
+    tagType: String, 
+    dataType: String, 
+    key: String
+  |}>, 
+  customFields: Array<Any>, 
+  tags: Array<{|    value: String,     key: Null  |}>, 
+  files: Array<{|    classifier: Null,     packaging: String,     externalLink: String,     md5: String,     createdDate: String  |}>, 
+  rating: Number {"typeId": "int"}, 
+  numberOfRates: Number {"typeId": "int"}, 
+  createdBy: {|
+    id: String, 
+    userName: String, 
+    firstName: String, 
+    lastName: String
+  |}, 
+  organization: {|
+    name: String, 
+    id: String, 
+    createdAt: String, 
+    updatedAt: String, 
+    ownerId: String, 
+    clientId: String, 
+    domain: String, 
+    idprovider_id: String, 
+    isFederated: Boolean, 
+    parentOrganizationIds: Array<String>, 
+    subOrganizationIds: Array<String>, 
+    tenantOrganizationIds: Array<Any>, 
+    isMaster: Boolean
+  |}, 
+  id: String, 
+  icon: Null, 
+  modifiedAt: String
+|} {"example": "{\\\"groupId\\\":\\\"074345f4-651b-4b90-9a5f-083303be816b\\\",\\\"assetId\\\":\\\"m3-api-template\\\",\\\"version\\\":\\\"1.0.2\\\",\\\"versionGroup\\\":\\\"v1\\\",\\\"productAPIVersion\\\":\\\"v1\\\",\\\"isPublic\\\":false,\\\"name\\\":\\\"M3 API Template\\\",\\\"type\\\":\\\"rest-api\\\",\\\"status\\\":\\\"published\\\",\\\"assetLink\\\":\\\"\\\",\\\"createdAt\\\":\\\"2020-10-14T04:18:12.479Z\\\",\\\"runtimeVersion\\\":\\\"\\\",\\\"attributes\\\":[{\\\"value\\\":\\\"raml\\\",\\\"tagType\\\":\\\"attribute\\\",\\\"key\\\":null},{\\\"value\\\":\\\"rest\\\",\\\"tagType\\\":\\\"attribute\\\",\\\"key\\\":null},{\\\"value\\\":\\\"api\\\",\\\"tagType\\\":\\\"attribute\\\",\\\"key\\\":null},{\\\"value\\\":\\\"v1\\\",\\\"tagType\\\":\\\"attribute\\\",\\\"key\\\":\\\"product-api-version\\\"},{\\\"value\\\":\\\"de6e4e46-2993-4e45-8b0a-dcdb0cdf091e\\\",\\\"tagType\\\":\\\"attribute\\\",\\\"key\\\":\\\"project-id\\\"},{\\\"value\\\":\\\"master\\\",\\\"tagType\\\":\\\"attribute\\\",\\\"key\\\":\\\"branch-id\\\"},{\\\"value\\\":\\\"d00355d500b69d10abac38c351eb91194bbd25a9\\\",\\\"tagType\\\":\\\"attribute\\\",\\\"key\\\":\\\"commit-id\\\"},{\\\"value\\\":\\\"has-mule4-connector\\\",\\\"tagType\\\":\\\"attribute\\\",\\\"key\\\":null},{\\\"value\\\":\\\"has-mule3-connector\\\",\\\"tagType\\\":\\\"attribute\\\",\\\"key\\\":null}],\\\"labels\\\":[{\\\"value\\\":\\\"last-sync-date:2020-10-14 00:42:24.654-0400\\\",\\\"tagType\\\":\\\"label\\\",\\\"key\\\":null}],\\\"categories\\\":[{\\\"value\\\":[\\\"MyCategory\\\"],\\\"displayName\\\":\\\"project\\\",\\\"tagType\\\":\\\"category\\\",\\\"dataType\\\":\\\"enum\\\",\\\"key\\\":\\\"Project\\\"}],\\\"customFields\\\":[],\\\"tags\\\":[{\\\"value\\\":\\\"last-sync-date:2020-10-14 00:42:24.654-0400\\\",\\\"key\\\":null},{\\\"value\\\":\\\"raml\\\",\\\"key\\\":null},{\\\"value\\\":\\\"rest\\\",\\\"key\\\":null},{\\\"value\\\":\\\"api\\\",\\\"key\\\":null},{\\\"value\\\":\\\"v1\\\",\\\"key\\\":\\\"product-api-version\\\"},{\\\"value\\\":\\\"de6e4e46-2993-4e45-8b0a-dcdb0cdf091e\\\",\\\"key\\\":\\\"project-id\\\"},{\\\"value\\\":\\\"master\\\",\\\"key\\\":\\\"branch-id\\\"},{\\\"value\\\":\\\"d00355d500b69d10abac38c351eb91194bbd25a9\\\",\\\"key\\\":\\\"commit-id\\\"},{\\\"value\\\":\\\"has-mule4-connector\\\",\\\"key\\\":null},{\\\"value\\\":\\\"has-mule3-connector\\\",\\\"key\\\":null}],\\\"files\\\":[{\\\"classifier\\\":null,\\\"packaging\\\":\\\"pom\\\",\\\"externalLink\\\":\\\"https:\\/\\/anypoint.mulesoft.com:443\\/object-store\\/repository-service-storage\\/074345f4-651b-4b90-9a5f-083303be816b\\/ae9a4d60-5857-44de-b0fa-2e08182eb26a\\/m3-api-template-1.0.2.pom\\\",\\\"md5\\\":\\\"e5a8ceb4405e5c634c45a672c27e5805\\\",\\\"createdDate\\\":\\\"2020-10-14T04:18:34.766Z\\\"},{\\\"classifier\\\":\\\"mule-plugin\\\",\\\"packaging\\\":\\\"jar\\\",\\\"externalLink\\\":\\\"https:\\/\\/anypoint.mulesoft.com:443\\/object-store\\/repository-service-storage\\/074345f4-651b-4b90-9a5f-083303be816b\\/161252b1-7f57-43a8-83e9-3de871161346\\/m3-api-template-1.0.2-mule-plugin.jar\\\",\\\"md5\\\":\\\"27807f5b32a1c53e4ecf2921381abc8a\\\",\\\"createdDate\\\":\\\"2020-10-14T04:18:34.639Z\\\"},{\\\"classifier\\\":\\\"fat-raml\\\",\\\"packaging\\\":\\\"zip\\\",\\\"externalLink\\\":\\\"https:\\/\\/anypoint.mulesoft.com:443\\/object-store\\/repository-service-storage\\/074345f4-651b-4b90-9a5f-083303be816b\\/7756d65c-a919-4852-adbd-f983f026f6e6\\/m3-api-template-1.0.2-fat-raml.zip\\\",\\\"md5\\\":\\\"c50316945cc31863fdbcf6b14bdd2573\\\",\\\"createdDate\\\":\\\"2020-10-14T04:18:12.329Z\\\"},{\\\"classifier\\\":\\\"raml\\\",\\\"packaging\\\":\\\"zip\\\",\\\"externalLink\\\":\\\"https:\\/\\/anypoint.mulesoft.com:443\\/object-store\\/repository-service-storage\\/074345f4-651b-4b90-9a5f-083303be816b\\/98d17b25-fb6f-4150-8457-e43b68843679\\/m3-api-template-1.0.2-raml.zip\\\",\\\"md5\\\":\\\"e42e62e2ac5aeaee4a8cb51993f469d6\\\",\\\"createdDate\\\":\\\"2020-10-14T04:18:11.807Z\\\"}],\\\"rating\\\":0,\\\"numberOfRates\\\":0,\\\"createdBy\\\":{\\\"id\\\":\\\"99a11c22-b536-463f-9b3d-b3983a503af0\\\",\\\"userName\\\":\\\"L1JHS01\\\",\\\"firstName\\\":\\\"Jin\\\",\\\"lastName\\\":\\\"Shin\\\"},\\\"organization\\\":{\\\"name\\\":\\\"NIS\\\",\\\"id\\\":\\\"074345f4-651b-4b90-9a5f-083303be816b\\\",\\\"createdAt\\\":\\\"2017-08-03T16:39:49.393Z\\\",\\\"updatedAt\\\":\\\"2020-07-10T16:16:03.335Z\\\",\\\"ownerId\\\":\\\"1a381d2a-7b7a-4c01-a563-f26fabb78b99\\\",\\\"clientId\\\":\\\"8923f10211454d0b8a0bb5fc2355d30b\\\",\\\"domain\\\":\\\"frs\\\",\\\"idprovider_id\\\":\\\"mulesoft\\\",\\\"isFederated\\\":true,\\\"parentOrganizationIds\\\":[\\\"6760ce10-4ceb-4fad-9fc3-000d57fb3ded\\\"],\\\"subOrganizationIds\\\":[\\\"85323283-cf87-4d18-a536-624fb01b7459\\\"],\\\"tenantOrganizationIds\\\":[],\\\"isMaster\\\":false},\\\"id\\\":\\\"074345f4-651b-4b90-9a5f-083303be816b\\/m3-api-template\\/1.0.2\\\",\\\"icon\\\":null,\\\"modifiedAt\\\":\\\"2020-10-14T04:18:12.479Z\\\"}"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="exchange-asset-small-v1" format="json">
+      <types:shape format="weave" example="examples/exchange-asset-small-v1.json"><![CDATA[%dw 2.0
+
+type exchange_asset_small_v1 = {|
+  groupId: String, 
+  labels: Array<{|    value: String,     tagType: String,     key: Null  |}>, 
+  modifiedAt: String
+|} {"example": "{\\\"groupId\\\":\\\"074345f4-651b-4b90-9a5f-083303be816b\\\",\\\"labels\\\":[{\\\"value\\\":\\\"last-sync-date:2020-10-14 00:42:24.654-0400\\\",\\\"tagType\\\":\\\"label\\\",\\\"key\\\":null}],\\\"modifiedAt\\\":\\\"2020-10-14T04:18:12.479Z\\\"}"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="api-details" format="json">
+      <types:shape format="weave" example="examples/api-details.json"><![CDATA[%dw 2.0
+
+type api_details = {|
+  audit: {|
+    created: {| date: String |}, 
+    updated: {| date: String |}
+  |}, 
+  masterOrganizationId: String, 
+  organizationId: String, 
+  id: Number {"typeId": "int"}, 
+  instanceLabel: String, 
+  groupId: String, 
+  assetId: String, 
+  assetVersion: String, 
+  productVersion: String, 
+  description: Null, 
+  tags: Array<Any>, 
+  order: Number {"typeId": "int"}, 
+  deprecated: Boolean, 
+  lastActiveDate: Null, 
+  endpointUri: Null, 
+  environmentId: String, 
+  isPublic: Boolean, 
+  endpoint: {|
+    audit: {|
+      created: {|  |}, 
+      updated: {|  |}
+    |}, 
+    id: Number {"typeId": "int"}, 
+    "type": String, 
+    uri: String, 
+    proxyUri: String, 
+    proxyRegistrationUri: Null, 
+    lastActiveDate: Null, 
+    isCloudHub: Boolean, 
+    deploymentType: String, 
+    policiesVersion: Null, 
+    referencesUserDomain: Boolean, 
+    muleVersion4OrAbove: Boolean, 
+    responseTimeout: Null, 
+    wsdlConfig: Null
+  |}, 
+  deployment: Null, 
+  autodiscoveryInstanceName: String
+|} {"example": "{\\\"audit\\\":{\\\"created\\\":{\\\"date\\\":\\\"2020-12-14T18:50:26.466Z\\\"},\\\"updated\\\":{\\\"date\\\":\\\"2020-12-15T18:06:06.938Z\\\"}},\\\"masterOrganizationId\\\":\\\"6760ce10-4ceb-4fad-9fc3-000d57fb3ded\\\",\\\"organizationId\\\":\\\"64675daa-bcba-4962-a29c-5ebd4c97b5be\\\",\\\"id\\\":1223,\\\"instanceLabel\\\":\\\"cloud-sandbox\\\",\\\"groupId\\\":\\\"64675daa-bcba-4962-a29c-5ebd4c97b5be\\\",\\\"assetId\\\":\\\"fl-demo-1\\\",\\\"assetVersion\\\":\\\"1.0.0\\\",\\\"productVersion\\\":\\\"v1\\\",\\\"description\\\":null,\\\"tags\\\":[],\\\"order\\\":1,\\\"deprecated\\\":false,\\\"lastActiveDate\\\":null,\\\"endpointUri\\\":null,\\\"environmentId\\\":\\\"24c8b29b-1ce2-4d37-a507-0767c35f60d1\\\",\\\"isPublic\\\":false,\\\"endpoint\\\":{\\\"audit\\\":{\\\"created\\\":{},\\\"updated\\\":{}},\\\"id\\\":1123,\\\"type\\\":\\\"raml\\\",\\\"uri\\\":\\\"https:\\/\\/services.mulesoft.com\\/my-service\\\",\\\"proxyUri\\\":\\\"https:\\/\\/0.0.0.0:8082\\/fl\\/demo\\\",\\\"proxyRegistrationUri\\\":null,\\\"lastActiveDate\\\":null,\\\"isCloudHub\\\":false,\\\"deploymentType\\\":\\\"HY\\\",\\\"policiesVersion\\\":null,\\\"referencesUserDomain\\\":false,\\\"muleVersion4OrAbove\\\":true,\\\"responseTimeout\\\":null,\\\"wsdlConfig\\\":null},\\\"deployment\\\":null,\\\"autodiscoveryInstanceName\\\":\\\"v1:1223\\\"}"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="api-request" format="json">
+      <types:shape format="weave" example="examples/api-request.json"><![CDATA[%dw 2.0
+
+type api_request = {|
+  endpoint: {|
+    deploymentType: String, 
+    isCloudHub: Boolean, 
+    muleVersion4OrAbove: Boolean, 
+    proxyUri: String, 
+    proxyTemplate: {| assetVersion: String |}, 
+    referencesUserDomain: Boolean, 
+    responseTimeout: Null, 
+    "type": String, 
+    uri: String, 
+    validation: String
+  |}, 
+  providerId: Null, 
+  instanceLabel: String, 
+  spec: {|
+    assetId: String, 
+    groupId: String, 
+    version: String
+  |}
+|} {"example": "{\\\"endpoint\\\":{\\\"deploymentType\\\":\\\"HY\\\",\\\"isCloudHub\\\":false,\\\"muleVersion4OrAbove\\\":true,\\\"proxyUri\\\":\\\"https:\\/\\/0.0.0.0\\/app\\/demo\\\",\\\"proxyTemplate\\\":{\\\"assetVersion\\\":\\\"2.1.0\\\"},\\\"referencesUserDomain\\\":true,\\\"responseTimeout\\\":null,\\\"type\\\":\\\"rest\\\",\\\"uri\\\":\\\"https:\\/\\/services.mulesoft.com\\/my-service\\\",\\\"validation\\\":\\\"DISABLED\\\"},\\\"providerId\\\":null,\\\"instanceLabel\\\":\\\"my-api-instance\\\",\\\"spec\\\":{\\\"assetId\\\":\\\"exchange-demo-asset\\\",\\\"groupId\\\":\\\"814941cd-878d-487c-80ad-50c0fa24b115\\\",\\\"version\\\":\\\"1.0.0\\\"}}"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="api-sla-tier-post" format="java">
+      <types:shape format="raml"><![CDATA[#%RAML 1.0 DataType
+type: string]]></types:shape>
+    </types:type>
+    <types:type name="api-sla-tier-details" format="json">
+      <types:shape format="weave" example="examples/api-sla-tier-details.json"><![CDATA[%dw 2.0
+
+type api_sla_tier_details = {|
+  audit: {|
+    created: {| date: String |}, 
+    updated: {| date: String |}
+  |}, 
+  masterOrganizationId: String, 
+  organizationId: String, 
+  id: Number {"typeId": "int"}, 
+  name: String, 
+  description: String, 
+  limits: Array<{|    visible: Boolean,     timePeriodInMilliseconds: Number {"typeId": "int"},     maximumRequests: Number {"typeId": "int"}  |}>, 
+  status: String, 
+  autoApprove: Boolean, 
+  applicationCount: Number {"typeId": "int"}, 
+  apiId: Number {"typeId": "int"}
+|} {"example": "{\\\"audit\\\":{\\\"created\\\":{\\\"date\\\":\\\"2021-06-14T14:50:36.420Z\\\"},\\\"updated\\\":{\\\"date\\\":\\\"2021-06-14T18:17:55.179Z\\\"}},\\\"masterOrganizationId\\\":\\\"6760ce10-4ceb-4fad-9fc3-000d57fb3ded\\\",\\\"organizationId\\\":\\\"074345f4-651b-4b90-9a5f-083303be816b\\\",\\\"id\\\":625,\\\"name\\\":\\\"Trial\\\",\\\"description\\\":\\\"Trial tier\\\",\\\"limits\\\":[{\\\"visible\\\":true,\\\"timePeriodInMilliseconds\\\":60000,\\\"maximumRequests\\\":3}],\\\"status\\\":\\\"ACTIVE\\\",\\\"autoApprove\\\":false,\\\"applicationCount\\\":0,\\\"apiId\\\":1379}"}
+
+]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#3c4ac33d-e2a2-467c-b94c-c7dd38384cfe">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="exchange-asset-small-v1"/>
+        </types:message>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#db553542-c574-49a1-ae1b-a688db4dadb2">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="exchange-asset-small-v1"/>
+        </types:message>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#9058fc02-9986-4f03-a433-fb42444b699f"/>
+  <types:enrichment select="#e3dc5709-a329-4b5d-853a-f579f4767e75"/>
+  <types:enrichment select="#a261ec9b-8a81-421b-87bd-ebe48e898082">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="api-details"/>
+        </types:message>
+      </types:input-event>
+      <types:output-event>
+        <types:message>
+          <types:payload type="api-request"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#4a9d7e83-b949-415b-aa6e-3059e7be5771"/>
+  <types:enrichment select="#fdd1b995-0ff9-4b2c-b616-46ec00eceb3b"/>
+  <types:enrichment select="#7de9fc64-2d8a-4542-be4c-4b2130bb8e25">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="api-sla-tier-details"/>
+        </types:message>
+      </types:input-event>
+      <types:output-event>
+        <types:variables>
+          <types:variable name="apiInstancePayload" type="api-sla-tier-post"/>
+        </types:variables>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#57d57816-344b-44a8-8ae5-3ecb0012d8fb"/>
+  <types:enrichment select="#bade5c33-771e-4876-ae21-3527a8f5309e"/>
+</types:mule>

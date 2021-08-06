@@ -1,0 +1,32 @@
+{
+    "audit": {
+        "created": {
+            "date": "2021-01-05T16:08:00.295Z"
+        },
+        "updated": {
+            "date": "2021-01-08T16:13:40.391Z"
+        }
+    },
+    "masterOrganizationId": "e19e5136-c0b6-497d-8b4f-7c272f57a4ac",
+    "organizationId": "284731da-b068-40d0-9261-42c8d4afe01f",
+    "id": 2139,
+    "instanceLabel": "on-prem-dev",
+    "groupId": "284731da-b068-40d0-9261-42c8d4afe01f",
+    "assetId": "demo-jin-1",
+    "assetVersion": "1.0.0",
+    "productVersion": "v1",
+    "description": null,
+    "tags": [
+        "last-sync-date:2022-01-07 10:39:54.679-0500",
+        "force-sync"
+    ],
+    "order": 1,
+    "deprecated": false,
+    "lastActiveDate": null,
+    "endpointUri": null,
+    "environmentId": "12692ead-2ced-4330-8e7d-10eb2e9f8db5",
+    "isPublic": false,
+    "pinned": false,
+    "activeContractsCount": 0,
+    "autodiscoveryInstanceName": "v1:2139"
+}

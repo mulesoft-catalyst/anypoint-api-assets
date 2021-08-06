@@ -1,0 +1,847 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="api-instances" doc:id="65dc3201-9269-4527-bbdf-12b7d5ae52b1">
+		<set-variable value='#["true" as Boolean]' doc:name="errorsDoNotExist" doc:id="351b423f-5a0a-45dd-b346-5157eb3fa7a3" variableName="errorsDoNotExist" />
+		<http:request method="GET" doc:name="Get source environments" doc:id="14e01012-03f4-4c5f-a5b2-ddaaafe19bea" path='#["/accounts/api/organizations/" ++ vars.groupId ++ "/environments"]' config-ref="HTTP_Request_Anypoint_Source" target="sourceEnvs" targetValue="#[payload.data]">
+			<http:headers><![CDATA[#[%dw 2.0
+output application/java
+---
+{
+	"Authorization":"bearer " ++ vars.sourceAuthToken
+}]]]></http:headers>
+		</http:request>
+		<http:request method="GET" doc:name="Get target environments" doc:id="2c4d1da1-0566-45eb-9302-5e11379e0c29" path='#["/accounts/api/organizations/" ++ vars.targetOrgId ++ "/environments"]' config-ref="HTTP_Request_Anypoint_Target" target="targetEnvs" targetValue="#[payload.data]">
+			<http:headers><![CDATA[#[%dw 2.0
+output application/java
+---
+{
+	"Authorization":"bearer " ++ vars.targetAuthToken
+}]]]></http:headers>
+		</http:request>
+		<foreach doc:name="For each environment" doc:id="c29ef5d1-1277-4a83-9244-60d057ddb87a" collection="#[vars.sourceEnvs]">
+			<choice doc:name="Process API instances in this environment?" doc:id="16929707-1ecb-42e9-b6a4-65714e746b48" >
+				<when expression='#[if (vars.apiInstanceEnvs == null)
+  true 
+else if (vars.apiInstanceEnvs contains(payload.name))
+  true
+else
+  false]'>
+					<flow-ref doc:name="process-api-instances" doc:id="dd6ad389-2452-4aae-969e-f17fae693fec" name="process-api-instances" />
+				</when>
+				<otherwise >
+					<logger level="INFO" doc:name="Logger" doc:id="b7d9b4ab-0bcf-4d6b-9a39-eaa290802a4f" message='#["Environment " ++ payload.name ++ " skipped as it is not among the requested environments in " ++ flow.name]'/>
+				</otherwise>
+			</choice>
+
+		</foreach>
+		<error-handler>
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="d4b1bbd0-3304-4071-a325-0ad5d4a5e5a7">
+				<set-variable value='#["false" as Boolean]' doc:name="errorsDoNotExist" doc:id="f1e87483-697c-426a-a33e-bf2cb031c088" variableName="errorsDoNotExist" />
+				<set-variable value='#[%dw 2.0
+output application/json
+---
+{
+	"groupId": vars.groupId,
+	"assetId": vars.assetId,
+	"version": vars.assetVersion,
+	"statusCode": error.errorMessage.attributes.statusCode,
+	"errorLocation": "api-instances",
+	"errorMessage": error.description
+}]' doc:name="currentAPIInstanceStatus" doc:id="6c6b65e4-a4fa-4bef-8245-27510977fe90" variableName="currentAPIInstanceStatus" />
+				<ee:transform doc:name="Append status to response message" doc:id="f7db3833-a63d-4f14-b269-e22cc1200060">
+					<ee:message>
+					</ee:message>
+					<ee:variables>
+						<ee:set-variable variableName="responseMessage"><![CDATA[%dw 2.0
+output application/json
+---
+vars.responseMessage mapObject ((value, key, index) -> do {
+	if ((key) ~= "errors")
+	    (key): value << vars.currentAPIInstanceStatus
+	else
+	    (key): value
+})]]></ee:set-variable>
+					</ee:variables>
+				</ee:transform>
+				<logger level="INFO" doc:name="Logger" doc:id="6485e203-a597-474c-8480-3402a3471aac" message="#[vars.currentAPIInstanceStatus]" />
+			</on-error-continue>
+		</error-handler>	
+	</flow>
+	<sub-flow name="process-api-instances" doc:id="da3babca-3f13-4c9f-894c-a29a725a61f7">
+		<flow-ref doc:name="get-api-instances" doc:id="22b661ed-bc3d-4a08-8aa9-833cd167070a" name="get-api-instances" />
+		<choice doc:name="No errors?" doc:id="8fac09ab-32ba-4e14-8946-b160b64480c2" >
+			<when expression="#[vars.errorsDoNotExist]">
+				<foreach doc:name="For each API version" doc:id="8dc95c67-2770-4aa5-89c5-2fa32345400c" collection="#[vars.apiInstances.assets]">
+			<foreach doc:name="For each API instance" doc:id="2bf01b25-6a6f-4528-8a99-12074bf53610" collection="#[payload.apis]">
+				<set-variable value="#[payload]" doc:name="currentAPIInstance" doc:id="4282494c-93b7-4720-bbbd-584939c07103" variableName="currentAPIInstance"/>
+						<choice doc:name="Only process SLA tiers?" doc:id="f67608f3-54c6-46be-907a-56c760691a4d" >
+							<when expression="#[vars.onlySLATiers]">
+								<logger level="INFO" doc:name="Log processing only SLA tiers" doc:id="c35cde03-f0d3-417d-9f8d-0d48b097a544" message='#["Processing only SLA tiers in " ++ flow.name]'/>
+							</when>
+							<otherwise >
+								<flow-ref doc:name="post-api-instance" doc:id="da1e2587-b1eb-4be8-be99-ebffc468e14f" name="post-api-instance" />
+								<choice doc:name="No errors?" doc:id="2bf65fcb-ed67-43aa-8ec6-e684595eba2b">
+					<when expression="#[vars.errorsDoNotExist and vars.apiInstanceUpdatesExist]">
+						<flow-ref doc:name="tag-api-instance" doc:id="428678a5-d1af-4976-81da-eaba11572758" name="tag-api-instance" />
+					</when>
+				</choice>
+								<choice doc:name="No errors?" doc:id="f0eb41e8-343a-4d46-bf20-85b7656f9b10">
+					<when expression="#[vars.errorsDoNotExist and vars.apiInstanceUpdatesExist]">
+						<set-variable value='#[%dw 2.0
+output application/json
+---
+{
+	"groupId": vars.apiInstanceDetails.groupId,
+	"orgName": vars.orgName,
+	"assetId": vars.apiInstanceDetails.assetId,
+	"assetVersion": vars.apiInstanceDetails.assetVersion,
+	"apiVersion": vars.apiInstanceDetails.productVersion,
+	"instanceLabel": vars.apiInstanceDetails.instanceLabel,
+	"environment": vars.envName,	
+	"status": "Success"
+}]' doc:name="currentAPIInstanceStatus" doc:id="695193a2-96c0-455d-8a70-15f8568b5610" variableName="currentAPIInstanceStatus" />
+						<ee:transform doc:name="Append status to response message" doc:id="b83ffd66-06d1-4604-8536-0c5bd1e0300f">
+					<ee:message />
+					<ee:variables>
+						<ee:set-variable variableName="responseMessage"><![CDATA[%dw 2.0
+output application/json
+---
+vars.responseMessage mapObject ((value, key, index) -> do {
+	if ((key) ~= "apiInstances")
+	    (key): value << vars.currentAPIInstanceStatus
+	else
+	    (key): value
+})]]></ee:set-variable>
+					</ee:variables>
+				</ee:transform>
+						<logger level="INFO" doc:name="Log API instance updates" doc:id="21b1f591-296f-481b-8828-9fa0f21cdcef" message="#[vars.currentAPIInstanceStatus]" />
+					</when>
+				</choice>
+							</otherwise>
+						</choice>
+						<flow-ref doc:name="get-sla-tiers" doc:id="37e1708a-1946-4834-a9d1-b4b286f388a3" name="get-sla-tiers" />
+						<choice doc:name="No errors?" doc:id="d4e66a0f-d3ba-4afd-8d31-dd354428f592" >
+							<when expression="#[vars.errorsDoNotExist and not (isEmpty(vars.sourceSLATiers.tiers))]">
+								<choice doc:name="API instance updates?" doc:id="d5e0565d-a03a-45b4-a91c-b0df2797df14">
+										<when expression="#[vars.apiInstanceUpdatesExist != true]">
+											<flow-ref doc:name="get-target-api-instance-id" doc:id="de5da4e6-64d6-41dd-807c-6ea82bed779e" name="get-target-api-instance-id" />
+										</when>
+									</choice>
+								<choice doc:name="No errrors and target API exists" doc:id="78ab62d6-6764-4f49-8281-c798a0816b88" >
+									<when expression="#[vars.errorsDoNotExist and vars.targetAPIInstanceId != null]">
+										<foreach doc:name="For Each SLA tier" doc:id="e4bcda1a-3d77-4df0-bf3c-f1f397697ce5" collection="#[vars.sourceSLATiers.tiers]">
+							<set-variable value="#[payload]" doc:name="currentSLAtierDetails" doc:id="20d8c0f3-52ea-4f2a-94fd-747a13ca83c4" variableName="currentSLAtierDetails" />
+									<flow-ref doc:name="post-sla-tier" doc:id="ca5ac976-e5a9-4873-823b-e94e90bb81de" name="post-sla-tier" />
+											<choice doc:name="No errors?" doc:id="57613419-dd24-4ed3-adb4-4705be1eb137">
+							<when expression="#[vars.errorsDoNotExist and vars.slaTierUpdatesExist]">
+								<set-variable value='#[%dw 2.0
+output application/json
+---
+{
+	"groupId": vars.groupId,
+	"orgName": vars.orgName,
+	"assetId": vars.currentAPIInstance.assetId,
+	"assetVersion": vars.currentAPIInstance.assetVersion,
+	"apiVersion": vars.currentAPIInstance.productVersion,
+	"apiInstanceId": vars.currentAPIInstance.id,
+	"instanceLabel": vars.currentAPIInstance.instanceLabel,
+	"slaTierId": vars.currentSLAtierDetails.id,
+	"slaTierName": vars.currentSLAtierDetails.name,
+	"environment": vars.envName,
+	"status": "Success"
+}]' doc:name="currentSLATierStatus" doc:id="ae833a25-959d-4146-9804-b9317d50ccd9" variableName="currentSLATierStatus" />
+								<ee:transform doc:name="Append status to response message" doc:id="bade5c33-771e-4876-ae21-3527a8f5309e">
+									<ee:message>
+										<ee:set-payload><![CDATA[%dw 2.0
+output application/java
+---
+{
+}]]></ee:set-payload>
+									</ee:message>
+									<ee:variables>
+										<ee:set-variable variableName="responseMessage"><![CDATA[%dw 2.0
+output application/json
+---
+vars.responseMessage mapObject ((value, key, index) -> do {
+	if ((key) ~= "slaTiers")
+	    (key): value << vars.currentSLATierStatus
+	else
+	    (key): value
+})]]></ee:set-variable>
+									</ee:variables>
+								</ee:transform>
+								<logger level="INFO" doc:name="Log SLA tier updates" doc:id="8bb7d963-78fc-4639-aa36-d2fc9f1b9dff" message="#[vars.currentSLATierStatus]" />
+							</when>
+						</choice>
+						</foreach>
+									</when>
+								</choice>
+							</when>
+						</choice>
+					
+			
+</foreach>
+		</foreach>
+			</when>
+		</choice>	
+	</sub-flow>
+	<flow name="get-api-instances" doc:id="f71890cf-4320-49de-afe6-c6c0192321ef">
+		<set-variable value="#[payload.id]" doc:name="envId" doc:id="3bae2499-dd28-409f-974b-7bbe918ed14e" variableName="envId" />
+		<set-variable value="#[payload.name]" doc:name="envName" doc:id="dc98e82e-ac57-49a4-96fa-3b57f3efc48f" variableName="envName" />
+		<set-variable value="#[%dw 2.0
+output application/json
+---
+(vars.targetEnvs map (
+    $ mapObject (v,k) -&gt; if((v) == vars.envName) {id:$.id} else {}
+) reduce ($$++$)).id]" doc:name="targetEnvId" doc:id="8248e954-8b11-47cb-afe0-d4faace74df2" variableName="targetEnvId" />
+		<http:request method="GET" doc:name="Get API instances" doc:id="94894f82-c44f-462e-b558-2f068b429445" path='#["/apimanager/api/v1/organizations/" ++ vars.groupId ++ "/environments/" ++ vars.envId ++ "/apis"]' config-ref="HTTP_Request_Anypoint_Source" target="apiInstances">
+				<http:headers><![CDATA[#[%dw 2.0
+output application/java
+---
+{
+	"Authorization":"bearer " ++ vars.sourceAuthToken
+}]]]></http:headers>
+				<http:query-params><![CDATA[#[%dw 2.0
+output application/java
+---
+{
+	"assetId" : vars.assetId,
+	"productVersion" : vars.apiVersion,
+	("instanceLabel" : vars.instanceLabel) if (vars.instanceLabel != null)
+}]]]></http:query-params>
+			</http:request>			
+		<logger level="INFO" doc:name="Log API instances retrieved" doc:id="197c2e85-a829-4bd5-b3a3-9bd2854faad7" message='#[%dw 2.0
+output application/java
+---
+"Retrieved API instances for API " ++ vars.assetId ++ " | " ++ vars.apiVersion ++ " in " ++ flow.name]'/>
+		<error-handler>
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="e24b31ee-0818-4997-942f-f50509a736d6">
+				<set-variable value='#["false" as Boolean]' doc:name="errorsDoNotExist" doc:id="190a5ddd-1835-4153-8307-68a77a702367" variableName="errorsDoNotExist" />
+				<set-variable value='#[%dw 2.0
+output application/json
+---
+{
+	"groupId": vars.groupId,
+	"assetId": vars.assetId,
+	"version": vars.assetVersion,
+	"environment": vars.envName,
+	"statusCode": error.errorMessage.attributes.statusCode,
+	"errorLocation": "get-api-instances",
+	"errorMessage": error.description
+}]' doc:name="currentAPIInstanceStatus" doc:id="21583118-6cee-4dfc-a011-658e937d827d" variableName="currentAPIInstanceStatus" />
+				<ee:transform doc:name="Append status to response message" doc:id="d3350cac-09b1-4af2-9f70-10cac6719a4a">
+					<ee:message>
+					</ee:message>
+					<ee:variables>
+						<ee:set-variable variableName="responseMessage"><![CDATA[%dw 2.0
+output application/json
+---
+vars.responseMessage mapObject ((value, key, index) -> do {
+	if ((key) ~= "errors")
+	    (key): value << vars.currentAPIInstanceStatus
+	else
+	    (key): value
+})]]></ee:set-variable>
+					</ee:variables>
+				</ee:transform>
+				<logger level="INFO" doc:name="Logger" doc:id="51b8bf45-a78c-4319-b14e-88ff44866718" message="#[vars.currentAPIInstanceStatus]" />
+			</on-error-continue>
+		</error-handler>
+	</flow>
+	<flow name="post-api-instance" doc:id="75b91ef8-a9fd-4eb4-87e2-77a949fba0c2">
+		<ee:transform doc:name="apiInstanceUpdatesExist" doc:id="4a9d7e83-b949-415b-aa6e-3059e7be5771">
+						<ee:message>
+						</ee:message>
+						<ee:variables>
+							<ee:set-variable variableName="apiInstanceUpdatesExist"><![CDATA[%dw 2.0
+import * from dw::core::Strings
+output application/json
+//DW function 'substringAfter' has an issue (fixed in 4.3 runtime)
+// where only the first character is evaluated in the find string).
+// Ideally the find string should be "last-sync-date:", but using ":"
+// for now due to the issue.
+var lastSyncDate = substringAfter( payload.tags[?( $ contains Mule::p('secure::tag.last.sync.date') )][ 0 ], ":" )
+var forceSync = payload.tags[?( $ contains Mule::p('secure::tag.force.sync') )][ 0 ]
+fun normalize(date) = date replace " " with "T"
+---
+//Check if the asset was published after the last sync date OR
+// if the force sync option is present.
+//Use of '|PT2M|': Needed to subtract a couple of min from the 'updated' date b/c
+//  tagging the API instance with the 'last-sync-date' updates the API instance
+//  'updated' date (i.e. tagging should not cause a new sync).
+if ((( not isEmpty(lastSyncDate)) and payload.audit.updated.date? and ((payload.audit.updated.date as DateTime - |PT2M|) > normalize(lastSyncDate) as DateTime {format: "yyyy-MM-dd'T'HH:mm:ss.SSSZ" })) or (( not isEmpty(forceSync))))
+  true
+// Case where asset has never been synced.
+else if (isEmpty(lastSyncDate))
+  true
+else
+  false]]></ee:set-variable>
+				<ee:set-variable variableName="currentLastSyncDateTag"><![CDATA[%dw 2.0
+output application/java
+---
+//Get tag for API instance so it can be deleted before updating.
+//  API instance PUT does not replace tag, so the existing tag must
+//  be deleted.
+payload.tags[?( $ contains Mule::p('secure::tag.last.sync.date') )][ 0 ]]]></ee:set-variable>
+				<ee:set-variable variableName="forceTagExists"><![CDATA[%dw 2.0
+import * from dw::core::Strings
+output application/java
+var forceSync = payload.tags[?( $ contains Mule::p('secure::tag.force.sync') )][ 0 ]
+---
+if (( not isEmpty(forceSync)))
+  true
+else
+  false]]></ee:set-variable>
+						</ee:variables>
+					</ee:transform>
+		<choice doc:name="Do API instance updates exist?" doc:id="a3433ec3-0e93-4862-b71e-669b1608879c">
+						<when expression="#[vars.apiInstanceUpdatesExist]">
+							<http:request method="GET" doc:name="Get API instance details" doc:id="03d03c9b-b97e-4b74-84a6-8bad30cb23d1" path='#["/apimanager/api/v1/organizations/" ++ vars.groupId ++ "/environments/" ++ vars.envId ++ "/apis/" ++ payload.id]' config-ref="HTTP_Request_Anypoint_Source" target="apiInstanceDetails">
+						<http:headers><![CDATA[#[%dw 2.0
+output application/java
+---
+{
+	"Authorization":"bearer " ++ vars.sourceAuthToken
+}]]]></http:headers>
+					</http:request>
+					<ee:transform doc:name="Prep API instance" doc:id="a261ec9b-8a81-421b-87bd-ebe48e898082">
+						<ee:message>
+						</ee:message>
+					<ee:variables>
+						<ee:set-variable variableName="apiInstancePayload"><![CDATA[%dw 2.0
+output application/json
+---
+{
+    "assetVersion": vars.apiInstanceDetails.assetVersion,
+    "endpoint": {
+        "deploymentType": vars.apiInstanceDetails.endpoint.deploymentType,
+        "isCloudHub": vars.apiInstanceDetails.endpoint.isCloudHub,
+        "muleVersion4OrAbove": vars.apiInstanceDetails.endpoint.muleVersion4OrAbove,
+        "proxyUri": vars.apiInstanceDetails.endpoint.proxyUri,
+        ("proxyTemplate": {
+            "assetVersion": Mule::p('secure::api.manager.proxy.version')
+        }) if (vars.apiInstanceDetails.endpoint.proxyUri != null),
+        "referencesUserDomain": vars.apiInstanceDetails.endpoint.referencesUserDomain,
+        "responseTimeout": vars.apiInstanceDetails.endpoint.responseTimeout,
+        "type": vars.apiInstanceDetails.endpoint."type",
+        "uri": vars.apiInstanceDetails.endpoint.uri,
+        //Validation is not returned in API details request so set to "DISABLED".
+        //Validation is only relevant for proxies and is a runtime effective setting, so it's not relevant for ACM.'
+        ("validation": "DISABLED") if (vars.apiInstanceDetails.endpoint.proxyUri != null)
+    },
+    "providerId": null,
+    "instanceLabel": vars.apiInstanceDetails.instanceLabel,
+    "spec": {
+        "assetId": vars.apiInstanceDetails.assetId,
+        "groupId": vars.targetOrgId,
+        "version": vars.apiInstanceDetails.assetVersion
+    }
+}]]></ee:set-variable>
+					</ee:variables>
+					</ee:transform>
+					<http:request method="POST" doc:name="Post API instance to target" doc:id="3dd02a84-815e-44a7-a01b-6d7f1fa2cdd7" config-ref="HTTP_Request_Anypoint_Target" path='#["/apimanager/api/v1/organizations/" ++ vars.targetOrgId ++ "/environments/" ++ vars.targetEnvId ++ "/apis"]' doc:description='If the "instanceLabel" has been updated in the source, a new instance will be created at the target.  This is currently unavoidable since identifying the target instance ID depends on the instance label and a query to identify the target instance ID cannot be created if the instance label has been updated at the source (i.e. the target API instance will be different from the updated source instance label).'>
+						<http:body><![CDATA[#[vars.apiInstancePayload]]]></http:body>
+					<http:headers><![CDATA[#[%dw 2.0
+output application/java
+---
+{
+	"Authorization":"bearer " ++ vars.targetAuthToken
+}]]]>
+						</http:headers>
+						<http:response-validator>
+							<http:failure-status-code-validator values="400..408,410..599" />
+						</http:response-validator>
+					</http:request>
+				<set-variable value="#[if (payload.id?) payload.id else null]" doc:name="targetAPIInstanceId" doc:id="9f28e827-c271-4885-9e15-236785b41554" variableName="targetAPIInstanceId" />
+				<choice doc:name="API instance exists?" doc:id="8d773661-cad9-49e0-b69a-e711dd18015a">
+					<when expression="#[attributes.statusCode == 409]">
+						<http:request method="GET" doc:name="Get API instance ID from target" doc:id="cb1221a8-0e2b-40fe-a710-d363db023ae3" config-ref="HTTP_Request_Anypoint_Target" path='#["/apimanager/api/v1/organizations/" ++ vars.targetOrgId ++ "/environments/" ++ vars.targetEnvId ++ "/apis"]' target="targetAPIInstanceId" targetValue="#[payload.assets[0].apis[0].id]">
+							<http:headers><![CDATA[#[%dw 2.0
+	output application/java
+	---
+	{
+		"Authorization":"bearer " ++ vars.targetAuthToken
+	}]]]>
+						</http:headers>
+							<http:query-params><![CDATA[#[%dw 2.0
+output application/java
+---
+{
+	"assetId": vars.assetId,
+	"productVersion": vars.apiVersion,
+	"instanceLabel": vars.apiInstanceDetails.instanceLabel
+}]]]></http:query-params>
+						
+</http:request>					
+						<http:request method="PATCH" doc:name="Patch API instance to target" doc:id="8d861e96-dc3e-41b5-beb4-da45d3b49ff5" config-ref="HTTP_Request_Anypoint_Target" path='#["/apimanager/api/v1/organizations/" ++ vars.targetOrgId ++ "/environments/" ++ vars.targetEnvId ++ "/apis/" ++ vars.targetAPIInstanceId]'>
+							<http:body><![CDATA[#[vars.apiInstancePayload]]]></http:body>
+							<http:headers><![CDATA[#[%dw 2.0
+	output application/java
+	---
+	{
+		"Authorization":"bearer " ++ vars.targetAuthToken
+	}]]]>
+						</http:headers>
+						</http:request>
+					</when>
+				</choice>
+				<logger level="INFO" doc:name="Log finished posting API instance" doc:id="c31c3fd4-7251-483a-a960-aaef0603ed23" message='#[%dw 2.0
+output application/java
+---
+"Successfully posted API to target. API instance: " ++ vars.apiInstanceDetails.assetId ++ " | " ++ vars.apiInstanceDetails.assetVersion ++ " | " ++ vars.apiInstanceDetails.instanceLabel ++ " in " ++ flow.name]'/>
+						</when>
+						<otherwise>
+							<set-variable value='#[%dw 2.0
+		output application/json
+		---
+		{
+			"groupId": payload.groupId,
+			"orgName": vars.orgName,
+			"assetId": payload.assetId,
+			"assetVersion": payload.assetVersion,
+			"apiVersion": payload.productVersion,
+			"instanceLabel": payload.instanceLabel,
+	        "environment": vars.envName,			
+			"status": "No api instance updates"
+		}]' doc:name="currentAPIInstanceStatus" doc:id="73c66085-9160-45f8-a1f9-beeef5c470e1" variableName="currentAPIInstanceStatus" />
+							<ee:transform doc:name="Append status to response message" doc:id="b5d737f9-09bd-4320-8d2a-8d116e1e5d0b">
+								<ee:message>
+								</ee:message>
+								<ee:variables>
+									<ee:set-variable variableName="responseMessage"><![CDATA[%dw 2.0
+		output application/json
+		---
+		vars.responseMessage mapObject ((value, key, index) -> do {
+			if ((key) ~= "apiInstances")
+			    (key): value << vars.currentAPIInstanceStatus
+			else
+			    (key): value
+		})]]></ee:set-variable>
+								</ee:variables>
+							</ee:transform>
+							<logger level="INFO" doc:name="Log no API instance updates" doc:id="c0f461dc-633d-4657-9d27-f6ee5f83fc08" message="#[vars.currentAPIInstanceStatus]" />
+						</otherwise>
+					</choice>
+		<error-handler>
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="89f3f164-6445-4bd6-9881-69e222f707b8">
+				<set-variable value='#["false" as Boolean]' doc:name="errorsDoNotExist" doc:id="1143d8ac-f77a-49cb-a3a6-4fe500c25aa4" variableName="errorsDoNotExist" />
+				<set-variable value='#[%dw 2.0
+output application/json
+---
+{
+    "groupId": payload.groupId,
+	"orgName": vars.orgName,
+	"assetId": payload.assetId,
+	"assetVersion": payload.assetVersion,
+	"apiVersion": payload.productVersion,
+	"instanceLabel": payload.instanceLabel,
+	"environment": vars.envName,	
+	"statusCode": error.errorMessage.attributes.statusCode,
+	"errorLocation": "post-api-instance",
+	"errorMessage": error.description
+}]' doc:name="currentAPIInstanceStatus" doc:id="3d2652d5-da2d-4369-bda7-d8e73a5e8a1d" variableName="currentAPIInstanceStatus" />
+				<ee:transform doc:name="Append status to response message" doc:id="d5e39246-1b6b-42ef-a09d-d4b463a3ce48">
+					<ee:message>
+					</ee:message>
+					<ee:variables>
+						<ee:set-variable variableName="responseMessage"><![CDATA[%dw 2.0
+output application/json
+---
+vars.responseMessage mapObject ((value, key, index) -> do {
+	if ((key) ~= "errors")
+	    (key): value << vars.currentAPIInstanceStatus
+	else
+	    (key): value
+})]]></ee:set-variable>
+					</ee:variables>
+				</ee:transform>
+				<logger level="INFO" doc:name="Logger" doc:id="218c5afa-a7af-4fef-8f5b-6f317d8fc279" message="#[vars.currentAPIInstanceStatus]" />
+			</on-error-continue>
+		</error-handler>					
+	</flow>
+	<flow name="tag-api-instance" doc:id="8b5ee3ba-885f-4c6b-83a4-c69e552d17e0">
+		<choice doc:name="Force tag exists?" doc:id="3079a9e4-64de-454c-bb26-223428b145e9">
+			<when expression="#[vars.forceTagExists]">
+				<http:request method="DELETE" doc:name="Delete existing force sync tag" doc:id="466c8ee5-0b25-4a00-9926-50289cfcaf05" config-ref="HTTP_Request_Anypoint_Source" path="#[&quot;/apimanager/api/v1/organizations/&quot; ++ vars.groupId ++ &quot;/environments/&quot; ++ vars.envId ++ &quot;/apis/&quot; ++ vars.apiInstanceDetails.id ++ &quot;/tags/&quot; ++ Mule::p('secure::tag.force.sync')]">
+			<http:headers><![CDATA[#[%dw 2.0
+output application/java
+---
+{
+	"Authorization":"bearer " ++ vars.sourceAuthToken
+}]]]></http:headers>
+	    </http:request>
+			</when>
+		</choice>	
+		<choice doc:name="Last sync date tag exists?" doc:id="59d30015-f1f4-4b29-b82b-5d1f1cf63036">
+			<when expression="#[vars.currentLastSyncDateTag != null]">
+				<http:request method="DELETE" doc:name="Delete existing api instance sync date tag" doc:id="71647896-60f7-49ab-acc7-ba9063cb49fc" config-ref="HTTP_Request_Anypoint_Source" path='#["/apimanager/api/v1/organizations/" ++ vars.groupId ++ "/environments/" ++ vars.envId ++ "/apis/" ++ vars.apiInstanceDetails.id ++ "/tags/" ++ vars.currentLastSyncDateTag]'>
+			<http:headers><![CDATA[#[%dw 2.0
+output application/java
+---
+{
+	"Authorization":"bearer " ++ vars.sourceAuthToken
+}]]]></http:headers>
+		</http:request>
+			</when>
+		</choice>			
+		<http:request method="PUT" doc:name="Tag api instance with sync date" doc:id="eb946a73-8cc9-4e20-bc4d-2d6d59ad1414" config-ref="HTTP_Request_Anypoint_Source" path="#[&quot;/apimanager/api/v1/organizations/&quot; ++ vars.groupId ++ &quot;/environments/&quot; ++ vars.envId ++ &quot;/apis/&quot; ++ vars.apiInstanceDetails.id ++ &quot;/tags/&quot; ++ &quot;last-sync-date:&quot; ++ now() as String {format: &quot;yyyy-MM-dd' 'HH:mm:ss.SSSZ&quot;}]">
+			<http:headers><![CDATA[#[%dw 2.0
+output application/java
+---
+{
+	"Authorization":"bearer " ++ vars.sourceAuthToken
+}]]]></http:headers>
+		</http:request>	
+		
+		<logger level="INFO" doc:name="Log tagged API instance" doc:id="11670958-65de-4a93-9106-ab459c213bee" message='#[%dw 2.0
+output application/java
+---
+"Successfully tagged API instance: " ++ vars.apiInstanceDetails.id ++ " in " ++ flow.name]'/>
+		<error-handler>
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="efe4d5f0-9df5-4ce5-9f2e-063b8d484fe2">
+				<set-variable value='#["false" as Boolean]' doc:name="errorsDoNotExist" doc:id="387278d5-0bee-4c3d-a872-da829f6a8aae" variableName="errorsDoNotExist" />
+				<set-variable value='#[%dw 2.0
+output application/json
+---
+{
+    "groupId": payload.groupId,
+	"orgName": vars.orgName,
+	"assetId": payload.assetId,
+	"assetVersion": payload.assetVersion,
+	"apiVersion": payload.productVersion,
+	"instanceLabel": payload.instanceLabel,
+	"environment": vars.envName,	
+	"statusCode": error.errorMessage.attributes.statusCode,
+	"errorLocation": "post-api-instance",
+	"errorMessage": error.description
+}]' doc:name="currentAPIInstanceStatus" doc:id="e05f073d-f2b3-4e66-82ce-d9afb1ee5f5c" variableName="currentAPIInstanceStatus" />
+				<ee:transform doc:name="Append status to response message" doc:id="0fccdf56-07a1-450c-9255-518906c3119e">
+					<ee:message>
+					</ee:message>
+					<ee:variables>
+						<ee:set-variable variableName="responseMessage"><![CDATA[%dw 2.0
+output application/json
+---
+vars.responseMessage mapObject ((value, key, index) -> do {
+	if ((key) ~= "errors")
+	    (key): value << vars.currentAPIInstanceStatus
+	else
+	    (key): value
+})]]></ee:set-variable>
+					</ee:variables>
+				</ee:transform>
+				<logger level="INFO" doc:name="Logger" doc:id="5caedbb2-cc1a-482f-ad0b-c09566e61926" message="#[vars.currentAPIInstanceStatus]" />
+			</on-error-continue>
+		</error-handler>			
+	</flow>
+	<flow name="get-sla-tiers" doc:id="25e6e8bc-b418-4b43-9545-10bd385962fe">
+		<http:request method="GET" doc:name="Get SLA tiers" doc:id="395997b9-3c62-45d8-b19c-1fc749250f78" path='#["/apimanager/api/v1/organizations/" ++ vars.groupId ++ "/environments/" ++ vars.envId ++ "/apis/" ++ vars.currentAPIInstance.id ++ "/tiers"]' config-ref="HTTP_Request_Anypoint_Source" target="sourceSLATiers">
+				<http:headers><![CDATA[#[%dw 2.0
+output application/java
+---
+{
+	"Authorization":"bearer " ++ vars.sourceAuthToken
+}]]]></http:headers>
+		</http:request>		
+		<error-handler>
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="dc9d052d-cec4-4d94-a00b-72cdb96e61bd">
+				<set-variable value='#["false" as Boolean]' doc:name="errorsDoNotExist" doc:id="f09a34b6-53b8-491d-a4c3-5b597540052f" variableName="errorsDoNotExist" />
+				<set-variable value='#[%dw 2.0
+output application/json
+---
+{
+	"groupId": vars.groupId,
+	"orgName": vars.orgName,
+	"assetId": vars.currentAPIInstance.assetId,
+	"version": vars.currentAPIInstance.assetVersion,
+	"apiInstanceId": vars.currentAPIInstance.id,
+	"instanceLabel": vars.currentAPIInstance.instanceLabel,
+	"environment": vars.envName,
+	"statusCode": error.errorMessage.attributes.statusCode,
+	"errorLocation": "get-sla-tiers",
+	"errorMessage": error.description
+}]' doc:name="currentSLATierStatus" doc:id="34f0005d-b1b9-43d7-9759-1df1ac1a36a7" variableName="currentSLATierStatus" />
+				<ee:transform doc:name="Append status to response message" doc:id="29c9b46f-c692-46b0-83a7-9b9dc6059708">
+					<ee:message>
+					</ee:message>
+					<ee:variables>
+						<ee:set-variable variableName="responseMessage"><![CDATA[%dw 2.0
+output application/json
+---
+vars.responseMessage mapObject ((value, key, index) -> do {
+	if ((key) ~= "errors")
+	    (key): value << vars.currentSLATierStatus
+	else
+	    (key): value
+})]]></ee:set-variable>
+					</ee:variables>
+				</ee:transform>
+				<logger level="INFO" doc:name="Logger" doc:id="d4c80a3f-7359-4b11-8e54-c6bb3dfd2a47" message="#[vars.currentSLATierStatus]" />
+			</on-error-continue>
+		</error-handler>
+	</flow>
+	<flow name="get-target-api-instance-id" doc:id="6d130a29-5122-4eef-8d35-254bed122418" >
+		<http:request method="GET" doc:name="Get API instance details" doc:id="3d7bf55e-207e-4648-be6c-d0d474d78b81" path='#["/apimanager/api/v1/organizations/" ++ vars.groupId ++ "/environments/" ++ vars.envId ++ "/apis/" ++ vars.currentAPIInstance.id]' config-ref="HTTP_Request_Anypoint_Source" target="apiInstanceDetails">
+			<http:headers><![CDATA[#[%dw 2.0
+output application/java
+---
+{
+	"Authorization":"bearer " ++ vars.sourceAuthToken
+}]]]></http:headers>
+		</http:request>
+		<http:request method="GET" doc:name="Get API instance ID from target" doc:id="e4b030eb-3fc3-4512-b4bd-b6ac3b0c6862" config-ref="HTTP_Request_Anypoint_Target" path='#["/apimanager/api/v1/organizations/" ++ vars.targetOrgId ++ "/environments/" ++ vars.targetEnvId ++ "/apis"]'>
+				<http:headers><![CDATA[#[%dw 2.0
+	output application/java
+	---
+	{
+		"Authorization":"bearer " ++ vars.targetAuthToken
+	}]]]>
+				</http:headers>
+				<http:query-params><![CDATA[#[%dw 2.0
+output application/java
+---
+{
+	"assetId": vars.assetId,
+	"productVersion": vars.apiVersion,
+	"instanceLabel": vars.apiInstanceDetails.instanceLabel
+}]]]>
+			</http:query-params>				
+		</http:request>
+		<choice doc:name="Target API instance retrieved?" doc:id="41fb6a50-1d25-4ec2-9d89-3649e7b66672" >
+			<when expression="#[not isEmpty(payload.assets)]">
+				<set-variable value="#[payload.assets[0].apis[0].id]" doc:name="targetAPIInstanceId" doc:id="f6b5c019-3460-4a0a-aa40-d125338a0e8d" variableName="targetAPIInstanceId"/>
+			</when>
+			<otherwise >
+				<set-variable value="#[null]" doc:name="targetAPIInstanceId" doc:id="b3761658-617b-429b-9573-3325f67648ba" variableName="targetAPIInstanceId"/>
+				<logger level="INFO" doc:name="Log target API instance not found" doc:id="8de820c3-62b1-4a35-a61d-69d2efba7b5e" message='#["Target API instance asset not found. assetId: " ++ vars.assetId ++ ", productVersion: " ++ vars.apiVersion ++ ", instanceLabel: " ++ vars.apiInstanceDetails.instanceLabel]'/>
+			</otherwise>
+		</choice>
+		<error-handler >
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="d357cbaf-cbb2-4c8b-aa0d-6015c41f3a3f" >
+				<set-variable value='#["false" as Boolean]' doc:name="errorsDoNotExist" doc:id="e97eb23a-ae70-4ad9-abc7-ee071582b988" variableName="errorsDoNotExist" />
+				<set-variable value='#[%dw 2.0
+output application/json
+---
+{
+    "groupId": vars.groupId,
+	"orgName": vars.orgName,
+	"assetId": vars.currentAPIInstance.assetId,
+	"assetVersion": vars.currentAPIInstance.assetVersion,
+	"apiVersion": vars.currentAPIInstance.productVersion,
+	"instanceLabel": vars.currentAPIInstance.instanceLabel,
+	"environment": vars.envName,	
+	"statusCode": error.errorMessage.attributes.statusCode,
+	"errorLocation": "get-target-api-instance-id",
+	"errorMessage": error.description
+}]' doc:name="currentAPIInstanceStatus" doc:id="54c3d0b1-165b-45d2-8c55-625f21511744" variableName="currentAPIInstanceStatus" />
+				<ee:transform doc:name="Append status to response message" doc:id="5995e22b-ad13-4736-b71d-5ce9117763b0" >
+					<ee:message >
+					</ee:message>
+					<ee:variables >
+						<ee:set-variable variableName="responseMessage" ><![CDATA[%dw 2.0
+output application/json
+---
+vars.responseMessage mapObject ((value, key, index) -> do {
+	if ((key) ~= "errors")
+	    (key): value << vars.currentAPIInstanceStatus
+	else
+	    (key): value
+})]]></ee:set-variable>
+					</ee:variables>
+				</ee:transform>
+				<logger level="INFO" doc:name="Logger" doc:id="dcf9ad15-b6a4-4f51-a9a2-153ad29298ec" message="#[vars.currentAPIInstanceStatus]" />
+			</on-error-continue>
+		</error-handler>			
+	</flow>	
+	<flow name="post-sla-tier" doc:id="7bb4f372-426d-492d-8b90-ad36e2a835cb" >
+		<ee:transform doc:name="slaTierUpdatesExist" doc:id="fdd1b995-0ff9-4b2c-b616-46ec00eceb3b">
+						<ee:message>
+						</ee:message>
+						<ee:variables>
+				<ee:set-variable variableName="slaTierUpdatesExist" ><![CDATA[%dw 2.0
+import * from dw::core::Strings
+output application/json
+//DW function 'substringAfter' has an issue (fixed in 4.3 runtime)
+// where only the first character is evaluated in the find string).
+// Ideally the find string should be "last-sync-date:", but using ":"
+// for now due to the issue.
+//
+//NOTE: Last sync date tag is from the API instance, not specifically from
+//  the SLA tier since SLA tiers do not have a tag.
+var lastSyncDate = substringAfter( vars.currentAPIInstance.tags[?( $ contains Mule::p('secure::tag.last.sync.date') )][ 0 ], ":" )
+var forceSync = vars.currentAPIInstance.tags[?( $ contains Mule::p('secure::tag.force.sync') )][ 0 ]
+fun normalize(date) = date replace " " with "T"
+---
+//Check if the asset was published after the last sync date OR
+// if the force sync option is present. 
+if ((( not isEmpty(lastSyncDate)) and vars.currentSLAtierDetails.audit.updated.date? and ((vars.currentSLAtierDetails.audit.updated.date as DateTime) > normalize(lastSyncDate) as DateTime {format: "yyyy-MM-dd'T'HH:mm:ss.SSSZ" })) or (( not isEmpty(forceSync))))
+  true
+// Case where asset has never been synced.
+else if (isEmpty(lastSyncDate))
+  true
+else
+  false]]></ee:set-variable>
+						
+</ee:variables>
+					</ee:transform>
+		<choice doc:name="Do SLA tier updates exist?" doc:id="f3e10205-151f-4754-98de-b28184a066ff">
+						<when expression="#[vars.slaTierUpdatesExist]">
+							<ee:transform doc:name="Prep SLA tier" doc:id="7de9fc64-2d8a-4542-be4c-4b2130bb8e25">
+						<ee:message>
+						</ee:message>
+					<ee:variables >
+						<ee:set-variable variableName="currentSLATierName" ><![CDATA[%dw 2.0
+output application/java
+---
+vars.currentSLAtierDetails.name]]></ee:set-variable>
+						<ee:set-variable variableName="slaTierPayload" ><![CDATA[%dw 2.0
+output application/json
+---
+{
+    "apiVersionId": vars.targetAPIInstanceId,
+    "status": vars.currentSLAtierDetails.status,
+    "autoApprove": vars.currentSLAtierDetails.autoApprove,
+    "limits": vars.currentSLAtierDetails.limits,
+    "name": vars.currentSLAtierDetails.name,
+    "description": vars.currentSLAtierDetails.description
+}]]></ee:set-variable>
+					
+</ee:variables>
+					</ee:transform>
+					<http:request method="POST" doc:name="Post SLA tier to target" doc:id="e7e2ba99-3054-4810-b51f-6f80edf5ab40" config-ref="HTTP_Request_Anypoint_Target" path='#["/apimanager/api/v1/organizations/" ++ vars.targetOrgId ++ "/environments/" ++ vars.targetEnvId ++ "/apis/" ++ vars.targetAPIInstanceId ++ "/tiers"]' doc:description='If the "instanceLabel" has been updated in the source, a new instance will be created at the target.  This is currently unavoidable since identifying the target instance ID depends on the instance label and a query to identify the target instance ID cannot be created if the instance label has been updated at the source (i.e. the target API instance will be different from the updated source instance label).'>
+					<http:body ><![CDATA[#[vars.slaTierPayload]]]></http:body>
+					<http:headers><![CDATA[#[%dw 2.0
+output application/java
+---
+{
+	"Authorization":"bearer " ++ vars.targetAuthToken
+}]]]>
+						</http:headers>
+						<http:response-validator >
+							<http:failure-status-code-validator values="400..408,410..599" />
+						</http:response-validator>
+					</http:request>
+				<choice doc:name="SLA tier exists?" doc:id="f954ec67-719d-4571-b4fc-d9d5cfe44949" >
+					<when expression='#[attributes.statusCode == 409]'>
+						<http:request method="GET" doc:name="Get SLA tiers for API instance from target" doc:id="645d5680-ca71-424e-a927-dd8c9659e9d1" config-ref="HTTP_Request_Anypoint_Target" path='#["/apimanager/api/v1/organizations/" ++ vars.targetOrgId ++ "/environments/" ++ vars.targetEnvId ++ "/apis/" ++ vars.targetAPIInstanceId ++ "/tiers"]' target="targetSLATiers" targetValue="#[payload.tiers]">
+							<http:headers><![CDATA[#[%dw 2.0
+	output application/java
+	---
+	{
+		"Authorization":"bearer " ++ vars.targetAuthToken
+	}]]]>
+						</http:headers>
+						
+</http:request>					
+						<ee:transform doc:name="Extract SLA tier ID with matching name" doc:id="57d57816-344b-44a8-8ae5-3ecb0012d8fb" >
+							<ee:message >
+							</ee:message>
+							<ee:variables >
+								<ee:set-variable variableName="targetSLATierId" ><![CDATA[%dw 2.0
+output application/json
+---
+(vars.targetSLATiers map (
+    $ mapObject (v,k) -> if((v) == vars.currentSLATierName) {id:$.id} else {}
+) reduce ($$++$)).id]]></ee:set-variable>
+							</ee:variables>
+						</ee:transform>
+						<http:request method="PUT" doc:name="Update (PUT) SLA tier to target" doc:id="61a47974-0db1-46e9-85e2-038be9154524" config-ref="HTTP_Request_Anypoint_Target" path='#["/apimanager/api/v1/organizations/" ++ vars.targetOrgId ++ "/environments/" ++ vars.targetEnvId ++ "/apis/" ++ vars.targetAPIInstanceId ++ "/tiers/" ++ vars.targetSLATierId]'>
+							<http:body ><![CDATA[#[vars.currentSLAtierDetails]]]></http:body>
+							<http:headers><![CDATA[#[%dw 2.0
+	output application/java
+	---
+	{
+		"Authorization":"bearer " ++ vars.targetAuthToken
+	}]]]>
+						</http:headers>
+						</http:request>
+					
+</when>
+				</choice>
+				<logger level="INFO" doc:name="Log created or updated SLA tier" doc:id="5aab9587-50dd-45d9-9bc1-f53327902ebd" message='#[%dw 2.0
+output application/java
+---
+"Successfully created or updated SLA tier " ++ vars.currentSLAtierDetails.name ++ " for target API instance " ++ vars.targetAPIInstanceId ++ " in " ++ flow.name]'/>
+						
+</when>
+			<otherwise>
+							<set-variable value='#[%dw 2.0
+output application/json
+---
+{
+	"groupId": vars.groupId,
+	"orgName": vars.orgName,
+	"assetId": vars.currentAPIInstance.assetId,
+	"assetVersion": vars.currentAPIInstance.assetVersion,
+	"apiVersion": vars.currentAPIInstance.productVersion,
+	"apiInstanceId": vars.currentAPIInstance.id,
+	"instanceLabel": vars.currentAPIInstance.instanceLabel,
+	"slaTierId": vars.currentSLAtierDetails.id,
+	"slaTierName": vars.currentSLAtierDetails.name,
+	"environment": vars.envName,
+	"status": "No SLA tier updates"
+}]' doc:name="currentSLATierStatus" doc:id="605a4727-58c7-486b-b18f-cab6d38093b8" variableName="currentSLATierStatus" />
+							<ee:transform doc:name="Append status to response message" doc:id="2980d8fc-9a32-4607-97dd-3b3108c9f456">
+								<ee:message>
+								</ee:message>
+								<ee:variables>
+									<ee:set-variable variableName="responseMessage"><![CDATA[%dw 2.0
+output application/json
+---
+vars.responseMessage mapObject ((value, key, index) -> do {
+	if ((key) ~= "slaTiers")
+	    (key): value << vars.currentSLATierStatus
+	else
+	    (key): value
+})]]></ee:set-variable>
+								</ee:variables>
+							</ee:transform>
+							<logger level="INFO" doc:name="Log no API instance updates" doc:id="96a94031-11c9-43c3-a199-b14afd9936ae" message="#[vars.currentSLATierStatus]" />
+						</otherwise>
+					</choice>
+		<error-handler >
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="3bb7fd8a-51c3-4628-bacd-2fb2bf16350b" >
+				<set-variable value='#["false" as Boolean]' doc:name="errorsDoNotExist" doc:id="ff1bd393-7ff0-43f6-9ed5-38227c0fc910" variableName="errorsDoNotExist" />
+				<set-variable value='#[%dw 2.0
+output application/json
+---
+{
+	"groupId": vars.groupId,
+	"orgName": vars.orgName,
+	"assetId": vars.currentAPIInstance.assetId,
+	"version": vars.currentAPIInstance.assetVersion,
+	"apiInstanceId": vars.currentAPIInstance.id,
+	"apiInstanceLabel": vars.currentAPIInstance.instanceLabel,
+	"slaTierId": vars.currentSLAtierDetails.id,
+	"slaTierName": vars.currentSLAtierDetails.name,	
+	"environment": vars.envName,
+	"statusCode": error.errorMessage.attributes.statusCode,
+	"errorLocation": "post-sla-tier",
+	"errorMessage": error.description
+}]' doc:name="currentSLATierStatus" doc:id="c2b38aa4-6e91-4701-ac9c-0d0f3174c989" variableName="currentAPIInstanceStatus" />
+				<ee:transform doc:name="Append status to response message" doc:id="635ecce9-23f8-4e26-b579-fcc0b6149ed4" >
+					<ee:message >
+					</ee:message>
+					<ee:variables >
+						<ee:set-variable variableName="responseMessage" ><![CDATA[%dw 2.0
+output application/json
+---
+vars.responseMessage mapObject ((value, key, index) -> do {
+	if ((key) ~= "errors")
+	    (key): value << vars.currentAPIInstanceStatus
+	else
+	    (key): value
+})]]></ee:set-variable>
+					</ee:variables>
+				</ee:transform>
+				<logger level="INFO" doc:name="Logger" doc:id="fe2be1da-0695-443a-b7fe-eaa95ba7f0bb" message="#[vars.currentAPIInstanceStatus]" />
+			</on-error-continue>
+		</error-handler>					
+	</flow>
+</mule>
+
