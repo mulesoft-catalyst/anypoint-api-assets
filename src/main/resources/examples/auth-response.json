@@ -1,0 +1,5 @@
+{
+  "access_token": "[BEARER TOKEN]",
+  "token_type": "bearer",
+  "redirectUrl": "/home/"
+}
